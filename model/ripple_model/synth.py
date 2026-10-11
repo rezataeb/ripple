@@ -128,6 +128,30 @@ def standardize(raw: list[float] | np.ndarray) -> np.ndarray:
     return (np.asarray(raw, dtype=float) - mu) / sd
 
 
+# data.py sorts cities and segments alphabetically when it prepares a dataset, and
+# posterior.json is exported in that order. launch.schema.json says city_idx and
+# segment_idx are indices into posterior.meta.*, so launches.json must be written
+# in the EXPORT order, not in the declaration order used above. Getting this wrong
+# silently matches every launch cell to the wrong segment.
+EXPORT_SEGMENTS = sorted(SEGMENTS)
+EXPORT_CITIES = sorted(CITIES)
+
+
+def seg_x(segment: str) -> int:
+    """Segment index as posterior.json orders them."""
+    return EXPORT_SEGMENTS.index(segment)
+
+
+def city_x(city: str) -> int:
+    """City index as posterior.json orders them."""
+    return EXPORT_CITIES.index(city)
+
+
+def in_export_order(values_by_synth_index: list[float]) -> list[float]:
+    """Re-order a per-segment list from declaration order to export order."""
+    return [values_by_synth_index[SEGMENTS.index(s)] for s in EXPORT_SEGMENTS]
+
+
 def mix_slug(segment: str) -> str:
     """Segment name -> its column in the cities file, e.g. 'mix_young_professionals'."""
     return segment.strip().lower().replace(" ", "_")
@@ -318,10 +342,12 @@ def generate_launches(rng: np.random.Generator, truth: Truth) -> dict:
     obs = _empty_obs()
     for w in range(1, 9):
         t = t0 + w - 1
-        for si in range(len(SEGMENTS)):
+        for si, seg in enumerate(SEGMENTS):
             share = CANDIDATE_SHARES[name][si]
             mu = np.exp(log_mu(truth, a_new, si, share, t, BASE_PRICE, 0.0, 0.0, 0.0))
-            _push(obs, w, t, -1, si, int(negbin(rng, mu, truth.phi)), BASE_PRICE, 0, 0, 0, 1)
+            # city_idx -1 marks the new city; segment_idx is the EXPORT index
+            _push(obs, w, t, -1, seg_x(seg), int(negbin(rng, mu, truth.phi)),
+                  BASE_PRICE, 0, 0, 0, 1)
     out.append(
         {
             "id": "austin-launch",
@@ -341,12 +367,12 @@ def generate_launches(rng: np.random.Generator, truth: Truth) -> dict:
             "horizon": 12,
             "t0": t0,
             "cities": [name],
-            "segments": SEGMENTS,
+            "segments": EXPORT_SEGMENTS,
             "new_city": {
                 "name": name,
                 "traits": CANDIDATES[name],
                 "traits_z": standardize(CANDIDATES[name]).round(10).tolist(),
-                "shares": CANDIDATE_SHARES[name],
+                "shares": in_export_order(CANDIDATE_SHARES[name]),
                 "extrapolation": False,
                 "out_of_range_traits": [],
             },
@@ -369,7 +395,7 @@ def generate_launches(rng: np.random.Generator, truth: Truth) -> dict:
     obs = _empty_obs()
     for w in range(1, 9):
         t = t0 + w - 1
-        for s2 in range(len(SEGMENTS)):
+        for s2, seg2 in enumerate(SEGMENTS):
             treated = 1 if s2 == si else 0
             price = promo_price if treated else BASE_PRICE
             b = b_true if treated else 0.0
@@ -382,7 +408,8 @@ def generate_launches(rng: np.random.Generator, truth: Truth) -> dict:
                 + b * treated
                 + float(season_row(t)[0] @ truth.season)
             )
-            _push(obs, w, t, ci, s2, int(negbin(rng, mu, truth.phi)), price, treated, 0, 0, treated)
+            _push(obs, w, t, city_x(city), seg_x(seg2),
+                  int(negbin(rng, mu, truth.phi)), price, treated, 0, 0, treated)
     out.append(
         {
             "id": "student-coupon",
@@ -422,7 +449,7 @@ def generate_launches(rng: np.random.Generator, truth: Truth) -> dict:
         t = t0 + w - 1
         for city2 in ("New York", "Seattle"):
             cidx = list(CITIES).index(city2)
-            for s2 in range(len(SEGMENTS)):
+            for s2, seg2 in enumerate(SEGMENTS):
                 for arm in (1, 0):  # treated arm and a 10% random holdout
                     share = CITY_SHARES[city2][s2] * (0.9 if arm else 0.1)
                     mu = np.exp(
@@ -432,9 +459,14 @@ def generate_launches(rng: np.random.Generator, truth: Truth) -> dict:
                         + theta_true * arm
                         + float(season_row(t)[0] @ truth.season)
                     )
+                    # feature stays 0: gift boxes are a NEW thing, not the email
+                    # campaign the model already learned a b_feature for. Setting
+                    # the existing flag would make b_feature absorb the lift and
+                    # leave theta measuring only the residual.
                     _push(
-                        obs, w, t, cidx, s2, int(negbin(rng, mu, truth.phi)),
-                        BASE_PRICE, 0, 0, arm, arm, holdout=1 - arm,
+                        obs, w, t, city_x(city2), seg_x(seg2),
+                        int(negbin(rng, mu, truth.phi)),
+                        BASE_PRICE, 0, 0, 0, arm, holdout=1 - arm,
                     )
     out.append(
         {
@@ -456,7 +488,7 @@ def generate_launches(rng: np.random.Generator, truth: Truth) -> dict:
             "horizon": 12,
             "t0": t0,
             "cities": ["New York", "Seattle"],
-            "segments": SEGMENTS,
+            "segments": EXPORT_SEGMENTS,
             "observations": obs,
             "has_holdout": True,
             "unit_cost": UNIT_COST,

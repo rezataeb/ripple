@@ -22,13 +22,15 @@ HOLDOUT_WEEKS = 12
 def main() -> None:
     draws = int(sys.argv[1]) if len(sys.argv) > 1 else 1000
     chains = int(sys.argv[2]) if len(sys.argv) > 2 else 4
+    target = float(sys.argv[3]) if len(sys.argv) > 3 else 0.95
     d = load_demo()
     print(f"data: {d.n_rows} rows, {d.n_cities} cities, {d.n_segments} segments, "
           f"{d.n_weeks} weeks, shares from {d.shares_source}", flush=True)
 
     t0 = time.perf_counter()
-    print(f"[1/3] full fit: {chains} chains x {draws} draws ...", flush=True)
-    res = fit(d, draws=draws, tune=draws, chains=chains)
+    print(f"[1/3] full fit: {chains} chains x {draws} draws, "
+          f"target_accept {target} ...", flush=True)
+    res = fit(d, draws=draws, tune=draws, chains=chains, target_accept=target)
     save_fit(res.idata, res, OUT / "fit_full.npz")
     print(f"      {res.method} in {res.seconds:.1f}s, {res.divergences} divergences", flush=True)
 
@@ -46,7 +48,7 @@ def main() -> None:
     print(f"[3/3] holdout fit (last {HOLDOUT_WEEKS} weeks removed) ...", flush=True)
     cutoff = d.n_weeks - HOLDOUT_WEEKS
     train = d.subset(d.t < cutoff)
-    res_h = fit(train, draws=draws, tune=draws, chains=chains)
+    res_h = fit(train, draws=draws, tune=draws, chains=chains, target_accept=target)
     save_fit(res_h.idata, res_h, OUT / "fit_holdout.npz")
     print(f"      {res_h.method} in {res_h.seconds:.1f}s, "
           f"{res_h.divergences} divergences", flush=True)

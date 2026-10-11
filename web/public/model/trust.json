@@ -1,0 +1,428 @@
+{
+ "generated_at": "2026-10-11T17:44:56+00:00",
+ "method": "nutpie NUTS, 4 chains x 1000 draws, target_accept 0.95",
+ "dataset_name": "Demo \u00b7 Brightside Coffee Subscriptions",
+ "summary": {
+  "passed": 4,
+  "total": 6,
+  "headline": "4 of 6 checks passed"
+ },
+ "checks": [
+  {
+   "name": "R-hat",
+   "group": "convergence",
+   "passed": false,
+   "value": 1.0101,
+   "threshold": 1.01,
+   "comparison": "lte",
+   "plain_english": "The chains do not fully agree, so these numbers are not settled yet.",
+   "detail": "worst parameter: tau_city (R-hat 1.0101)"
+  },
+  {
+   "name": "Effective sample size",
+   "group": "convergence",
+   "passed": true,
+   "value": 625.0,
+   "threshold": 400.0,
+   "comparison": "gte",
+   "plain_english": "There are enough independent draws for the intervals to be stable.",
+   "detail": "smallest for tau_city (625 draws)"
+  },
+  {
+   "name": "Divergences",
+   "group": "convergence",
+   "passed": false,
+   "value": 4,
+   "threshold": 0,
+   "comparison": "lte",
+   "plain_english": "4 draws got stuck in a difficult part of the posterior. The fit is usable but the tails may be understated."
+  },
+  {
+   "name": "Posterior predictive coverage",
+   "group": "fit",
+   "passed": true,
+   "value": 0.9083,
+   "threshold": 0.85,
+   "comparison": "gte",
+   "plain_english": "91% of the weeks the model was fitted on fall inside its own 90% range, so the spread of the predictions matches the spread of reality."
+  },
+  {
+   "name": "Parameter recovery",
+   "group": "recovery",
+   "passed": true,
+   "value": 1.0,
+   "threshold": 0.9333,
+   "comparison": "gte",
+   "plain_english": "The data was generated with known values, and 30 of 30 of them land inside the model's 94% interval. The model finds effects that are really there.",
+   "detail": "all 30 planted values recovered"
+  },
+  {
+   "name": "Time holdout",
+   "group": "holdout",
+   "passed": true,
+   "value": 0.9271,
+   "threshold": 0.8,
+   "comparison": "gte",
+   "plain_english": "The last 12 weeks were hidden from the fit. 93% of them landed inside the 90% range, and the average error was 18% against 45% for a same-week-last-year guess.",
+   "detail": "MAPE 18.4% vs. naive 44.7%"
+  }
+ ],
+ "convergence": {
+  "max_rhat": 1.0101,
+  "min_ess": 625.1,
+  "divergences": 4,
+  "worst_param": "tau_city",
+  "n_chains": 4,
+  "n_draws_per_chain": 1000,
+  "sampling_seconds": 161.6
+ },
+ "model_facts": {
+  "elasticity_by_segment": [
+   {
+    "segment": "families",
+    "mean": -1.1444820926430048,
+    "p05": -1.3980336665645694,
+    "p95": -0.895906825139802
+   },
+   {
+    "segment": "retirees",
+    "mean": -0.758288091811818,
+    "p05": -1.0210377661623933,
+    "p95": -0.5004176902411369
+   },
+   {
+    "segment": "students",
+    "mean": -2.2459409016566787,
+    "p05": -2.497634064472745,
+    "p95": -1.9844463027768333
+   },
+   {
+    "segment": "young professionals",
+    "mean": -1.600316877113698,
+    "p05": -1.8485086395100205,
+    "p95": -1.3500157894542535
+   }
+  ],
+  "promo_lift_by_segment": [
+   {
+    "segment": "families",
+    "mean": 0.19700488753022483,
+    "p05": 0.12193651836605618,
+    "p95": 0.27180314134332
+   },
+   {
+    "segment": "retirees",
+    "mean": 0.062138740478888184,
+    "p05": -0.01617541271648512,
+    "p95": 0.14018893698080154
+   },
+   {
+    "segment": "students",
+    "mean": 0.3882199315492142,
+    "p05": 0.3117904113985101,
+    "p95": 0.4656940801920854
+   },
+   {
+    "segment": "young professionals",
+    "mean": 0.2963478107655493,
+    "p05": 0.22419497688058698,
+    "p95": 0.36992348467774955
+   }
+  ],
+  "post_promo_dip": {
+   "mean": -0.16455085576300252,
+   "p05": -0.1870757890503762,
+   "p95": -0.14248826073330104
+  },
+  "feature_lift": {
+   "mean": 0.0939418933035095,
+   "p05": 0.07565894851237748,
+   "p95": 0.11262889397831688
+  }
+ },
+ "limits": [
+  "The demo company is synthetic, so the planted truth is known. On your own data there is no truth to check against, and the recovery card is replaced by the holdout.",
+  "The model has no competitor reaction: it answers what happens if you change your price, not what happens after a competitor answers back.",
+  "Effects are assumed stable over the forecast horizon. A market that is changing shape will drift outside these intervals.",
+  "A new city is a forecast from its traits. Outside the training trait range the interval is a lower bound on the real uncertainty, and Ripple says so."
+ ],
+ "recovery": [
+  {
+   "param": "e[families]",
+   "label": "Price elasticity \u00b7 families",
+   "truth": -1.1,
+   "posterior_mean": -1.1444820926430048,
+   "hdi_low": -1.4349145245285124,
+   "hdi_high": -0.8597133545428041,
+   "inside": true
+  },
+  {
+   "param": "b_promo[families]",
+   "label": "Promo lift \u00b7 families",
+   "truth": 0.22,
+   "posterior_mean": 0.19700488753022483,
+   "hdi_low": 0.11050649584926327,
+   "hdi_high": 0.2820269025943399,
+   "inside": true
+  },
+  {
+   "param": "a_seg[families]",
+   "label": "Segment level \u00b7 families",
+   "truth": 0.125,
+   "posterior_mean": 0.12092233852243663,
+   "hdi_low": 0.10428083466229002,
+   "hdi_high": 0.1375856676131661,
+   "inside": true
+  },
+  {
+   "param": "e[retirees]",
+   "label": "Price elasticity \u00b7 retirees",
+   "truth": -0.8,
+   "posterior_mean": -0.758288091811818,
+   "hdi_low": -1.065628915535959,
+   "hdi_high": -0.47548264191173284,
+   "inside": true
+  },
+  {
+   "param": "b_promo[retirees]",
+   "label": "Promo lift \u00b7 retirees",
+   "truth": 0.1,
+   "posterior_mean": 0.062138740478888184,
+   "hdi_low": -0.02282696602124255,
+   "hdi_high": 0.15302951949834162,
+   "inside": true
+  },
+  {
+   "param": "a_seg[retirees]",
+   "label": "Segment level \u00b7 retirees",
+   "truth": -0.225,
+   "posterior_mean": -0.21056218525877812,
+   "hdi_low": -0.2267898918651876,
+   "hdi_high": -0.19294190028697758,
+   "inside": true
+  },
+  {
+   "param": "e[students]",
+   "label": "Price elasticity \u00b7 students",
+   "truth": -2.2,
+   "posterior_mean": -2.2459409016566787,
+   "hdi_low": -2.529607534970482,
+   "hdi_high": -1.9534877979326335,
+   "inside": true
+  },
+  {
+   "param": "b_promo[students]",
+   "label": "Promo lift \u00b7 students",
+   "truth": 0.42,
+   "posterior_mean": 0.3882199315492142,
+   "hdi_low": 0.3008700173703913,
+   "hdi_high": 0.47629246993813795,
+   "inside": true
+  },
+  {
+   "param": "a_seg[students]",
+   "label": "Segment level \u00b7 students",
+   "truth": -0.125,
+   "posterior_mean": -0.12657321973804625,
+   "hdi_low": -0.143098869954606,
+   "hdi_high": -0.10947941303667116,
+   "inside": true
+  },
+  {
+   "param": "e[young professionals]",
+   "label": "Price elasticity \u00b7 young professionals",
+   "truth": -1.6,
+   "posterior_mean": -1.600316877113698,
+   "hdi_low": -1.8781163933640894,
+   "hdi_high": -1.3091427124477086,
+   "inside": true
+  },
+  {
+   "param": "b_promo[young professionals]",
+   "label": "Promo lift \u00b7 young professionals",
+   "truth": 0.3,
+   "posterior_mean": 0.2963478107655493,
+   "hdi_low": 0.21267482472757168,
+   "hdi_high": 0.3791086046168889,
+   "inside": true
+  },
+  {
+   "param": "a_seg[young professionals]",
+   "label": "Segment level \u00b7 young professionals",
+   "truth": 0.225,
+   "posterior_mean": 0.21621306647438773,
+   "hdi_low": 0.20022071737963912,
+   "hdi_high": 0.23353172904196978,
+   "inside": true
+  },
+  {
+   "param": "a_city[Atlanta]",
+   "label": "City effect \u00b7 Atlanta",
+   "truth": 6.0474088371,
+   "posterior_mean": 6.028614277175413,
+   "hdi_low": 6.005203109145428,
+   "hdi_high": 6.0507830448647315,
+   "inside": true
+  },
+  {
+   "param": "a_city[Boston]",
+   "label": "City effect \u00b7 Boston",
+   "truth": 6.7705112734,
+   "posterior_mean": 6.768091314185767,
+   "hdi_low": 6.745582915467339,
+   "hdi_high": 6.79014938885709,
+   "inside": true
+  },
+  {
+   "param": "a_city[Chicago]",
+   "label": "City effect \u00b7 Chicago",
+   "truth": 6.5514812143,
+   "posterior_mean": 6.564685368438463,
+   "hdi_low": 6.539197126624197,
+   "hdi_high": 6.591006236011729,
+   "inside": true
+  },
+  {
+   "param": "a_city[Denver]",
+   "label": "City effect \u00b7 Denver",
+   "truth": 6.0944485161,
+   "posterior_mean": 6.079380542988505,
+   "hdi_low": 6.055755428272227,
+   "hdi_high": 6.10219650835679,
+   "inside": true
+  },
+  {
+   "param": "a_city[New York]",
+   "label": "City effect \u00b7 New York",
+   "truth": 7.4905353417,
+   "posterior_mean": 7.481684271067568,
+   "hdi_low": 7.460286598154734,
+   "hdi_high": 7.5038227442678584,
+   "inside": true
+  },
+  {
+   "param": "a_city[Seattle]",
+   "label": "City effect \u00b7 Seattle",
+   "truth": 6.6049700828,
+   "posterior_mean": 6.605912220764555,
+   "hdi_low": 6.584134059556776,
+   "hdi_high": 6.628374372091548,
+   "inside": true
+  },
+  {
+   "param": "g[log_population]",
+   "label": "Trait coefficient \u00b7 log_population",
+   "truth": 0.55,
+   "posterior_mean": 0.5437102852145427,
+   "hdi_low": 0.3843133360273525,
+   "hdi_high": 0.6772840343026124,
+   "inside": true
+  },
+  {
+   "param": "g[median_income_k]",
+   "label": "Trait coefficient \u00b7 median_income_k",
+   "truth": 0.18,
+   "posterior_mean": 0.10405052669192724,
+   "hdi_low": -0.04484237733067395,
+   "hdi_high": 0.2414736929706807,
+   "inside": true
+  },
+  {
+   "param": "g[share_age_18_34]",
+   "label": "Trait coefficient \u00b7 share_age_18_34",
+   "truth": 0.3,
+   "posterior_mean": 0.24874122086276243,
+   "hdi_low": 0.10255674883609178,
+   "hdi_high": 0.38125558889614763,
+   "inside": true
+  },
+  {
+   "param": "g0",
+   "label": "Global level",
+   "truth": 6.6,
+   "posterior_mean": 6.586179346364366,
+   "hdi_low": 6.457423813277926,
+   "hdi_high": 6.715619513029806,
+   "inside": true
+  },
+  {
+   "param": "tau_city",
+   "label": "City-to-city spread",
+   "truth": 0.16,
+   "posterior_mean": 0.13226636364134145,
+   "hdi_low": 0.025911274215230966,
+   "hdi_high": 0.30656923116586404,
+   "inside": true
+  },
+  {
+   "param": "phi",
+   "label": "Overdispersion",
+   "truth": 22.0,
+   "posterior_mean": 21.907621915518597,
+   "hdi_low": 20.69409166099803,
+   "hdi_high": 23.248674157253287,
+   "inside": true
+  },
+  {
+   "param": "b_dip",
+   "label": "Post-promo dip",
+   "truth": -0.18,
+   "posterior_mean": -0.16455085576300252,
+   "hdi_low": -0.19074601287012238,
+   "hdi_high": -0.1397418483954221,
+   "inside": true
+  },
+  {
+   "param": "b_feature",
+   "label": "Feature lift",
+   "truth": 0.08,
+   "posterior_mean": 0.0939418933035095,
+   "hdi_low": 0.07207633145903389,
+   "hdi_high": 0.11512518488895292,
+   "inside": true
+  },
+  {
+   "param": "season[0]",
+   "label": "Seasonality term 1",
+   "truth": 0.12,
+   "posterior_mean": 0.1242406935325406,
+   "hdi_low": 0.1123442330841717,
+   "hdi_high": 0.13691240046363815,
+   "inside": true
+  },
+  {
+   "param": "season[1]",
+   "label": "Seasonality term 2",
+   "truth": -0.07,
+   "posterior_mean": -0.06412503790547211,
+   "hdi_low": -0.07628006054401498,
+   "hdi_high": -0.052210237918586276,
+   "inside": true
+  },
+  {
+   "param": "season[2]",
+   "label": "Seasonality term 3",
+   "truth": 0.04,
+   "posterior_mean": 0.029416167642932495,
+   "hdi_low": 0.01724413542480243,
+   "hdi_high": 0.04199362110003457,
+   "inside": true
+  },
+  {
+   "param": "season[3]",
+   "label": "Seasonality term 4",
+   "truth": 0.02,
+   "posterior_mean": 0.020213862790480056,
+   "hdi_low": 0.008293501842154917,
+   "hdi_high": 0.031373641723072956,
+   "inside": true
+  }
+ ],
+ "holdout": {
+  "weeks_held_out": 12,
+  "coverage_90": 0.9271,
+  "mape_model": 0.1843,
+  "mape_naive": 0.4468,
+  "beats_naive": true
+ }
+}

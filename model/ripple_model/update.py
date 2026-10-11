@@ -26,14 +26,14 @@ contract/update.parity.fixture.json.
 from __future__ import annotations
 
 import numpy as np
-from arviz_stats.base import array_stats
 
+from ripple_model.psis import K_HAT_THRESHOLD, psis_smooth
 from ripple_model.simulate import season_row
 from ripple_model.synth import HOLDOUT_RECOMMENDATION
 
 K_PER_DRAW = 20
-ESS_MIN = 300.0          # the browser's gate
-PARETO_K_MAX = 0.7       # the PSIS gate here
+ESS_MIN = 300.0                   # the browser's gate
+PARETO_K_MAX = K_HAT_THRESHOLD    # the PSIS gate here
 DENSITY_POINTS = 60
 DEFAULT_SEED = 20261011
 
@@ -380,8 +380,8 @@ def update_with_launch(
         n_obs_cells = int(y.size)
 
         if smooth:
-            smoothed, khat = array_stats.psislw(logw.copy(), r_eff=1.0, axis=-1)
-            pareto_k = float(np.asarray(khat).ravel()[0])
+            smoothed, khat = psis_smooth(logw)
+            pareto_k = float(khat)
             w = normalize_log_weights(smoothed)
         else:
             w = normalize_log_weights(logw)
@@ -451,7 +451,7 @@ def update_with_launch(
     unknown_block["truth"] = None if truth is None else float(truth)
 
     # ---- validity gate ---------------------------------------------------
-    if smooth and pareto_k is not None:
+    if smooth and pareto_k is not None and np.isfinite(pareto_k):
         ok = bool(pareto_k <= PARETO_K_MAX)
         gate = {
             "ok": ok,
