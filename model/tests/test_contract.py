@@ -147,3 +147,45 @@ def test_fixture_a_city_contains_g0() -> None:
     )[:, 0, :]
     ratio = mu.mean() / np.mean(h["units"])
     assert 0.5 < ratio < 2.0, f"fixture mu is {ratio:.3g}x the observed units — g0 lost?"
+
+
+def test_exported_candidate_shares_are_in_meta_segment_order() -> None:
+    """Regression guard, found by Session B.
+
+    candidates[].shares is positional against meta.segments. synth.py declares
+    segments in its own order and data.py sorts them alphabetically, so passing a
+    plain list gave every candidate city the wrong customer mix — a new-city
+    forecast built on the wrong segment weights, with nothing to flag it.
+    """
+    path = PUBLIC / "posterior.json"
+    truth_path = ROOT / "model" / "data" / "truth.json"
+    if not (path.exists() and truth_path.exists()):
+        pytest.skip("export the demo model first")
+    post, truth = load(path), load(truth_path)
+    segments = post["meta"]["segments"]
+
+    for cand in post["candidates"]:
+        planted = dict(zip(truth["segments"], truth["candidates"][cand["name"]]["shares"],
+                           strict=True))
+        for i, segment in enumerate(segments):
+            assert abs(cand["shares"][i] - planted[segment]) < 1e-9, (
+                f"{cand['name']}: shares[{i}] is for {segment} but does not match the "
+                f"planted mix — the list is in the wrong order"
+            )
+        assert abs(sum(cand["shares"]) - 1.0) < 1e-9
+
+
+def test_build_candidates_rejects_positional_shares() -> None:
+    """A list cannot be checked against meta.segments, so it is refused outright."""
+    from ripple_model.data import load_demo
+    from ripple_model.export import build_candidates
+
+    if not (ROOT / "model" / "data" / "brightside_weekly.csv").exists():
+        pytest.skip("generate the demo data first")
+    d = load_demo()
+    with pytest.raises(TypeError, match="keyed by segment name"):
+        build_candidates(d, {"Nowhere": {"traits": [13.0, 80.0, 0.3], "shares": [0.25] * 4}})
+    with pytest.raises(ValueError, match="no share given"):
+        build_candidates(
+            d, {"Nowhere": {"traits": [13.0, 80.0, 0.3], "shares": {"students": 1.0}}}
+        )

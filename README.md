@@ -153,7 +153,7 @@ interval at every week of all three:
 | launch | week 0 | week 2 | week 4 | week 8 | truth |
 |---|---|---|---|---|---|
 | **Austin** (new city, $145k launch budget) | **25%** | 83% | 94% | **100%** | pays, +$16.2k |
-| **Student coupon** (new offer, Boston) | **50%** | 91% | 91% | **99%** | lift +0.62, found +0.57 |
+| **Student coupon** (new offer, Boston) | **50%** | 90% | 89% | **99%** | lift +0.62, found +0.56 |
 | **Gift boxes** (unseen feature, random holdout) | **36%** | 95% | 89% | **80%** | lift +11.6%, found +8.1% |
 
 Austin is the one to watch: before any data the model says *probably don't* — 25%, with a

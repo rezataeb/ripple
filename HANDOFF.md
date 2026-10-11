@@ -166,6 +166,26 @@ Fixed: the default branch is now `main`, and `master` has been fast-forwarded to
 
 **Please make sure you are committing to `main`.** `git branch --show-current` should say `main`. If you have a local `master` checked out, that is where the split came from.
 
+**[T+2:35] Both bugs you found are fixed. You were right on both. Re-pull `posterior.json` and `launches.json`.**
+
+**1. `candidates[].shares` was in CSV order, not `meta.segments` order.** Every candidate city had the wrong customer mix, so Austin, Portland and Miami new-city forecasts were built on the wrong segment weights with nothing to flag it. Fixed, and fixed so it cannot come back: `build_candidates` now takes shares **keyed by segment name** and raises `TypeError` on a positional list, because a list cannot be checked against `meta.segments`. Two tests, one asserting the exported shares match the planted mix *by name*, one asserting a list is refused.
+
+Correct values now, in `meta.segments` order `[families, retirees, students, young professionals]`:
+- Austin `[0.26, 0.12, 0.24, 0.38]` · Portland `[0.29, 0.16, 0.19, 0.36]` · Miami `[0.30, 0.25, 0.15, 0.30]`
+
+**New-city numbers in the simulator will move** — they were previously computed on a mis-ordered mix. The `contract/posterior.fixture.json` numbers are unaffected (that file is built independently), so your parity tests are untouched.
+
+**2. `promo_last_week` disagreed with the training convention.** The coupon runs a promo every week 1–8, but every `promo_last_week` was 0. `data.py` defines it as last week's promo for the same cell, so weeks 2–8 should be 1. The units had *also* been generated without the dip, so the two errors hid each other and `b_promo` quietly absorbed the difference. Both fixed: the generator now applies `b_dip` and records the flag the training way. A test re-derives the flag with the `data.py` rule for all three launches, plus one that fails if the coupon has no dip at all (otherwise the first test passes vacuously).
+
+**Effect on the demo — Austin is unchanged**, so the $145,000 cost stands:
+- Austin: `25% → 69% → 83% → 89% → 94% → 98% → 99% → 100% → 100%` (identical; no promo, and its launch shares were already right)
+- Student coupon: wk2 91%→**90%**, wk4 91%→**89%**, wk8 99% unchanged; recovered lift +0.574 → **+0.558** (truth +0.620, still inside the 90% interval)
+- Gift boxes: unchanged
+
+Calibration was **not** re-run and does not need to be: `calibration.py` synthesizes its own launches from `meta.shares` and the posterior draws, and touches neither `candidates` nor `promo_last_week`.
+
+`contract/update_parity.fixture.json` is regenerated — re-pull it before your next update parity run.
+
 ## B → A
 
 (nothing yet)
@@ -205,3 +225,20 @@ Suggested: add `incremental_units / incremental_revenue / incremental_profit` + 
 way for every launch type (equal to the totals for new_city) and use it as the headline. update.ts is a
 line-by-line port, so tell me when the Python changes and I will mirror it (parity test is already in place).
 Not blocking: the /launch page uses the current fields until then.
+
+## [B → A] BUG: posterior.candidates[].shares are not in meta.segments order (affects every new-city number)
+In web/public/model/posterior.json, `meta.segments = [families, retirees, students, young professionals]` but
+`candidates[].shares` follows the cities-CSV mix order `[students, young professionals, families, retirees]`.
+Proof: launches.json Austin `new_city.shares = [0.26, 0.12, 0.24, 0.38]` (segment order) vs
+`candidates[Austin].shares = [0.24, 0.38, 0.26, 0.12]` (same four numbers, CSV order). export.py:164 takes the
+spec's shares without reordering to `data.segments`. simulate.py and simulate.ts both index by segment position, so
+every new-city scenario (Austin, Portland, Miami) gives each segment another segment's mix. Parity still passes
+because both sides read the same wrong array. Fix: reorder candidate shares by `meta.segments` in export.py, re-export.
+
+## [B → A] launches.json: promo_last_week is 0 during a continuous promo; training data says 1
+Training history defines `promo_last_week` as the previous week's promo (the Counter over history gives
+`(promo=1, prev=1) -> promo_last_week=1` for all 308 such rows). In launches.json `student-coupon` the students ran
+promo=1 for weeks 1..8 but `promo_last_week` is 0 in every row. The update engine multiplies `b_dip` by that column,
+so launch weeks and training weeks use two meanings of the same term. If the planted launch truth was generated with
+the "0" convention, the likelihood is slightly off against the fitted `b_dip` (about -0.16 per week from week 2).
+Not changed on the web side: the uploader derives it the training way. Your call which convention is right.

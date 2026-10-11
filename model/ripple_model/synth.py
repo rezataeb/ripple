@@ -407,16 +407,23 @@ def generate_launches(rng: np.random.Generator, truth: Truth) -> dict:
             price = promo_price if treated else BASE_PRICE
             b = b_true if treated else 0.0
             share = CITY_SHARES[city][s2]
+            # promo_last_week follows the TRAINING convention from data.py: last
+            # week's promo flag for this same cell. The coupon runs every week, so
+            # from week 2 on the treated cell carries the pull-forward dip — and the
+            # units are generated with b_dip applied, or the recorded flag would
+            # contradict the data the model is asked to explain.
+            promo_last = 1 if (treated and w > 1) else 0
             mu = np.exp(
                 np.log(share)
                 + a_city[ci]
                 + truth.a_seg[s2]
                 + truth.e[s2] * np.log(price / BASE_PRICE)
                 + b * treated
+                + truth.b_dip * promo_last
                 + float(season_row(t)[0] @ truth.season)
             )
             _push(obs, w, t, city_x(city), seg_x(seg2),
-                  int(negbin(rng, mu, truth.phi)), price, treated, 0, 0, treated)
+                  int(negbin(rng, mu, truth.phi)), price, treated, promo_last, 0, treated)
     out.append(
         {
             "id": "student-coupon",

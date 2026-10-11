@@ -35,6 +35,9 @@ The agent turns the question into a scenario, runs the model, and checks the liv
 [Ask panel — extrapolation warning + market sources]
 Miami is outside the training range, and Ripple says so. Every number comes from a tool, with sources.
 
+[/data — bring your own data]
+Your own CSV goes through the same path: map the columns, check them, fit the same model.
+
 [/method — recovery + calibration charts]
 Thirty of thirty planted values recovered. Six of six trust checks pass.
 

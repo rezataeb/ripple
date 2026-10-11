@@ -142,3 +142,41 @@ def test_synth_is_deterministic() -> None:
     p1 = synth.generate_panel(rng1, t1)
     p2 = synth.generate_panel(rng2, t2)
     pd.testing.assert_frame_equal(p1, p2)
+
+
+def test_launch_promo_last_week_follows_the_training_convention() -> None:
+    """Regression guard, found by Session B.
+
+    data.py defines promo_last_week as last week's promo flag for the same cell.
+    The student coupon runs every week, so from week 2 the treated cell carries
+    the pull-forward dip. Recording 0 there told the model there was no dip to
+    account for, while the units had been generated without one either — two
+    wrongs that left b_promo absorbing the difference.
+    """
+    if not (DATA / "launches.json").exists():
+        synth.main()
+    doc = json.loads((DATA / "launches.json").read_text())
+    for launch in doc["launches"]:
+        obs = launch["observations"]
+        df = pd.DataFrame(
+            {k: obs[k] for k in ("week", "city_idx", "segment_idx", "treated",
+                                 "promo", "promo_last_week")}
+        ).sort_values(["city_idx", "segment_idx", "treated", "week"])
+        derived = (
+            df.groupby(["city_idx", "segment_idx", "treated"])["promo"]
+            .shift(1)
+            .fillna(0.0)
+            .to_numpy()
+        )
+        assert np.array_equal(derived, df["promo_last_week"].to_numpy()), (
+            f"{launch['id']}: promo_last_week disagrees with the training convention"
+        )
+
+
+def test_the_coupon_launch_actually_has_a_dip_to_account_for() -> None:
+    """If every promo_last_week were 0 the guard above would pass vacuously."""
+    if not (DATA / "launches.json").exists():
+        synth.main()
+    doc = json.loads((DATA / "launches.json").read_text())
+    coupon = next(x for x in doc["launches"] if x["id"] == "student-coupon")
+    assert sum(coupon["observations"]["promo_last_week"]) > 0

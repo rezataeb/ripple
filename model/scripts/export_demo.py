@@ -23,7 +23,7 @@ from ripple_model.checks import build_trust, write_trust
 from ripple_model.data import load_demo
 from ripple_model.export import build_posterior, write_json
 from ripple_model.model import load_fit
-from ripple_model.synth import CANDIDATE_SHARES, CANDIDATES
+from ripple_model.synth import CANDIDATE_SHARES, CANDIDATES, SEGMENTS
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "model" / "data"
@@ -39,8 +39,13 @@ def main() -> None:
     y_rep = np.load(DATA / "ppc_full.npz")["y_rep"]
     holdout_arrays, _ = load_fit(DATA / "fit_holdout.npz")
 
+    # keyed by segment name: synth.py declares segments in its own order and
+    # data.py sorts them alphabetically, so a positional list mis-orders the mix
     candidates = {
-        name: {"traits": raw, "shares": CANDIDATE_SHARES[name]}
+        name: {
+            "traits": raw,
+            "shares": dict(zip(SEGMENTS, CANDIDATE_SHARES[name], strict=True)),
+        }
         for name, raw in CANDIDATES.items()
     }
 

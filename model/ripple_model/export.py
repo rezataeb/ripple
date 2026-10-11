@@ -161,9 +161,25 @@ def build_candidates(d: ModelData, candidates: dict[str, dict] | None) -> list[d
             for i in range(d.n_traits)
             if z[i] < lo[i] - 1e-12 or z[i] > hi[i] + 1e-12
         ]
-        shares = np.asarray(
-            spec.get("shares") or d.shares.mean(axis=0), dtype=float
-        )
+        # shares MUST be keyed by segment name, not positional. A plain list is
+        # read in the caller's order, and synth.py declares segments in a different
+        # order from data.py's alphabetical one, so a list silently gave every
+        # candidate city the wrong customer mix.
+        raw_shares = spec.get("shares")
+        if isinstance(raw_shares, dict):
+            missing = [s for s in d.segments if s not in raw_shares]
+            if missing:
+                raise ValueError(f"{name}: no share given for segment(s) {missing}")
+            shares = np.array([float(raw_shares[s]) for s in d.segments])
+        elif raw_shares is None:
+            shares = d.shares.mean(axis=0)
+        else:
+            raise TypeError(
+                f"{name}: candidate shares must be a dict keyed by segment name, "
+                f"got {type(raw_shares).__name__}. A positional list cannot be checked "
+                "against meta.segments and has silently mis-ordered the mix before."
+            )
+        shares = np.asarray(shares, dtype=float)
         shares = shares / shares.sum()
         entry = {
             "name": name,

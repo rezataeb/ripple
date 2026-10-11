@@ -1,0 +1,15 @@
+Hi, I'm Reza, and this is Ripple, my project for the AI Engineer Hackathon NYC.
+Ripple answers "what happens to sales if" with a distribution, never a single number.
+A twenty percent student coupon in Boston: incremental profit, a ninety percent interval, and the chance it pays.
+Drag the discount and everything moves at once, because the whole posterior is in the browser.
+Notice the dip after the promotion. A promo borrows sales from next week, and the model charges it back.
+Then reality arrives. Here is the Austin launch before any data.
+Each real week updates the forecast with Bayes' rule. The band narrows, and the chance it pays updates.
+The data was generated with a known answer, so I can show you the truth. It stays inside the interval the whole way.
+And when the launch is too surprising for the fast update, this badge says "refit needed" instead of pretending.
+The agent turns the question into a scenario, runs the model, and checks the live market.
+Miami is outside the training range, and Ripple says so. Every number comes from a tool, with sources.
+Your own CSV goes through the same path: map the columns, check them, fit the same model.
+Thirty of thirty planted values recovered. Six of six trust checks pass.
+And two hundred simulated launches say the intervals are honest, including the one case where they are not.
+The model makes the numbers. The agent explains them. The web gives context. Thanks for watching.
