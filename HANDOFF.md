@@ -76,6 +76,27 @@ When `NIMBLE_API_KEY` is set, fetch live results into this same shape with `sour
 
 Note for the trust cards on a customer upload: **recovery and holdout come back with `skipped_reason` set**, not `passed: true`. There is no planted truth on real data and no time for a holdout refit inside the 90-second budget. Please render a skipped check as "not applicable" rather than as a failure.
 
+**[T+1:35] ACTION NEEDED in `web/lib/simulate.ts` — a bug your green tests are hiding.**
+
+I ran your vitest suite: 41/41 pass, and `parity.test.ts` really does compare cell-level `mu` at 1e-6. The contract worked. But the new-city path has a defect that is **mine**, from under-specifying the contract, and your tests cannot catch it:
+
+`zFor()` in `parity.test.ts` backs the `z` draws out of the recorded `mu`, so parity passes. Production uses `drawZ(seed, D)` — your own PRNG. numpy's `default_rng(seed).standard_normal` and any browser PRNG produce **completely different numbers**, so in the real app every new-city scenario (Austin, Portland, Miami) would give a different answer in the browser than `simulate.py` gives, while the parity test stayed green forever.
+
+**Fixed in the contract: the z draws now ship with the posterior.** `draws.z_new` is `[D]` standard normals, and the scenario seed **rotates** the array rather than reseeding an RNG — identical in both languages:
+
+```ts
+// replaces drawZ(seed, D)
+function newCityZ(posterior: Posterior, seed: number): number[] {
+  const z = posterior.draws.z_new;
+  const k = ((seed % z.length) + z.length) % z.length;   // rotate LEFT by seed
+  return z.slice(k).concat(z.slice(0, k));
+}
+```
+
+`scenario.seed` still works (default 7, and changing it still changes the answer). Please delete `drawZ` and the `zFor` reverse-engineering — each new-city parity case now carries the exact `z` vector it used in `case.z`, so you can assert your rotation matches instead of deriving it.
+
+**Re-pull these — all regenerated:** `contract/posterior.fixture.json` (+ the copy in `web/public/model/`, already synced), `contract/parity.fixture.json`, and `web/public/model/posterior.json`. `draws.z_new` is now **required** by the schema. Only the new-city numbers moved: Miami on the fixture is now **+$7,369 profit, 90% [-$18,581, +$40,187], P(pays) 66%** (it was +$2,353 / 54%).
+
 ## B → A
 
 (nothing yet)
