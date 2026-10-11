@@ -151,3 +151,143 @@ export interface ScenarioResult {
     net_price?: number;
   };
 }
+
+// ---- launches (contract/launch.schema.json) and updates (contract/update.schema.json) ----
+
+export type LaunchKind = "z_new_city" | "b_promo" | "elasticity" | "theta";
+export type UnknownDisplay = "log_lift" | "percent_lift" | "raw";
+
+export interface LaunchObservations {
+  week: number[];
+  week_start?: string[];
+  t: number[];
+  city_idx: number[];
+  segment_idx: number[];
+  units: number[];
+  price: number[];
+  promo: number[];
+  promo_last_week: number[];
+  feature: number[];
+  treated: number[];
+  holdout?: number[];
+}
+
+export interface CausalAssumption {
+  id: string;
+  text: string;
+  holds?: boolean | null;
+}
+
+export interface Launch {
+  id: string;
+  label: string;
+  type: "new_city" | "offer" | "feature";
+  description?: string;
+  unknown: {
+    name: string;
+    label: string;
+    kind: LaunchKind;
+    segment?: string;
+    prior: { dist: "normal" | "posterior"; mu?: number; sigma?: number; editable_sigma?: boolean };
+    display?: UnknownDisplay;
+  };
+  weeks_observed: number;
+  horizon: number;
+  t0?: number;
+  cities?: string[];
+  segments?: string[];
+  new_city?: {
+    name: string;
+    traits: number[];
+    traits_z: number[];
+    shares: number[];
+    extrapolation?: boolean;
+    out_of_range_traits?: string[];
+  };
+  observations: LaunchObservations;
+  has_holdout?: boolean;
+  unit_cost: number;
+  fixed_cost: number;
+  net_price?: number;
+  truth?: {
+    unknown_value?: number;
+    unknown_percent?: number;
+    total_units?: number;
+    total_profit?: number;
+    pays?: boolean;
+  };
+  causal_assumptions?: CausalAssumption[];
+}
+
+export interface LaunchesFile {
+  generated_at: string;
+  seed: number;
+  launches: Launch[];
+}
+
+export interface UpdateGate {
+  ok: boolean;
+  criterion: "ess" | "pareto_k";
+  value: number;
+  threshold: number;
+  ess?: number;
+  pareto_k?: number | null;
+  smoothed?: boolean;
+  message: string;
+}
+
+export interface UpdateWeeklyRow {
+  week: number;
+  t?: number;
+  week_start?: string;
+  units: Partial<Band> & { p05: number; p50: number; p95: number };
+  observed_units?: number | null;
+  counterfactual_units?: Partial<Band> & { p05: number; p50: number; p95: number };
+}
+
+export interface UpdateResult {
+  launch_id: string;
+  weeks_used: number;
+  gate: UpdateGate;
+  unknown: {
+    name: string;
+    label: string;
+    display: UnknownDisplay;
+    prior: Interval;
+    posterior: Interval;
+    prior_percent?: Interval;
+    posterior_percent?: Interval;
+    truth?: number | null;
+    density?: { x: number[]; prior: number[]; posterior: number[] };
+  };
+  forecast: {
+    horizon: number;
+    total_units: Interval;
+    total_revenue?: Interval;
+    total_profit?: Interval;
+    p_profit_positive: number;
+    weekly: UpdateWeeklyRow[];
+  };
+  prior_forecast: {
+    total_units: Interval;
+    total_revenue?: Interval;
+    total_profit?: Interval;
+    p_profit_positive: number;
+  };
+  causal: {
+    mode: "experiment" | "model_based";
+    label?: string;
+    assumptions: CausalAssumption[];
+    recommendation?: string;
+  };
+  meta: {
+    n_prior_draws: number;
+    k_per_draw: number;
+    n_samples: number;
+    n_obs_cells?: number;
+    seed?: number;
+    source: "browser" | "python";
+    computed_ms?: number;
+    prior_sigma?: number;
+  };
+}
