@@ -33,6 +33,10 @@ calibrate:          ## run the calibration study -> web/public/model/calibration
 fixtures:           ## regenerate the contract fixtures
 	uv run python contract/make_fixture.py
 	uv run python contract/make_parity_fixture.py
+	uv run python model/scripts/make_demo_scan.py
+
+check-fixtures:     ## fail if a committed fixture no longer matches its generator
+	uv run python scripts/check_fixtures.py
 
 pipeline: data fit export calibrate  ## everything, from scratch
 

@@ -299,9 +299,12 @@ Nimble.
 `.github/workflows/ci.yml` runs on every push:
 
 - **ruff** over `model/`, `api/`, `contract/`;
-- **regenerates the demo data and every fixture, then fails if the committed ones
-  differ** — a fixture edited by hand, or a `simulate.py` change that was not followed by
-  regenerating the parity fixture, would make the parity test meaningless;
+- **`scripts/check_fixtures.py`** — regenerates every fixture and fails if a committed one
+  no longer matches its generator. A fixture edited by hand, or a `simulate.py` change
+  that was not followed by regenerating the parity fixture, would leave the parity test
+  comparing new code against expectations derived from new code: green and worthless. The
+  comparison is **numeric, not byte-for-byte** — float64 differs in the last digit or two
+  between CPUs and BLAS builds, and a 1e-16 relative difference is not a stale fixture;
 - **pytest**, including the slow end-to-end BYOD upload → fit → poll flow, which is a
   real (tiny) PyMC fit;
 - **tsc + vitest** in `web/`, including the Python↔TS parity tests and the number guard.

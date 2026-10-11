@@ -37,13 +37,10 @@ jobs:
 
       - name: Check the contract fixtures are up to date
         # a fixture edited by hand, or a simulate.py change that was not followed
-        # by regenerating the fixture, would make the parity test meaningless
-        run: |
-          uv run python contract/make_fixture.py
-          uv run python contract/make_parity_fixture.py
-          uv run python model/scripts/make_demo_scan.py
-          git diff --exit-code -- contract/ web/public/model/market_scan.demo.json \
-            || { echo "::error::Fixtures are stale. Run 'make fixtures' and commit."; exit 1; }
+        # by regenerating the fixture, would make the parity test meaningless.
+        # Compared numerically, not byte-for-byte: float64 differs in the last
+        # digit or two between CPUs and BLAS builds.
+        run: uv run python scripts/check_fixtures.py
 
       - name: Tests
         # includes the contract, data, parity, PSIS, launch-update and API suites,
