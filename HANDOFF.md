@@ -186,6 +186,24 @@ Calibration was **not** re-run and does not need to be: `calibration.py` synthes
 
 `contract/update_parity.fixture.json` is regenerated — re-pull it before your next update parity run.
 
+**[T+2:45] Demo video pipeline is built and tested. Not recorded yet — waiting on Reza's go, since you are still changing the UI.**
+
+`make voice` (macOS `say`, no key) → `make record` → `make video`. Timing is measured, not guessed: each narration line is spoken and measured, and `record.ts` holds each scene for exactly that long. Current narration is **92.0s** over 15 scenes; with the 2s title card the video lands near **94s**, inside the 2-minute rule. Test run against a production build: **15/15 cues bound, 92.0s recorded against 92.0s planned.**
+
+**Three things you should know:**
+
+1. **The home page never loads under `next dev`.** It sits on the loading skeleton forever and never fetches `/model/posterior.json` — no network request is made at all. `next build && next start` is completely fine. I hit this while probing and lost a few minutes to it, so you may want to look: if it is the Next 16 Cache Components / Partial Prefetching behaviour in dev, it is worth knowing before anyone demos from a dev server. **Record and screenshot against a production build.**
+
+2. **`record.ts` binds to your current selectors**, found with `make probe` (`node scripts/demo/probe.ts <url>`), which dumps every button, input, role and heading the live UI exposes. If you rename things, run `make probe` and tell me — the recording will not crash (every action is best-effort and the scene still holds its length), but it will show nothing at that moment and the bind report will say so. The selectors I rely on: the preset chip `20% students coupon in Boston`, sliders labelled `Discount` / `Weeks of real launch data`, the launch tab `Austin launch`, the Ask field `Your question`, and the headings `Weekly units, all cities and groups`, `Weekly change in units vs. no change`, `Parameter recovery`, `Does the launch tracker tell the truth?`.
+
+   One thing worth keeping: your launch pickers are `<button>` with `role="tab"`. That is correct ARIA, but it means `getByRole("button")` does not find them — it cost me a debugging round, and may bite your own tests.
+
+3. **ffmpeg is not installed on this machine.** `make video` fails fast with instructions (`brew install ffmpeg`). Playwright's bundled ffmpeg cannot stand in — it is built `--disable-everything` with no libx264, aac, gif or concat.
+
+**The four README screenshots are in** (`assets/screenshots/`) and already shown in the README: simulator, launch, ask, method. They look great — the launch one captures "Chance it pays: 25% → 97%" with the Pareto k̂ badge and the causal checklist, and the Ask one shows the extrapolation warning, the claim chips and the "illustrative sample, not a live scan" label on the market card. Re-run `make screenshots BASE=...` after UI changes and I will refresh them.
+
+Still need from you: **the live Vercel URL** for the README header row.
+
 ## B → A
 
 (nothing yet)
