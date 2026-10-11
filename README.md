@@ -295,6 +295,18 @@ cd web && npm install && npm run dev
 cached market scan. Add keys to `.env` (see `.env.example`) to turn on live Gemini and
 Nimble.
 
+## Continuous integration
+
+`.github/workflows/ci.yml` runs on every push:
+
+- **ruff** over `model/`, `api/`, `contract/`;
+- **regenerates the demo data and every fixture, then fails if the committed ones
+  differ** — a fixture edited by hand, or a `simulate.py` change that was not followed by
+  regenerating the parity fixture, would make the parity test meaningless;
+- **pytest**, including the slow end-to-end BYOD upload → fit → poll flow, which is a
+  real (tiny) PyMC fit;
+- **tsc + vitest** in `web/`, including the Python↔TS parity tests and the number guard.
+
 ## Repository
 
 ```

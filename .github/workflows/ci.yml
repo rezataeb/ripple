@@ -1,0 +1,77 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  python:
+    name: ruff + pytest
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: uv.lock
+
+      - name: Install dependencies
+        run: uv sync --locked
+
+      - name: Lint
+        run: uv run ruff check model/ api/ contract/
+
+      - name: Generate the demo data
+        # the data is derived, not committed, so CI builds it the same way a
+        # contributor does — which also tests synth.py itself
+        run: uv run python -m ripple_model.synth
+
+      - name: Check the contract fixtures are up to date
+        # a fixture edited by hand, or a simulate.py change that was not followed
+        # by regenerating the fixture, would make the parity test meaningless
+        run: |
+          uv run python contract/make_fixture.py
+          uv run python contract/make_parity_fixture.py
+          uv run python model/scripts/make_demo_scan.py
+          git diff --exit-code -- contract/ web/public/model/market_scan.demo.json \
+            || { echo "::error::Fixtures are stale. Run 'make fixtures' and commit."; exit 1; }
+
+      - name: Tests
+        # includes the contract, data, parity, PSIS, launch-update and API suites,
+        # and the slow end-to-end BYOD fit (a real, tiny PyMC fit)
+        run: uv run pytest -p no:randomly
+
+  web:
+    name: vitest + tsc
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      - name: Install dependencies
+        working-directory: web
+        run: npm ci
+
+      - name: Types
+        working-directory: web
+        run: npx tsc --noEmit
+
+      - name: Tests
+        # simulate + update parity against contract/*.fixture.json, and the number guard
+        working-directory: web
+        run: npx vitest run
