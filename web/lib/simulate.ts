@@ -133,6 +133,29 @@ function selectIdx(all: string[], chosen?: string[]): number[] {
   return all.map((n, i) => (chosen.includes(n) ? i : -1)).filter((i) => i >= 0);
 }
 
+/** Scenario levers per horizon week, shared by simulate() and muGrid(). */
+function levers(posterior: Posterior, scenario: Scenario) {
+  const { meta } = posterior;
+  const base = meta.base_price;
+  const H = scenario.horizon;
+  const promoWeeks =
+    scenario.type === "promo" && meta.has_promo ? Math.min(scenario.weeks ?? 0, H) : 0;
+  const discount = scenario.type === "promo" && meta.has_promo ? (scenario.discount ?? 0) : 0;
+  const priceChange = scenario.type === "price" ? (scenario.price_change ?? 0) : 0;
+  return {
+    promoWeeks,
+    featureOn: scenario.feature ? 1 : 0,
+    scenPrice: (w: number) =>
+      scenario.type === "price"
+        ? base * (1 + priceChange)
+        : scenario.type === "promo" && w < promoWeeks
+          ? base * (1 - discount)
+          : base,
+    promoFlag: (w: number) => (w < promoWeeks ? 1 : 0),
+    promoLast: (w: number) => (promoWeeks > 0 && w === promoWeeks ? 1 : 0),
+  };
+}
+
 export function simulate(
   posterior: Posterior,
   scenario: Scenario,
@@ -156,19 +179,7 @@ export function simulate(
   const segSel = new Set(segIdx);
 
   // Scenario levers per horizon week.
-  const promoWeeks =
-    scenario.type === "promo" && meta.has_promo ? Math.min(scenario.weeks ?? 0, H) : 0;
-  const discount = scenario.type === "promo" && meta.has_promo ? (scenario.discount ?? 0) : 0;
-  const priceChange = scenario.type === "price" ? (scenario.price_change ?? 0) : 0;
-  const featureOn = scenario.feature ? 1 : 0;
-  const scenPrice = (w: number) =>
-    scenario.type === "price"
-      ? base * (1 + priceChange)
-      : scenario.type === "promo" && w < promoWeeks
-        ? base * (1 - discount)
-        : base;
-  const promoFlag = (w: number) => (w < promoWeeks ? 1 : 0);
-  const promoLast = (w: number) => (promoWeeks > 0 && w === promoWeeks ? 1 : 0);
+  const { promoWeeks, scenPrice, promoFlag, promoLast, featureOn } = levers(posterior, scenario);
 
   // New city definition.
   const cand = isNew ? candidates.find((c) => c.name === scenario.candidate) : undefined;
@@ -221,7 +232,8 @@ export function simulate(
       let bU = 0, bR = 0, bP = 0, xU = 0, xR = 0, xP = 0;
 
       // Existing business: baseline everywhere; scenario where selected.
-      for (let c = 0; c < C; c++) {
+      // A new city is reported on its own (baseline 0), as in simulate.py.
+      for (let c = 0; c < (isNew ? 0 : C); c++) {
         for (let s = 0; s < S; s++) {
           const common = {
             logShare: Math.log(meta.shares[c][s]),
@@ -265,7 +277,7 @@ export function simulate(
         }
       }
 
-      // New city adds volume on top of the unchanged existing business.
+      // New city: its volume is the whole scenario; its no-launch baseline is zero.
       if (isNew) {
         for (let s = 0; s < S; s++) {
           const units =
@@ -348,13 +360,24 @@ export function simulate(
     : [];
   const cityNames = isNew ? [scenario.candidate ?? "New city"] : meta.cities;
   const cities = cityNames
-    .map((city, i) => ({ city, incremental: cityAcc[i].summary() }))
-    .filter((_, i) => isNew || citySel.has(i));
+    .map((city, i) => ({ city, incremental: cityAcc[i].summary() }));
 
   const prices = posterior.history.price;
   const noPriceVariation = prices.length > 0 && Math.min(...prices) === Math.max(...prices);
   const warnings: string[] = [];
-  if (isNew && !cand && traitsRaw.length === 0) warnings.push("No city selected.");
+  if (isNew && outOfRange.length > 0) {
+    warnings.push(
+      `${cand?.name ?? scenario.candidate ?? "This city"} is outside the training range on ` +
+        `${outOfRange.join(", ")}. The forecast extrapolates; ` +
+        "treat the interval as a lower bound on the real uncertainty.",
+    );
+  }
+  if (noPriceVariation) {
+    warnings.push(
+      "Price never varied in the fitted data, so the elasticity is driven by the " +
+        "prior, not by evidence. Price scenarios are illustrative.",
+    );
+  }
 
   const now = typeof performance !== "undefined" ? performance.now() : Date.now();
   return {
@@ -384,4 +407,68 @@ export function simulate(
       net_price: isNew ? newPrice : scenPrice(0),
     },
   };
+}
+
+/**
+ * Cell-level mu for the parity test: flat [draw][week-in-`weeks`][cell], same cell order as
+ * simulate.py (city-major then segment; a new city's cells are its segments).
+ */
+export function muGrid(
+  posterior: Posterior,
+  scenario: Scenario,
+  weeks: number[],
+  z?: number[],
+): { baseline: number[]; scenario: number[]; cells: number } {
+  const { meta, draws, candidates } = posterior;
+  const D = meta.n_draws;
+  const S = meta.segments.length;
+  const base = meta.base_price;
+  const { scenPrice, promoFlag, promoLast, featureOn } = levers(posterior, scenario);
+  const cityIdx = selectIdx(meta.cities, scenario.cities);
+  const segIdx = selectIdx(meta.segments, scenario.segments);
+  const isNew = scenario.type === "new_city";
+  const cand = isNew ? candidates.find((c) => c.name === scenario.candidate) : undefined;
+  const zs = isNew ? (z ?? drawZ(scenario.seed ?? 7, D)) : [];
+  const cells: { c: number; s: number }[] = isNew
+    ? Array.from({ length: S }, (_, s) => ({ c: -1, s }))
+    : meta.cities.flatMap((_, c) => meta.segments.map((__, s) => ({ c, s })));
+  const outB: number[] = [];
+  const outS: number[] = [];
+  for (let d = 0; d < D; d++) {
+    const aNew = isNew
+      ? draws.g0[d] +
+        (cand?.traits_z ?? []).reduce((a, v, p) => a + v * draws.g[d][p], 0) +
+        draws.tau_city[d] * zs[d]
+      : 0;
+    for (const w of weeks) {
+      const row = seasonRow(meta.weeks + w, meta.season_period, meta.n_fourier);
+      const season = row.reduce((a, r, k) => a + r * draws.season[d][k], 0);
+      for (const { c, s } of cells) {
+        const common = {
+          logShare: Math.log(isNew ? (cand?.shares[s] ?? 0) : meta.shares[c][s]),
+          aCity: isNew ? aNew : draws.a_city[d][c],
+          aSeg: draws.a_seg[d][s],
+          elasticity: draws.e[d][s],
+          basePrice: base,
+          bPromo: draws.b_promo[d][s],
+          bFeature: draws.b_feature[d],
+          bDip: draws.b_dip[d],
+          season,
+        };
+        const treated = isNew || (cityIdx.includes(c) && segIdx.includes(s));
+        outB.push(isNew ? 0 : mu({ ...common, price: base, promo: 0, feature: 0, promoLastWeek: 0 }));
+        outS.push(
+          mu({
+            ...common,
+            price: treated ? (isNew ? (scenario.new_city_price ?? base) : scenPrice(w)) : base,
+            promo: treated && !isNew ? promoFlag(w) : 0,
+            feature: treated ? featureOn : 0,
+            promoLastWeek: treated && !isNew ? promoLast(w) : 0,
+            ...(isNew ? { bPromo: 0, bDip: 0 } : {}),
+          }),
+        );
+      }
+    }
+  }
+  return { baseline: outB, scenario: outS, cells: cells.length };
 }

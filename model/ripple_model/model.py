@@ -74,17 +74,21 @@ def build_model(d: ModelData) -> pm.Model:
         else:
             a_seg = pm.Deterministic("a_seg", pt.zeros(1), dims="segment")
 
-        # --- elasticity: partially pooled across segments (spec Section 3)
+        # --- elasticity: partially pooled across segments (spec Section 3).
+        # --- Non-centered: with only 4 segments, sampling e directly against its own
+        # --- scale makes a funnel, and that funnel was the source of the divergences.
         mu_e = pm.Normal("mu_e", mu=-1.5, sigma=0.5)
         sigma_e = pm.HalfNormal("sigma_e", sigma=0.5)
-        e = pm.Normal("e", mu=mu_e, sigma=sigma_e, dims="segment")
+        z_e = pm.Normal("z_e", 0.0, 1.0, dims="segment")
+        e = pm.Deterministic("e", mu_e + sigma_e * z_e, dims="segment")
 
         # --- promo deal signal: partially pooled, and the dip that stops us
         # --- overrating promotions by ignoring pull-forward
         if d.has_promo:
             mu_bp = pm.Normal("mu_promo", mu=0.2, sigma=0.3)
             sigma_bp = pm.HalfNormal("sigma_promo", sigma=0.3)
-            b_promo = pm.Normal("b_promo", mu=mu_bp, sigma=sigma_bp, dims="segment")
+            z_bp = pm.Normal("z_promo", 0.0, 1.0, dims="segment")
+            b_promo = pm.Deterministic("b_promo", mu_bp + sigma_bp * z_bp, dims="segment")
             b_dip = pm.Normal("b_dip", mu=0.0, sigma=0.2)
         else:
             b_promo = pm.Deterministic("b_promo", pt.zeros(d.n_segments), dims="segment")
@@ -114,7 +118,6 @@ def build_model(d: ModelData) -> pm.Model:
             + b_dip * promo_last
             + season_term
         )
-        pm.Deterministic("mu", pt.exp(log_mu), dims="obs")
         pm.NegativeBinomial("y", mu=pt.exp(log_mu), alpha=phi, observed=d.units, dims="obs")
 
     return model
@@ -146,10 +149,16 @@ def fit(
     tune: int = 1000,
     chains: int = 4,
     seed: int = SEED,
+    target_accept: float = 0.95,
     time_limit: float | None = None,
     progressbar: bool = False,
 ) -> FitResult:
     """Fit the model. nutpie if installed, else PyMC's own NUTS.
+
+    `target_accept` defaults to 0.95 rather than the usual 0.8: the city block
+    (tau_city with only 6 cities) and the two partially-pooled scale parameters
+    give the posterior a funnel, and at 0.8 the demo fit produced 28 divergences
+    out of 4000 draws. A smaller step size costs a few seconds and removes them.
 
     `time_limit` is the BYOD guard from spec Section 3: if NUTS would take longer
     than the budget we fall back to ADVI and label the run a fast approximation,
@@ -168,6 +177,7 @@ def fit(
                 cores=chains,
                 random_seed=seed,
                 nuts_sampler=sampler,
+                nuts={"target_accept": target_accept},
                 progressbar=progressbar,
                 compute_convergence_checks=False,
                 idata_kwargs={"log_likelihood": False},
@@ -179,7 +189,10 @@ def fit(
         divergences = _count_divergences(idata)
         return FitResult(
             idata=idata,
-            method=f"{sampler} NUTS, {chains} chains x {draws} draws",
+            method=(
+                f"{sampler} NUTS, {chains} chains x {draws} draws, "
+                f"target_accept {target_accept}"
+            ),
             fast_approximation=False,
             seconds=seconds,
             chains=chains,
