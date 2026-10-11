@@ -38,6 +38,8 @@ export interface PosteriorDraws {
   b_dip: number[];
   season: number[][];
   phi: number[];
+  /** [D] exported standard-normal draws for new-city scenarios; rotated by scenario.seed. */
+  z_new?: number[];
 }
 
 export interface PosteriorHistory {

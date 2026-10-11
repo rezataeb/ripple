@@ -75,6 +75,19 @@ export function drawZ(seed: number, n: number): number[] {
   return out;
 }
 
+/**
+ * z draws for a new city. The export carries them (numpy's RNG is not reproducible here):
+ * z[d] = z_new[(d + seed) mod D]. Falls back to a local PRNG only for exports without z_new.
+ */
+export function newCityZ(draws: { z_new?: number[] }, seed: number, n: number): number[] {
+  const zn = draws.z_new;
+  if (zn && zn.length === n) {
+    const shift = ((seed % n) + n) % n;
+    return Array.from({ length: n }, (_, d) => zn[(d + shift) % n]);
+  }
+  return drawZ(seed, n);
+}
+
 /** Linear-interpolation quantile of an ascending-sorted array (numpy default). */
 export function quantileSorted(sorted: ArrayLike<number>, q: number): number {
   const n = sorted.length;
@@ -201,7 +214,7 @@ export function simulate(
   const newShares = isNew ? (scenario.new_city_shares ?? cand?.shares ?? trainingMix) : [];
   const newPrice = scenario.new_city_price ?? base;
   const marketSize = scenario.market_size ?? 1;
-  const zDraws = isNew ? (opts.z ?? drawZ(seed, D)) : [];
+  const zDraws = isNew ? (opts.z ?? newCityZ(draws, seed, D)) : [];
 
   const logShares = new Float64Array(C * S);
   for (let c = 0; c < C; c++) for (let s = 0; s < S; s++) logShares[c * S + s] = Math.log(meta.shares[c][s]);
@@ -436,7 +449,7 @@ export function muGrid(
   const segIdx = selectIdx(meta.segments, scenario.segments);
   const isNew = scenario.type === "new_city";
   const cand = isNew ? candidates.find((c) => c.name === scenario.candidate) : undefined;
-  const zs = isNew ? (z ?? drawZ(scenario.seed ?? 7, D)) : [];
+  const zs = isNew ? (z ?? newCityZ(draws, scenario.seed ?? 7, D)) : [];
   const cells: { c: number; s: number }[] = isNew
     ? Array.from({ length: S }, (_, s) => ({ c: -1, s }))
     : meta.cities.flatMap((_, c) => meta.segments.map((__, s) => ({ c, s })));

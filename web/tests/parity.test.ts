@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { muGrid, seasonRow, simulate } from "@/lib/simulate";
+import { muGrid, newCityZ, simulate } from "@/lib/simulate";
 import type { Posterior, Scenario } from "@/lib/types";
 
 const root = path.resolve(__dirname, "../..");
@@ -43,31 +43,6 @@ function diff(got: unknown, want: unknown, tol: number, at: string, ignore: Set<
   }
 }
 
-/**
- * numpy's default_rng(seed).standard_normal is not reproducible in the browser, so the
- * new-city case needs the z draws. Use `case.z` if the fixture has it; otherwise back
- * them out of the recorded scenario mu (week 0, first cell) and sanity-check they look
- * N(0,1). Everything downstream of z is still compared field by field.
- */
-function zFor(c: ParityCase): number[] | undefined {
-  if (c.scenario.type !== "new_city") return undefined;
-  if (c.z) return c.z;
-  const { meta, draws, candidates } = posterior;
-  const cand = candidates.find((x) => x.name === c.scenario.candidate)!;
-  const [D, W, K] = c.mu.shape;
-  const t = c.mu.t[0];
-  const row = seasonRow(t, meta.season_period, meta.n_fourier);
-  const z: number[] = [];
-  for (let d = 0; d < D; d++) {
-    const logMu = Math.log(c.mu.scenario_flat[d * W * K]);
-    const season = row.reduce((a, r, k) => a + r * draws.season[d][k], 0);
-    const aNew = logMu - Math.log(cand.shares[0]) - draws.a_seg[d][0] - season;
-    const traitPart = cand.traits_z.reduce((a, v, p) => a + v * draws.g[d][p], 0);
-    z.push((aNew - draws.g0[d] - traitPart) / draws.tau_city[d]);
-  }
-  return z;
-}
-
 describe("served fixture", () => {
   it("web/public/model/posterior.fixture.json equals contract/posterior.fixture.json (npm run sync:contract)", () => {
     const served = path.join(__dirname, "../public/model/posterior.fixture.json");
@@ -81,20 +56,16 @@ describe.runIf(existsSync(fixturePath))("Python ↔ TS parity (contract/parity.f
   const file = JSON.parse(readFileSync(fixturePath, "utf8")) as ParityFile;
   const ignore = new Set(file.ignore_fields);
 
-  it("recovered new-city z draws look standard normal", () => {
-    const c = file.cases.find((x) => x.scenario.type === "new_city");
-    if (!c) return;
-    const z = zFor(c)!;
-    const m = z.reduce((a, b) => a + b, 0) / z.length;
-    const sd = Math.sqrt(z.reduce((a, b) => a + (b - m) ** 2, 0) / z.length);
-    expect(Math.abs(m)).toBeLessThan(0.5);
-    expect(sd).toBeGreaterThan(0.6);
-    expect(sd).toBeLessThan(1.5);
+  it("new-city z is derived from draws.z_new exactly as the fixture's z", () => {
+    for (const c of file.cases.filter((x) => x.scenario.type === "new_city")) {
+      expect(c.z, `${c.name} must carry z`).toBeDefined();
+      expect(newCityZ(posterior.draws, c.scenario.seed ?? 7, posterior.meta.n_draws)).toEqual(c.z);
+    }
   });
 
   for (const c of file.cases) {
     it(`${c.name}: cell-level mu within ${file.tolerance.mu}`, () => {
-      const g = muGrid(posterior, c.scenario, c.mu.weeks, zFor(c));
+      const g = muGrid(posterior, c.scenario, c.mu.weeks);
       expect(g.scenario).toHaveLength(c.mu.scenario_flat.length);
       const out: string[] = [];
       diff(g.baseline, c.mu.baseline_flat, file.tolerance.mu, "baseline", ignore, out);
@@ -103,7 +74,7 @@ describe.runIf(existsSync(fixturePath))("Python ↔ TS parity (contract/parity.f
     });
 
     it(`${c.name}: every result field within tolerance`, () => {
-      const got = simulate(posterior, c.scenario, { z: zFor(c) });
+      const got = simulate(posterior, c.scenario);
       const out: string[] = [];
       diff(got, c.expected, file.tolerance.summary, "", ignore, out);
       expect(out.slice(0, 15)).toEqual([]);
