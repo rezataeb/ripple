@@ -5,8 +5,7 @@ learns from real data, and a market-aware AI agent.
 
 <!-- TODO(Reza): assets/demo.gif, live Vercel link, assets/demo.mp4 -->
 
-> Built in 3 hours at the **Ripple** hackathon, 2026-10-11.
-> *(Placeholder name — replace with the official hackathon name.)*
+> Built in 3 hours at the **AI Engineer Hackathon NYC**, 2026-10-11.
 
 ---
 
@@ -318,6 +317,9 @@ docs/method/  model card, checks, limits — RAG source and the source of this R
 ```
 
 ## AI tools used
+
+All code in this repository was written during the AI Engineer Hackathon NYC on 2026-10-11. No code was
+carried over from earlier projects.
 
 - **Claude Code** (Claude Opus 5) — wrote all the code during the event, in two parallel
   sessions: one on `contract/` + `model/` + `api/`, one on `web/`.

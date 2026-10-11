@@ -203,10 +203,10 @@ ripple/
 5. **Agent design:** tools table; "numbers only from tools" + number guard; Nimble as cited context; prompt-injection guard.
 6. **Use your own data:** CSV format, privacy, run with Docker.
 7. Design decisions and limits (synthetic demo; no competitor reaction in the model; stable effects; extrapolation).
-8. Quickstart. **AI tools used** (Claude Code, Gemini). Built at the Ripple hackathon (replace with the official hackathon name if Reza gives one), 2026-10-11. Roadmap. MIT.
+8. Quickstart. **AI tools used** (Claude Code, Gemini). Built at the AI Engineer Hackathon NYC, 2026-10-11. Roadmap. MIT.
 
 ## 14. Demo video with no manual recording (≈ 100 s)
-Playwright (1440×900, video on): home → preset "Student coupon in Boston" → drag discount 10% → 30% (numbers and bands move) → `/launch` "Austin launch": drag the week slider 0 → 8 (band narrows, "chance it pays" updates, prior → posterior animates, truth line) → ⌘K "Is Miami a good next city?" (steps, verdict, extrapolation warning, market sources) → `/data` with the sample CSV (mapping, validation, trust cards) → `/method`. TTS narration, **line 1: "Hi, I'm Reza, and this is Ripple, my project for <OFFICIAL HACKATHON NAME — ask Reza; placeholder: Ripple>."** `ffmpeg` → `assets/demo.mp4` + 15 s `assets/demo.gif`.
+Playwright (1440×900, video on): home → preset "Student coupon in Boston" → drag discount 10% → 30% (numbers and bands move) → `/launch` "Austin launch": drag the week slider 0 → 8 (band narrows, "chance it pays" updates, prior → posterior animates, truth line) → ⌘K "Is Miami a good next city?" (steps, verdict, extrapolation warning, market sources) → `/data` with the sample CSV (mapping, validation, trust cards) → `/method`. TTS narration, **line 1: "Hi, I'm Reza, and this is Ripple, my project for the AI Engineer Hackathon NYC."** `ffmpeg` → `assets/demo.mp4` + 15 s `assets/demo.gif`.
 
 ## 15. Rules for the coding agent
 - Fixed seeds. Never show a number without its interval.

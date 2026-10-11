@@ -1,0 +1,45 @@
+# Demo narration — AI Engineer Hackathon NYC, 2026-10-11
+# Target: under 100 seconds. Line 1 names the hackathon, which is a submission rule.
+# One line per scene; scene cues in [brackets] are for the Playwright script, not spoken.
+
+[home]
+Hi, I'm Reza, and this is Ripple, my project for the AI Engineer Hackathon NYC.
+
+[home — verdict + fan chart visible]
+Ripple answers "what happens to sales if" with a distribution, never a single number.
+
+[home — preset "Student coupon in Boston"]
+A twenty percent student coupon in Boston: incremental profit, a ninety percent interval, and the chance it pays.
+
+[home — drag discount 10% to 30%]
+Drag the discount and everything moves at once, because the whole posterior is in the browser.
+
+[home — point at the dip after the promo weeks]
+Notice the dip after the promotion. A promo borrows sales from next week, and the model charges it back.
+
+[/launch — Austin launch, slider at 0]
+Then reality arrives. Here is the Austin launch before any data.
+
+[/launch — drag the week slider 0 to 8]
+Each real week updates the forecast with Bayes' rule. The band narrows, and the chance it pays updates.
+
+[/launch — truth toggle on]
+The data was generated with a known answer, so I can show you the truth. It stays inside the interval the whole way.
+
+[/launch — gate badge]
+And when the launch is too surprising for the fast update, this badge says "refit needed" instead of pretending.
+
+[cmd-K — "Is Miami a good next city?"]
+The agent turns the question into a scenario, runs the model, and checks the live market.
+
+[Ask panel — extrapolation warning + market sources]
+Miami is outside the training range, and Ripple says so. Every number comes from a tool, with sources.
+
+[/method — recovery + calibration charts]
+Thirty of thirty planted values recovered. Six of six trust checks pass.
+
+[/method — stress arm on the calibration chart]
+And two hundred simulated launches say the intervals are honest, including the one case where they are not.
+
+[end]
+The model makes the numbers. The agent explains them. The web gives context. Thanks for watching.

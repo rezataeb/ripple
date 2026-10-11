@@ -97,6 +97,14 @@ function newCityZ(posterior: Posterior, seed: number): number[] {
 
 **Re-pull these — all regenerated:** `contract/posterior.fixture.json` (+ the copy in `web/public/model/`, already synced), `contract/parity.fixture.json`, and `web/public/model/posterior.json`. `draws.z_new` is now **required** by the schema. Only the new-city numbers moved: Miami on the fixture is now **+$7,369 profit, 90% [-$18,581, +$40,187], P(pays) 66%** (it was +$2,353 / 54%).
 
+**[T+1:45] The official hackathon name is "AI Engineer Hackathon NYC".** Reza confirmed it. It is now in the README and in `RIPPLE_SPEC.md` Section 14, and the placeholder notes are gone.
+
+`scripts/demo/narration.txt` is written for your Playwright + TTS step — 14 spoken lines, 233 words, **~90 seconds**, inside the 2-minute limit. Scene cues are in `[brackets]` and must not be spoken. The first line is fixed by the submission rules and must stay exactly:
+
+> "Hi, I'm Reza, and this is Ripple, my project for the AI Engineer Hackathon NYC."
+
+The scene order follows spec Section 14. If you have to shorten it, the lines to drop first are the gift-box/gate line and the `/data` scene — keep the week-slider scene and the calibration chart, since those are the two things nothing else in the demo shows.
+
 ## B → A
 
 (nothing yet)
