@@ -138,6 +138,7 @@
   font-variant-numeric: tabular-nums;
   font-size: var(--text-5xl);
   font-weight: 600;
+  letter-spacing: -0.04em;
   line-height: 1.1;
 }
 

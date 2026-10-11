@@ -1,47 +1,47 @@
 {
- "generated_at": "2026-10-11T17:44:56+00:00",
- "method": "nutpie NUTS, 4 chains x 1000 draws, target_accept 0.95",
+ "generated_at": "2026-10-11T17:56:06+00:00",
+ "method": "nutpie NUTS, 4 chains x 1000 draws, target_accept 0.99",
  "dataset_name": "Demo \u00b7 Brightside Coffee Subscriptions",
  "summary": {
-  "passed": 4,
+  "passed": 6,
   "total": 6,
-  "headline": "4 of 6 checks passed"
+  "headline": "6 of 6 checks passed"
  },
  "checks": [
   {
    "name": "R-hat",
    "group": "convergence",
-   "passed": false,
-   "value": 1.0101,
+   "passed": true,
+   "value": 1.01,
    "threshold": 1.01,
    "comparison": "lte",
-   "plain_english": "The chains do not fully agree, so these numbers are not settled yet.",
-   "detail": "worst parameter: tau_city (R-hat 1.0101)"
+   "plain_english": "The independent chains agree with each other, so the sampler found one answer rather than several.",
+   "detail": "worst parameter: tau_city (R-hat 1.0100)"
   },
   {
    "name": "Effective sample size",
    "group": "convergence",
    "passed": true,
-   "value": 625.0,
+   "value": 612.0,
    "threshold": 400.0,
    "comparison": "gte",
    "plain_english": "There are enough independent draws for the intervals to be stable.",
-   "detail": "smallest for tau_city (625 draws)"
+   "detail": "smallest for tau_city (612 draws)"
   },
   {
    "name": "Divergences",
    "group": "convergence",
-   "passed": false,
-   "value": 4,
+   "passed": true,
+   "value": 0,
    "threshold": 0,
    "comparison": "lte",
-   "plain_english": "4 draws got stuck in a difficult part of the posterior. The fit is usable but the tails may be understated."
+   "plain_english": "The sampler explored the whole posterior without getting stuck."
   },
   {
    "name": "Posterior predictive coverage",
    "group": "fit",
    "passed": true,
-   "value": 0.9083,
+   "value": 0.9095,
    "threshold": 0.85,
    "comparison": "gte",
    "plain_english": "91% of the weeks the model was fitted on fall inside its own 90% range, so the spread of the predictions matches the spread of reality."
@@ -60,84 +60,84 @@
    "name": "Time holdout",
    "group": "holdout",
    "passed": true,
-   "value": 0.9271,
+   "value": 0.9236,
    "threshold": 0.8,
    "comparison": "gte",
-   "plain_english": "The last 12 weeks were hidden from the fit. 93% of them landed inside the 90% range, and the average error was 18% against 45% for a same-week-last-year guess.",
+   "plain_english": "The last 12 weeks were hidden from the fit. 92% of them landed inside the 90% range, and the average error was 18% against 45% for a same-week-last-year guess.",
    "detail": "MAPE 18.4% vs. naive 44.7%"
   }
  ],
  "convergence": {
-  "max_rhat": 1.0101,
-  "min_ess": 625.1,
-  "divergences": 4,
+  "max_rhat": 1.01,
+  "min_ess": 611.8,
+  "divergences": 0,
   "worst_param": "tau_city",
   "n_chains": 4,
   "n_draws_per_chain": 1000,
-  "sampling_seconds": 161.6
+  "sampling_seconds": 336.2
  },
  "model_facts": {
   "elasticity_by_segment": [
    {
     "segment": "families",
-    "mean": -1.1444820926430048,
-    "p05": -1.3980336665645694,
-    "p95": -0.895906825139802
+    "mean": -1.1451331628583052,
+    "p05": -1.4143977754251937,
+    "p95": -0.8824401258910217
    },
    {
     "segment": "retirees",
-    "mean": -0.758288091811818,
-    "p05": -1.0210377661623933,
-    "p95": -0.5004176902411369
+    "mean": -0.7609785176840823,
+    "p05": -1.0230973921237325,
+    "p95": -0.5023746405716872
    },
    {
     "segment": "students",
-    "mean": -2.2459409016566787,
-    "p05": -2.497634064472745,
-    "p95": -1.9844463027768333
+    "mean": -2.2475153630725964,
+    "p05": -2.5088216986794043,
+    "p95": -1.980432477169846
    },
    {
     "segment": "young professionals",
-    "mean": -1.600316877113698,
-    "p05": -1.8485086395100205,
-    "p95": -1.3500157894542535
+    "mean": -1.6004972150878503,
+    "p05": -1.852977258093384,
+    "p95": -1.3501211208375585
    }
   ],
   "promo_lift_by_segment": [
    {
     "segment": "families",
-    "mean": 0.19700488753022483,
-    "p05": 0.12193651836605618,
-    "p95": 0.27180314134332
+    "mean": 0.1977942993526786,
+    "p05": 0.12215197584275568,
+    "p95": 0.272934449554765
    },
    {
     "segment": "retirees",
-    "mean": 0.062138740478888184,
-    "p05": -0.01617541271648512,
-    "p95": 0.14018893698080154
+    "mean": 0.061640861887639474,
+    "p05": -0.017690780673722987,
+    "p95": 0.13995428510536498
    },
    {
     "segment": "students",
-    "mean": 0.3882199315492142,
-    "p05": 0.3117904113985101,
-    "p95": 0.4656940801920854
+    "mean": 0.38775003139540215,
+    "p05": 0.3113599393650175,
+    "p95": 0.4652713612767166
    },
    {
     "segment": "young professionals",
-    "mean": 0.2963478107655493,
-    "p05": 0.22419497688058698,
-    "p95": 0.36992348467774955
+    "mean": 0.29562786678402686,
+    "p05": 0.22210467249209573,
+    "p95": 0.3713223566661417
    }
   ],
   "post_promo_dip": {
-   "mean": -0.16455085576300252,
-   "p05": -0.1870757890503762,
-   "p95": -0.14248826073330104
+   "mean": -0.16443411609447295,
+   "p05": -0.18551012160863123,
+   "p95": -0.1434339534797257
   },
   "feature_lift": {
-   "mean": 0.0939418933035095,
-   "p05": 0.07565894851237748,
-   "p95": 0.11262889397831688
+   "mean": 0.09419754663082912,
+   "p05": 0.07595560529652715,
+   "p95": 0.11231675389641224
   }
  },
  "limits": [
@@ -151,277 +151,277 @@
    "param": "e[families]",
    "label": "Price elasticity \u00b7 families",
    "truth": -1.1,
-   "posterior_mean": -1.1444820926430048,
-   "hdi_low": -1.4349145245285124,
-   "hdi_high": -0.8597133545428041,
+   "posterior_mean": -1.1451331628583052,
+   "hdi_low": -1.4568400642877033,
+   "hdi_high": -0.8583979316368279,
    "inside": true
   },
   {
    "param": "b_promo[families]",
    "label": "Promo lift \u00b7 families",
    "truth": 0.22,
-   "posterior_mean": 0.19700488753022483,
-   "hdi_low": 0.11050649584926327,
-   "hdi_high": 0.2820269025943399,
+   "posterior_mean": 0.1977942993526786,
+   "hdi_low": 0.11516660373390407,
+   "hdi_high": 0.2859255540586068,
    "inside": true
   },
   {
    "param": "a_seg[families]",
    "label": "Segment level \u00b7 families",
    "truth": 0.125,
-   "posterior_mean": 0.12092233852243663,
-   "hdi_low": 0.10428083466229002,
-   "hdi_high": 0.1375856676131661,
+   "posterior_mean": 0.12067024724724794,
+   "hdi_low": 0.10511323974021969,
+   "hdi_high": 0.13792275624589762,
    "inside": true
   },
   {
    "param": "e[retirees]",
    "label": "Price elasticity \u00b7 retirees",
    "truth": -0.8,
-   "posterior_mean": -0.758288091811818,
-   "hdi_low": -1.065628915535959,
-   "hdi_high": -0.47548264191173284,
+   "posterior_mean": -0.7609785176840823,
+   "hdi_low": -1.063562831120546,
+   "hdi_high": -0.47376938298639126,
    "inside": true
   },
   {
    "param": "b_promo[retirees]",
    "label": "Promo lift \u00b7 retirees",
    "truth": 0.1,
-   "posterior_mean": 0.062138740478888184,
-   "hdi_low": -0.02282696602124255,
-   "hdi_high": 0.15302951949834162,
+   "posterior_mean": 0.061640861887639474,
+   "hdi_low": -0.027738537256793577,
+   "hdi_high": 0.15211057654173127,
    "inside": true
   },
   {
    "param": "a_seg[retirees]",
    "label": "Segment level \u00b7 retirees",
    "truth": -0.225,
-   "posterior_mean": -0.21056218525877812,
-   "hdi_low": -0.2267898918651876,
-   "hdi_high": -0.19294190028697758,
+   "posterior_mean": -0.21059847704253926,
+   "hdi_low": -0.228454843470907,
+   "hdi_high": -0.19365509784521573,
    "inside": true
   },
   {
    "param": "e[students]",
    "label": "Price elasticity \u00b7 students",
    "truth": -2.2,
-   "posterior_mean": -2.2459409016566787,
-   "hdi_low": -2.529607534970482,
-   "hdi_high": -1.9534877979326335,
+   "posterior_mean": -2.2475153630725964,
+   "hdi_low": -2.544600578204608,
+   "hdi_high": -1.9518535161182757,
    "inside": true
   },
   {
    "param": "b_promo[students]",
    "label": "Promo lift \u00b7 students",
    "truth": 0.42,
-   "posterior_mean": 0.3882199315492142,
-   "hdi_low": 0.3008700173703913,
-   "hdi_high": 0.47629246993813795,
+   "posterior_mean": 0.38775003139540215,
+   "hdi_low": 0.30281730579794774,
+   "hdi_high": 0.48003142013534894,
    "inside": true
   },
   {
    "param": "a_seg[students]",
    "label": "Segment level \u00b7 students",
    "truth": -0.125,
-   "posterior_mean": -0.12657321973804625,
-   "hdi_low": -0.143098869954606,
-   "hdi_high": -0.10947941303667116,
+   "posterior_mean": -0.12654741073099535,
+   "hdi_low": -0.1434995924638402,
+   "hdi_high": -0.10985172623841508,
    "inside": true
   },
   {
    "param": "e[young professionals]",
    "label": "Price elasticity \u00b7 young professionals",
    "truth": -1.6,
-   "posterior_mean": -1.600316877113698,
-   "hdi_low": -1.8781163933640894,
-   "hdi_high": -1.3091427124477086,
+   "posterior_mean": -1.6004972150878503,
+   "hdi_low": -1.8882482602128325,
+   "hdi_high": -1.3153008721967792,
    "inside": true
   },
   {
    "param": "b_promo[young professionals]",
    "label": "Promo lift \u00b7 young professionals",
    "truth": 0.3,
-   "posterior_mean": 0.2963478107655493,
-   "hdi_low": 0.21267482472757168,
-   "hdi_high": 0.3791086046168889,
+   "posterior_mean": 0.29562786678402686,
+   "hdi_low": 0.2110412109560125,
+   "hdi_high": 0.3799811870594437,
    "inside": true
   },
   {
    "param": "a_seg[young professionals]",
    "label": "Segment level \u00b7 young professionals",
    "truth": 0.225,
-   "posterior_mean": 0.21621306647438773,
-   "hdi_low": 0.20022071737963912,
-   "hdi_high": 0.23353172904196978,
+   "posterior_mean": 0.2164756405262867,
+   "hdi_low": 0.1995008652523917,
+   "hdi_high": 0.23258980002966245,
    "inside": true
   },
   {
    "param": "a_city[Atlanta]",
    "label": "City effect \u00b7 Atlanta",
    "truth": 6.0474088371,
-   "posterior_mean": 6.028614277175413,
-   "hdi_low": 6.005203109145428,
-   "hdi_high": 6.0507830448647315,
+   "posterior_mean": 6.028704280875627,
+   "hdi_low": 6.008406973573663,
+   "hdi_high": 6.053452194300678,
    "inside": true
   },
   {
    "param": "a_city[Boston]",
    "label": "City effect \u00b7 Boston",
    "truth": 6.7705112734,
-   "posterior_mean": 6.768091314185767,
-   "hdi_low": 6.745582915467339,
-   "hdi_high": 6.79014938885709,
+   "posterior_mean": 6.76766510188109,
+   "hdi_low": 6.74620946803406,
+   "hdi_high": 6.79041184957075,
    "inside": true
   },
   {
    "param": "a_city[Chicago]",
    "label": "City effect \u00b7 Chicago",
    "truth": 6.5514812143,
-   "posterior_mean": 6.564685368438463,
-   "hdi_low": 6.539197126624197,
-   "hdi_high": 6.591006236011729,
+   "posterior_mean": 6.5650157928921855,
+   "hdi_low": 6.537922899431877,
+   "hdi_high": 6.589821405873557,
    "inside": true
   },
   {
    "param": "a_city[Denver]",
    "label": "City effect \u00b7 Denver",
    "truth": 6.0944485161,
-   "posterior_mean": 6.079380542988505,
-   "hdi_low": 6.055755428272227,
-   "hdi_high": 6.10219650835679,
+   "posterior_mean": 6.078813450806901,
+   "hdi_low": 6.056670606167414,
+   "hdi_high": 6.103766217910727,
    "inside": true
   },
   {
    "param": "a_city[New York]",
    "label": "City effect \u00b7 New York",
    "truth": 7.4905353417,
-   "posterior_mean": 7.481684271067568,
-   "hdi_low": 7.460286598154734,
-   "hdi_high": 7.5038227442678584,
+   "posterior_mean": 7.481681298881194,
+   "hdi_low": 7.459532025379757,
+   "hdi_high": 7.503339106171477,
    "inside": true
   },
   {
    "param": "a_city[Seattle]",
    "label": "City effect \u00b7 Seattle",
    "truth": 6.6049700828,
-   "posterior_mean": 6.605912220764555,
-   "hdi_low": 6.584134059556776,
-   "hdi_high": 6.628374372091548,
+   "posterior_mean": 6.605612174882648,
+   "hdi_low": 6.58409256853521,
+   "hdi_high": 6.628755345067687,
    "inside": true
   },
   {
    "param": "g[log_population]",
    "label": "Trait coefficient \u00b7 log_population",
    "truth": 0.55,
-   "posterior_mean": 0.5437102852145427,
-   "hdi_low": 0.3843133360273525,
-   "hdi_high": 0.6772840343026124,
+   "posterior_mean": 0.5413241046082683,
+   "hdi_low": 0.37621250183837096,
+   "hdi_high": 0.6895372336533051,
    "inside": true
   },
   {
    "param": "g[median_income_k]",
    "label": "Trait coefficient \u00b7 median_income_k",
    "truth": 0.18,
-   "posterior_mean": 0.10405052669192724,
-   "hdi_low": -0.04484237733067395,
-   "hdi_high": 0.2414736929706807,
+   "posterior_mean": 0.10278559029748788,
+   "hdi_low": -0.05527249262228484,
+   "hdi_high": 0.2458511284965146,
    "inside": true
   },
   {
    "param": "g[share_age_18_34]",
    "label": "Trait coefficient \u00b7 share_age_18_34",
    "truth": 0.3,
-   "posterior_mean": 0.24874122086276243,
-   "hdi_low": 0.10255674883609178,
-   "hdi_high": 0.38125558889614763,
+   "posterior_mean": 0.2486428246655873,
+   "hdi_low": 0.07901737097121989,
+   "hdi_high": 0.4047782265448857,
    "inside": true
   },
   {
    "param": "g0",
    "label": "Global level",
    "truth": 6.6,
-   "posterior_mean": 6.586179346364366,
-   "hdi_low": 6.457423813277926,
-   "hdi_high": 6.715619513029806,
+   "posterior_mean": 6.589210159763721,
+   "hdi_low": 6.458008117270076,
+   "hdi_high": 6.722280895572591,
    "inside": true
   },
   {
    "param": "tau_city",
    "label": "City-to-city spread",
    "truth": 0.16,
-   "posterior_mean": 0.13226636364134145,
-   "hdi_low": 0.025911274215230966,
-   "hdi_high": 0.30656923116586404,
+   "posterior_mean": 0.14216362248602302,
+   "hdi_low": 0.0273794200710329,
+   "hdi_high": 0.3362839224714195,
    "inside": true
   },
   {
    "param": "phi",
    "label": "Overdispersion",
    "truth": 22.0,
-   "posterior_mean": 21.907621915518597,
-   "hdi_low": 20.69409166099803,
-   "hdi_high": 23.248674157253287,
+   "posterior_mean": 21.924038309231396,
+   "hdi_low": 20.54944526037044,
+   "hdi_high": 23.21603508456567,
    "inside": true
   },
   {
    "param": "b_dip",
    "label": "Post-promo dip",
    "truth": -0.18,
-   "posterior_mean": -0.16455085576300252,
-   "hdi_low": -0.19074601287012238,
-   "hdi_high": -0.1397418483954221,
+   "posterior_mean": -0.16443411609447295,
+   "hdi_low": -0.18864786821506635,
+   "hdi_high": -0.14169898633144434,
    "inside": true
   },
   {
    "param": "b_feature",
    "label": "Feature lift",
    "truth": 0.08,
-   "posterior_mean": 0.0939418933035095,
-   "hdi_low": 0.07207633145903389,
-   "hdi_high": 0.11512518488895292,
+   "posterior_mean": 0.09419754663082912,
+   "hdi_low": 0.07236268506229977,
+   "hdi_high": 0.11409855211323577,
    "inside": true
   },
   {
    "param": "season[0]",
    "label": "Seasonality term 1",
    "truth": 0.12,
-   "posterior_mean": 0.1242406935325406,
-   "hdi_low": 0.1123442330841717,
-   "hdi_high": 0.13691240046363815,
+   "posterior_mean": 0.12432676937422911,
+   "hdi_low": 0.11185521820443751,
+   "hdi_high": 0.13602136826409258,
    "inside": true
   },
   {
    "param": "season[1]",
    "label": "Seasonality term 2",
    "truth": -0.07,
-   "posterior_mean": -0.06412503790547211,
-   "hdi_low": -0.07628006054401498,
-   "hdi_high": -0.052210237918586276,
+   "posterior_mean": -0.06404674005851228,
+   "hdi_low": -0.0766982738038021,
+   "hdi_high": -0.052240210037728316,
    "inside": true
   },
   {
    "param": "season[2]",
    "label": "Seasonality term 3",
    "truth": 0.04,
-   "posterior_mean": 0.029416167642932495,
-   "hdi_low": 0.01724413542480243,
-   "hdi_high": 0.04199362110003457,
+   "posterior_mean": 0.029510576708579022,
+   "hdi_low": 0.017619122195240637,
+   "hdi_high": 0.04130588132072757,
    "inside": true
   },
   {
    "param": "season[3]",
    "label": "Seasonality term 4",
    "truth": 0.02,
-   "posterior_mean": 0.020213862790480056,
-   "hdi_low": 0.008293501842154917,
-   "hdi_high": 0.031373641723072956,
+   "posterior_mean": 0.020340902273436108,
+   "hdi_low": 0.008570431690696401,
+   "hdi_high": 0.03239878994743087,
    "inside": true
   }
  ],
  "holdout": {
   "weeks_held_out": 12,
-  "coverage_90": 0.9271,
-  "mape_model": 0.1843,
+  "coverage_90": 0.9236,
+  "mape_model": 0.1844,
   "mape_naive": 0.4468,
   "beats_naive": true
  }

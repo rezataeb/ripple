@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useDeferredValue, useEffect, useMemo, useState } from "react";
 import { ScenarioControls, presetsFor } from "@/components/scenario-controls";
 import { Topbar } from "@/components/topbar";
 import { Verdict } from "@/components/verdict";
 import { FanChart } from "@/components/fan-chart";
+import { IncrementalChart } from "@/components/incremental-chart";
 import { SegmentBars } from "@/components/segment-bars";
 import { Warnings } from "@/components/extrapolation-banner";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -17,9 +18,11 @@ export default function Simulator() {
   const [source, setSource] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [scenario, setScenario] = useState<Scenario | null>(null);
+  // Deferred so slider thumbs stay responsive while 1000 draws are re-simulated.
+  const deferred = useDeferredValue(scenario);
   const result: ScenarioResult | null = useMemo(
-    () => (posterior && scenario ? simulate(posterior, scenario) : null),
-    [posterior, scenario],
+    () => (posterior && deferred ? simulate(posterior, deferred) : null),
+    [posterior, deferred],
   );
 
   useEffect(() => {
@@ -58,6 +61,7 @@ export default function Simulator() {
               <Warnings result={result} />
               <Verdict result={result} />
               <FanChart posterior={posterior} result={result} />
+              <IncrementalChart result={result} />
               <SegmentBars result={result} />
               <p className="text-xs text-muted-foreground">
                 {posterior.meta.method} · {posterior.meta.n_draws} draws · seed {posterior.meta.seed}

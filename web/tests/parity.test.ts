@@ -68,6 +68,15 @@ function zFor(c: ParityCase): number[] | undefined {
   return z;
 }
 
+describe("served fixture", () => {
+  it("web/public/model/posterior.fixture.json equals contract/posterior.fixture.json (npm run sync:contract)", () => {
+    const served = path.join(__dirname, "../public/model/posterior.fixture.json");
+    expect(readFileSync(served, "utf8")).toBe(
+      readFileSync(path.join(root, "contract/posterior.fixture.json"), "utf8"),
+    );
+  });
+});
+
 describe.runIf(existsSync(fixturePath))("Python ↔ TS parity (contract/parity.fixture.json)", () => {
   const file = JSON.parse(readFileSync(fixturePath, "utf8")) as ParityFile;
   const ignore = new Set(file.ignore_fields);

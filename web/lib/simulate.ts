@@ -203,6 +203,14 @@ export function simulate(
   const marketSize = scenario.market_size ?? 1;
   const zDraws = isNew ? (opts.z ?? drawZ(seed, D)) : [];
 
+  const logShares = new Float64Array(C * S);
+  for (let c = 0; c < C; c++) for (let s = 0; s < S; s++) logShares[c * S + s] = Math.log(meta.shares[c][s]);
+  const rows = Array.from({ length: H }, (_, w) => seasonRow(meta.weeks + w, meta.season_period, meta.n_fourier));
+  const pW = Array.from({ length: H }, (_, w) => scenPrice(w));
+  const lpW = pW.map((p) => Math.log(p / base));
+  const promoW = Array.from({ length: H }, (_, w) => promoFlag(w));
+  const lastW = Array.from({ length: H }, (_, w) => promoLast(w));
+
   // Accumulators (per draw).
   const baseAcc = new MoneyAcc(D);
   const scenAcc = new MoneyAcc(D);
@@ -217,7 +225,7 @@ export function simulate(
     let sBaseU = 0, sBaseR = 0, sBaseP = 0, sScenU = 0, sScenR = 0, sScenP = 0;
     const seasonW = new Float64Array(H);
     for (let w = 0; w < H; w++) {
-      const row = seasonRow(meta.weeks + w, meta.season_period, meta.n_fourier);
+      const row = rows[w];
       let acc = 0;
       for (let k = 0; k < row.length; k++) acc += row[k] * draws.season[d][k];
       seasonW[w] = acc;
@@ -233,46 +241,46 @@ export function simulate(
 
       // Existing business: baseline everywhere; scenario where selected.
       // A new city is reported on its own (baseline 0), as in simulate.py.
+      // Inlined form of mu() with per-week constants hoisted (this is the hot loop).
+      const sea = seasonW[w];
+      const p = pW[w];
+      const lp = lpW[w];
+      const pf = promoW[w];
+      const pl = lastW[w];
       for (let c = 0; c < (isNew ? 0 : C); c++) {
+        const cityOn = citySel.has(c);
         for (let s = 0; s < S; s++) {
-          const common = {
-            logShare: Math.log(meta.shares[c][s]),
-            aCity: draws.a_city[d][c],
-            aSeg: draws.a_seg[d][s],
-            elasticity: draws.e[d][s],
-            basePrice: base,
-            bPromo: draws.b_promo[d][s],
-            bFeature: draws.b_feature[d],
-            bDip: draws.b_dip[d],
-            season: seasonW[w],
-          };
-          const baseline = mu({ ...common, price: base, promo: 0, feature: 0, promoLastWeek: 0 });
-          const treated = !isNew && citySel.has(c) && segSel.has(s);
-          const p = treated ? scenPrice(w) : base;
-          const scen = treated
-            ? mu({
-                ...common,
-                price: p,
-                promo: promoFlag(w),
-                feature: featureOn,
-                promoLastWeek: promoLast(w),
-              })
-            : baseline;
+          const k0 = logShares[c * S + s] + draws.a_city[d][c] + draws.a_seg[d][s] + sea;
+          const baseline = Math.exp(k0);
           bU += baseline;
           bR += baseline * base;
           bP += baseline * (base - cost);
-          xU += scen;
-          xR += scen * p;
-          xP += scen * (p - cost);
-          if (!isNew && treated) {
+          if (cityOn && segSel.has(s)) {
+            const scen = Math.exp(
+              k0 +
+                draws.e[d][s] * lp +
+                draws.b_promo[d][s] * pf +
+                draws.b_feature[d] * featureOn +
+                draws.b_dip[d] * pl,
+            );
+            xU += scen;
+            xR += scen * p;
+            xP += scen * (p - cost);
+            const dU = scen - baseline;
+            const dR = scen * p - baseline * base;
+            const dP = scen * (p - cost) - baseline * (base - cost);
             const a = segAcc[s];
-            a.units[d] += scen - baseline;
-            a.revenue[d] += scen * p - baseline * base;
-            a.profit[d] += scen * (p - cost) - baseline * (base - cost);
+            a.units[d] += dU;
+            a.revenue[d] += dR;
+            a.profit[d] += dP;
             const ca = cityAcc[c];
-            ca.units[d] += scen - baseline;
-            ca.revenue[d] += scen * p - baseline * base;
-            ca.profit[d] += scen * (p - cost) - baseline * (base - cost);
+            ca.units[d] += dU;
+            ca.revenue[d] += dR;
+            ca.profit[d] += dP;
+          } else {
+            xU += baseline;
+            xR += baseline * base;
+            xP += baseline * (base - cost);
           }
         }
       }

@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "vitest run"
+    "test": "vitest run",
+    "sync:contract": "cp ../contract/posterior.fixture.json public/model/posterior.fixture.json"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",
