@@ -20,7 +20,7 @@ import json
 from pathlib import Path
 
 import numpy as np
-from ripple_model.simulate import mu_for_cells, new_city_a, simulate
+from ripple_model.simulate import mu_for_cells, new_city_a, new_city_z, simulate
 
 HERE = Path(__file__).parent
 POSTERIOR = HERE / "posterior.fixture.json"
@@ -191,15 +191,20 @@ def main() -> None:
                 f"{case['name']}: week {w} disagrees with simulate()"
             )
 
-        cases.append(
-            {
-                "name": case["name"],
-                "about": case["about"],
-                "scenario": scenario,
-                "mu": mu,
-                "expected": result,
-            }
-        )
+        entry = {
+            "name": case["name"],
+            "about": case["about"],
+            "scenario": scenario,
+            "mu": mu,
+            "expected": result,
+        }
+        if scenario["type"] == "new_city":
+            # the exact z vector this case used, so a port can assert it reads
+            # draws.z_new and rotates it the same way instead of guessing
+            entry["z"] = [
+                float(x) for x in new_city_z(post, int(scenario.get("seed", 7)))
+            ]
+        cases.append(entry)
 
     doc = {
         "about": (
@@ -210,6 +215,12 @@ def main() -> None:
         "generated_by": "contract/make_parity_fixture.py",
         "tolerance": {"mu": MU_TOLERANCE, "summary": SUMMARY_TOLERANCE},
         "ignore_fields": ["meta.source", "meta.computed_ms"],
+        "z_note": (
+            "A new-city case carries `z`: the standard-normal draws it used. They are "
+            "draws.z_new rotated left by (scenario.seed mod n_draws). Do NOT generate "
+            "them with a local PRNG — numpy and a browser PRNG cannot agree, and the "
+            "browser would then disagree with the reference on every new-city scenario."
+        ),
         "check_weeks_note": (
             "mu is recorded only at mu.weeks (promo window, the dip week, and a late "
             "week). expected.weekly covers all horizon weeks."

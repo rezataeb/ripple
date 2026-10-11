@@ -13,7 +13,7 @@ from pathlib import Path
 
 import numpy as np
 import pytest
-from ripple_model.simulate import mu_for_cells, new_city_a, simulate
+from ripple_model.simulate import mu_for_cells, new_city_a, new_city_z, simulate
 
 ROOT = Path(__file__).resolve().parents[2]
 CONTRACT = ROOT / "contract"
@@ -155,3 +155,37 @@ def test_unselected_cells_cancel_out_of_the_incremental() -> None:
     assert others, "expected other cities in the result"
     for c in others:
         assert abs(c["incremental"]["units"]["mean"]) < 1e-12, f"{c['city']} should not move"
+
+
+def test_new_city_z_comes_from_the_export_not_an_rng() -> None:
+    """Regression guard for a cross-language bug that a green test would hide.
+
+    numpy's RNG and a browser PRNG cannot produce the same standard normals, so
+    if the z draws were generated at simulation time the browser would disagree
+    with this file on every new-city scenario — while a parity test that backs z
+    out of the fixture would still pass. The draws therefore ship in the export.
+    """
+    assert "z_new" in POSTERIOR["draws"], "the posterior must carry the new-city z draws"
+    z = np.array(POSTERIOR["draws"]["z_new"])
+    assert len(z) == POSTERIOR["meta"]["n_draws"]
+    assert abs(z.mean()) < 0.2 and 0.7 < z.std() < 1.3, "z_new should look standard normal"
+
+    # the seed rotates the shipped array, which any language can reproduce exactly
+    assert np.array_equal(new_city_z(POSTERIOR, 0), z)
+    assert np.array_equal(new_city_z(POSTERIOR, 3), np.roll(z, -3))
+    n = len(z)
+    assert np.array_equal(new_city_z(POSTERIOR, n), z), "rotation must wrap"
+
+    case = CASES["new-city-miami"]
+    assert "z" in case, "the fixture must publish the z vector it used"
+    seed = int(case["scenario"].get("seed", 7))
+    assert np.allclose(case["z"], new_city_z(POSTERIOR, seed), atol=1e-12)
+
+
+def test_new_city_results_are_reproducible_and_seed_dependent() -> None:
+    scenario = dict(CASES["new-city-miami"]["scenario"])
+    a = simulate(POSTERIOR, scenario)["incremental"]["profit"]["mean"]
+    b = simulate(POSTERIOR, scenario)["incremental"]["profit"]["mean"]
+    assert a == b, "the same scenario must always give the same number"
+    other = simulate(POSTERIOR, {**scenario, "seed": 99})["incremental"]["profit"]["mean"]
+    assert other != a, "changing the seed must change the new-city draw"

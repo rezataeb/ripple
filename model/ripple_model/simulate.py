@@ -98,16 +98,30 @@ def mu_for_cells(
     return np.exp(log_mu)
 
 
-def new_city_a(post: dict, traits_z: np.ndarray, seed: int) -> np.ndarray:
-    """a_new = g0 + traits_z·g + tau_city·z, one z per posterior draw (spec Section 5).
+def new_city_z(post: dict, seed: int) -> np.ndarray:
+    """The new-city z draws for this scenario, rotated by the seed.
 
-    The seed is part of the scenario, so the same question always gets the same answer.
+    The draws come from the posterior export (`draws.z_new`), not from an RNG here.
+    numpy's generator and a browser PRNG cannot produce the same numbers, so
+    generating them at simulation time would make web/lib/simulate.ts disagree with
+    this file on every new-city scenario while the parity test still looked green.
+    Rotating a shipped array by the seed keeps `scenario.seed` meaningful and is
+    exactly reproducible in both languages.
     """
+    z = np.asarray(post["draws"]["z_new"], dtype=float)
+    n = len(z)
+    if n == 0:
+        return np.zeros(int(post["meta"]["n_draws"]))
+    return np.roll(z, -(int(seed) % n))
+
+
+def new_city_a(post: dict, traits_z: np.ndarray, seed: int) -> np.ndarray:
+    """a_new = g0 + traits_z·g + tau_city·z_new (spec Section 5)."""
     draws = post["draws"]
     g0 = np.asarray(draws["g0"], dtype=float)
     g = np.asarray(draws["g"], dtype=float)
     tau = np.asarray(draws["tau_city"], dtype=float)
-    z = np.random.default_rng(seed).standard_normal(len(g0))
+    z = new_city_z(post, seed)
     trait_part = g @ np.asarray(traits_z, dtype=float) if g.shape[1] else np.zeros(len(g0))
     return g0 + trait_part + tau * z
 

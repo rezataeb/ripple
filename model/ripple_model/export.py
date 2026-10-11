@@ -117,6 +117,10 @@ def build_posterior(
         "b_dip": scalar("b_dip") if d.has_promo else _round(np.zeros(D)),
         "season": col("season", K),
         "phi": scalar("phi"),
+        # Drawn here, once, with the export seed, and shipped with the posterior.
+        # Generating them at simulation time would mean numpy and the browser's
+        # PRNG disagreeing on every new-city scenario — see posterior.schema.json.
+        "z_new": _round(np.random.default_rng(seed).standard_normal(D)),
     }
 
     history = {

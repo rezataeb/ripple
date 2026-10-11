@@ -54,7 +54,7 @@
     "draws": {
       "type": "object",
       "description": "Posterior draws, draw index first. Terms that do not apply are present and filled with zeros, so the simulator never branches on missing keys.",
-      "required": ["g0", "g", "tau_city", "a_city", "a_seg", "e", "b_promo", "b_feature", "b_dip", "season", "phi"],
+      "required": ["g0", "g", "tau_city", "a_city", "a_seg", "e", "b_promo", "b_feature", "b_dip", "season", "phi", "z_new"],
       "additionalProperties": false,
       "properties": {
         "g0": { "type": "array", "items": { "type": "number" }, "description": "[D] intercept of the city-effect regression." },
@@ -67,7 +67,12 @@
         "b_feature": { "type": "array", "items": { "type": "number" }, "description": "[D] lift of the feature flag (shared across segments)." },
         "b_dip": { "type": "array", "items": { "type": "number" }, "description": "[D] post-promo pull-forward effect, multiplies promo_last_week. Expected to be negative." },
         "season": { "type": "array", "items": { "type": "array", "items": { "type": "number" } }, "description": "[D][K] Fourier coefficients; season(t) = dot(season_row(t), season[d])." },
-        "phi": { "type": "array", "items": { "type": "number", "exclusiveMinimum": 0 }, "description": "[D] Negative Binomial dispersion; var = mu + mu^2/phi." }
+        "phi": { "type": "array", "items": { "type": "number", "exclusiveMinimum": 0 }, "description": "[D] Negative Binomial dispersion; var = mu + mu^2/phi." },
+        "z_new": {
+          "type": "array",
+          "items": { "type": "number" },
+          "description": "[D] standard-normal draws used ONLY for a new city: a_new[d] = g0[d] + traits_z.g[d] + tau_city[d] * z_new[(d + scenario.seed) mod D]. These are exported rather than generated at simulation time because numpy's RNG and a browser PRNG cannot produce the same numbers, which would make the browser and the reference simulator disagree on every new-city scenario. Rotating by the scenario seed keeps the seed meaningful and is identical in both languages."
+        }
       }
     },
     "history": {

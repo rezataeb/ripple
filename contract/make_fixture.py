@@ -90,6 +90,8 @@ def main() -> None:
         ]
     )
     phi = np.abs(rng.normal(18.0, 2.0, D))
+    # the new-city z draws travel WITH the posterior: see posterior.schema.json
+    z_new = rng.standard_normal(D)
 
     # --- history: every city x segment x week, with one 3-week promo ----------
     hist: dict[str, list] = {
@@ -204,6 +206,7 @@ def main() -> None:
             "b_dip": r(b_dip),
             "season": r(season),
             "phi": r(phi),
+            "z_new": r(z_new),
         },
         "history": hist,
         "candidates": candidates,
