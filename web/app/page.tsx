@@ -62,7 +62,7 @@ export default function Simulator() {
   return (
     <>
       <Topbar datasetName={name} demo={isDemo || !posterior} />
-      <main className="mx-auto flex w-full max-w-[1200px] flex-1 flex-col gap-8 px-6 py-8 lg:flex-row">
+      <main className="mx-auto flex w-full max-w-[1200px] flex-1 flex-col gap-8 px-4 py-8 sm:px-6 lg:flex-row">
         {error && (
           <p className="rounded-xl border border-loss/40 bg-loss/5 px-4 py-3 text-sm">
             Could not load the model: {error}. Run the model export or place the fixture in web/public/model/.

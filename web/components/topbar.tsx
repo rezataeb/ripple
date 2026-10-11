@@ -2,17 +2,18 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { AskButton } from "@/components/ask/ask-button";
 import { DatasetSwitcher } from "@/components/dataset-switcher";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export function Topbar({ datasetName, demo }: { datasetName: string; demo: boolean }) {
   return (
     <header className="border-b bg-background">
-      <div className="mx-auto flex h-14 w-full max-w-[1200px] items-center gap-4 px-6">
+      <div className="mx-auto flex min-h-14 w-full max-w-[1200px] flex-wrap items-center gap-x-4 gap-y-1 px-4 py-2 sm:px-6">
         <Link href="/" className="text-xl font-semibold tracking-tight">
           ripple
         </Link>
         <DatasetSwitcher datasetName={datasetName} />
         {demo && <Badge variant="outline">demo mode</Badge>}
-        <nav className="ml-auto flex items-center gap-1 text-sm">
+        <nav className="ml-auto flex flex-wrap items-center gap-1 text-sm">
           <Link className="rounded-lg px-3 py-1.5 text-muted-foreground hover:text-foreground" href="/launch">
             Launch tracker
           </Link>
@@ -22,6 +23,7 @@ export function Topbar({ datasetName, demo }: { datasetName: string; demo: boole
           <Link className="rounded-lg px-3 py-1.5 text-muted-foreground hover:text-foreground" href="/data">
             Use your data
           </Link>
+          <ThemeToggle />
           <AskButton />
         </nav>
       </div>

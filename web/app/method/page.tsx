@@ -59,7 +59,7 @@ export default function MethodPage() {
   return (
     <>
       <Topbar datasetName={trust?.dataset_name ?? "Method"} demo />
-      <main className="mx-auto w-full max-w-[1200px] flex-1 space-y-12 px-6 py-8">
+      <main className="mx-auto w-full max-w-[1200px] flex-1 space-y-12 px-4 py-8 sm:px-6">
         <header className="space-y-2">
           <h1 className="text-3xl font-semibold tracking-tight">How Ripple works</h1>
           <p className="max-w-[70ch] text-base text-muted-foreground">

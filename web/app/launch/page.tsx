@@ -83,7 +83,7 @@ export default function LaunchPage() {
   return (
     <>
       <Topbar datasetName={posterior?.meta.dataset_name ?? "Loading…"} demo />
-      <main className="mx-auto w-full max-w-[1200px] flex-1 space-y-6 px-6 py-8">
+      <main className="mx-auto w-full max-w-[1200px] flex-1 space-y-6 px-4 py-8 sm:px-6">
         <div className="space-y-3">
           <h1 className="text-xl font-semibold tracking-tight">Launch tracker</h1>
           <div className="flex flex-wrap gap-2" role="tablist" aria-label="Choose a launch">
