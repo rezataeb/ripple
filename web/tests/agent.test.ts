@@ -111,3 +111,79 @@ describe("tools", () => {
     expect(r[0].offer).toMatch(/20% off/);
   });
 });
+
+describe("Gemini path (stubbed client, no network)", () => {
+  type Reply = { functionCalls?: { id?: string; name: string; args: Record<string, unknown> }[]; text?: string };
+  const stub = (replies: Reply[]) => {
+    let i = 0;
+    const seen: unknown[] = [];
+    return {
+      seen,
+      client: {
+        models: {
+          generateContent: async (req: unknown) => {
+            seen.push(req);
+            const r = replies[Math.min(i++, replies.length - 1)];
+            return { ...r, candidates: [{ content: { role: "model", parts: [{ text: r.text ?? "" }] } }] };
+          },
+        },
+      },
+    };
+  };
+  const live = (): AgentContext => ({ ...ctx, live: { gemini: true, nimble: false } });
+  const withKey = async <T,>(f: () => Promise<T>) => {
+    const old = process.env.GEMINI_API_KEY;
+    process.env.GEMINI_API_KEY = "test-key";
+    try {
+      return await f();
+    } finally {
+      if (old === undefined) delete process.env.GEMINI_API_KEY;
+      else process.env.GEMINI_API_KEY = old;
+    }
+  };
+  const promoCalls: Reply = {
+    functionCalls: [{ name: "build_scenario", args: { type: "promo", discount: 0.2, weeks: 4, cities: ["Boston"], segments: ["students"] } }],
+  };
+
+  it("keeps the model's wording when every number comes from a tool", async () => {
+    const claimsFirst = await runAgent(ctx, "Should we run a 20% student coupon in Boston?"); // template run just to read the true numbers
+    const profit = claimsFirst.claims.find((c) => c.label === "Incremental profit vs. no change")!.value;
+    const { client } = stub([
+      promoCalls,
+      { functionCalls: [{ name: "run_scenario", args: { scenario: { type: "promo", discount: 0.2, weeks: 4, cities: ["Boston"], segments: ["students"] } } }] },
+      { text: `Yes. The coupon adds ${profit} over 12 weeks.` },
+    ]);
+    const a = await withKey(() => runAgent(live(), "Should we run a 20% student coupon in Boston?", () => {}, client));
+    expect(a.mode).toBe("gemini");
+    expect(a.guard.passed).toBe(true);
+    expect(a.text).toContain(profit);
+  });
+
+  it("replaces the model's wording when it states a number no tool returned", async () => {
+    const { client } = stub([
+      promoCalls,
+      { functionCalls: [{ name: "run_scenario", args: { scenario: { type: "promo", discount: 0.2, weeks: 4 } } }] },
+      { text: "Great idea: this will add $123.4k of profit." },
+    ]);
+    const a = await withKey(() => runAgent(live(), "Should we run a 20% coupon?", () => {}, client));
+    expect(a.mode).toBe("template");
+    expect(a.text).not.toContain("123.4k");
+    expect(numberGuard(a.text, a.claims).passed).toBe(true);
+  });
+
+  it("stops after 5 tool calls and asks for an answer without tools", async () => {
+    const many: Reply = { functionCalls: Array.from({ length: 3 }, () => ({ name: "model_facts", args: {} })) };
+    const { client, seen } = stub([many, many, { text: "Done." }]);
+    await withKey(() => runAgent(live(), "why trust", () => {}, client));
+    const lastReq = seen.at(-1) as { config: { tools?: unknown } };
+    expect(lastReq.config.tools).toBeUndefined();
+  });
+
+  it("falls back to the template when the model call throws", async () => {
+    const client = { models: { generateContent: async () => { throw new Error("quota"); } } };
+    const a = await withKey(() => runAgent(live(), "What if we raise prices 8%?", () => {}, client as never));
+    expect(a.mode).toBe("template");
+    expect(a.guard.passed).toBe(true);
+    expect(a.scenario?.type).toBe("price");
+  });
+});

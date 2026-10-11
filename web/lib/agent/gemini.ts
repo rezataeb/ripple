@@ -72,14 +72,30 @@ export const DECLARATIONS: FunctionDeclaration[] = [
 
 export type Exec = (name: string, args: Record<string, unknown>) => Promise<Record<string, unknown>>;
 
+/** The slice of the SDK the loop uses; tests inject a stub. */
+export interface GenAiLike {
+  models: {
+    generateContent(req: {
+      model: string;
+      contents: Content[];
+      config?: Record<string, unknown>;
+    }): Promise<{
+      text?: string;
+      functionCalls?: { id?: string; name?: string; args?: Record<string, unknown> }[];
+      candidates?: { content?: Content }[];
+    }>;
+  };
+}
+
 export async function runGemini(opts: {
   apiKey: string;
+  client?: GenAiLike;
   model: string;
   question: string;
   exec: Exec;
   maxCalls?: number;
 }): Promise<string> {
-  const ai = new GoogleGenAI({ apiKey: opts.apiKey });
+  const ai = opts.client ?? (new GoogleGenAI({ apiKey: opts.apiKey }) as unknown as GenAiLike);
   const max = opts.maxCalls ?? 5;
   const contents: Content[] = [{ role: "user", parts: [{ text: opts.question }] }];
   let calls = 0;

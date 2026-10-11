@@ -1,5 +1,5 @@
 import { numberGuard } from "./guard";
-import { runGemini } from "./gemini";
+import { runGemini, type GenAiLike } from "./gemini";
 import { plan } from "./intent";
 import { composeTemplate, type TemplateInput } from "./template";
 import {
@@ -172,6 +172,7 @@ export async function runAgent(
   ctx: AgentContext,
   question: string,
   emit: Emit = () => {},
+  client?: GenAiLike,
 ): Promise<AgentAnswer> {
   const sess: Session = { claims: [], sources: [], calls: 0 };
   let mode: AgentAnswer["mode"] = "template";
@@ -181,6 +182,7 @@ export async function runAgent(
     try {
       text = await runGemini({
         apiKey: process.env.GEMINI_API_KEY,
+        client,
         model: ctx.geminiModel,
         question,
         exec: async (name, args) => (await execTool(ctx, sess, name, args, emit)).output,
