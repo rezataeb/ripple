@@ -69,7 +69,8 @@ export default function LaunchPage() {
 
   const pStart = prior?.forecast.p_profit_positive ?? 0;
   const pNow = result?.forecast.p_profit_positive ?? 0;
-  const profit = result?.forecast.total_profit;
+  const profit = result?.forecast.incremental_profit;
+  const incUnits = result?.forecast.incremental_units;
   const editable = launch?.unknown.prior.editable_sigma;
 
   return (
@@ -181,15 +182,15 @@ export default function LaunchPage() {
             <div className="min-w-0 flex-1 space-y-6">
               <section className="space-y-3" aria-live="polite">
                 <p className="text-sm text-muted-foreground">
-                  Profit over {result.forecast.horizon} weeks, after {money(launch.fixed_cost, false)} launch cost
+                  Added profit vs. no change over {result.forecast.horizon} weeks, after {money(launch.fixed_cost, false)} launch cost
                 </p>
                 <p className={cn("num-hero", (profit?.mean ?? 0) >= 0 ? "text-gain" : "text-loss")}>
                   {money(profit?.mean ?? 0)}
                 </p>
                 <p className="num text-sm text-muted-foreground">
-                  90% interval {money(profit?.p05 ?? 0)} to {money(profit?.p95 ?? 0)} · units{" "}
-                  {units(result.forecast.total_units.mean, false)} ({units(result.forecast.total_units.p05, false)} to{" "}
-                  {units(result.forecast.total_units.p95, false)})
+                  90% interval {money(profit?.p05 ?? 0)} to {money(profit?.p95 ?? 0)} · extra units{" "}
+                  {units(incUnits?.mean ?? 0, false)} ({units(incUnits?.p05 ?? 0, false)} to{" "}
+                  {units(incUnits?.p95 ?? 0, false)})
                 </p>
                 <p className="text-sm">
                   Chance it pays:{" "}

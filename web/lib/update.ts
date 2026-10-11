@@ -428,19 +428,27 @@ export function updateWithLaunch(
   const unitsTot = new Float64Array(N);
   const revTot = new Float64Array(N);
   const profTot = new Float64Array(N);
+  const incUnits = new Float64Array(N);
+  const incRev = new Float64Array(N);
+  const incProf = new Float64Array(N);
   const weekUnits = Array.from({ length: H }, () => new Float64Array(N));
   const weekCf = Array.from({ length: H }, () => new Float64Array(N));
   for (let i = 0; i < N; i++) {
-    let tu = 0, tr = 0, tp = 0;
+    let tu = 0, tr = 0, tp = 0, du = 0, dr = 0, dp = 0;
     for (let h = 0; h < H; h++) {
       let wu = 0, wc = 0;
       for (let c = 0; c < n; c++) {
         const price = fdes.price[h * n + c];
         const m = Math.exp(lmF[(i * H + h) * n + c]);
+        // counterfactual: the model with no change; zero for a new city (no launch, no city)
+        const cf = lmCf ? Math.exp(lmCf[(i * H + h) * n + c]) : 0;
         wu += m;
         tr += m * price;
         tp += m * (price - unitCost);
-        if (lmCf) wc += Math.exp(lmCf[(i * H + h) * n + c]);
+        du += m - cf;
+        dr += (m - cf) * price;
+        dp += (m - cf) * (price - unitCost);
+        wc += cf;
       }
       tu += wu;
       weekUnits[h][i] = wu;
@@ -449,6 +457,10 @@ export function updateWithLaunch(
     unitsTot[i] = tu;
     revTot[i] = tr;
     profTot[i] = tp - launch.fixed_cost;
+    incUnits[i] = du;
+    incRev[i] = dr;
+    // the headline: differenced inside each sample, before any summary
+    incProf[i] = dp - launch.fixed_cost;
   }
 
   const observed = new Map<number, number>();
@@ -494,26 +506,45 @@ export function updateWithLaunch(
   }
   unknown.truth = launch.truth?.unknown_value ?? null;
 
-  // validity gate: the browser reports weight ESS (no PSIS smoothing)
-  const ok = weeksUsed ? ess >= ESS_MIN : true;
+  // validity gate: Pareto k-hat (PSIS) when estimable, else weight ESS; both as in update.py
   const fmt = (x: number) => Math.round(x).toLocaleString("en-US");
-  const gate: UpdateGate = {
-    ok,
-    criterion: "ess",
-    value: Math.round(ess * 10) / 10,
-    threshold: ESS_MIN,
-    ess: Math.round(ess * 10) / 10,
-    pareto_k: null,
-    smoothed: false,
-    message: ok
-      ? `Fast update reliable (ESS ${fmt(ess)} of ${fmt(N)})`
-      : `Refit needed — only ${fmt(ess)} of ${fmt(N)} samples carry any weight.`,
-  };
+  const r1 = (x: number) => Math.round(x * 10) / 10;
+  let gate: UpdateGate;
+  if (paretoK !== null && Number.isFinite(paretoK)) {
+    const ok = paretoK <= K_HAT_THRESHOLD;
+    gate = {
+      ok,
+      criterion: "pareto_k",
+      value: Math.round(paretoK * 1e4) / 1e4,
+      threshold: K_HAT_THRESHOLD,
+      ess: r1(ess),
+      pareto_k: Math.round(paretoK * 1e4) / 1e4,
+      smoothed: true,
+      message: ok
+        ? `Fast update reliable (Pareto k̂ ${paretoK.toFixed(2)}, ESS ${fmt(ess)} of ${fmt(N)})`
+        : `Refit needed — Pareto k̂ ${paretoK.toFixed(2)} is above ${K_HAT_THRESHOLD}. ` +
+          "The launch weeks are too surprising for the fast update; Ripple refits the full model with these rows.",
+    };
+  } else {
+    const ok = weeksUsed ? ess >= ESS_MIN : true;
+    gate = {
+      ok,
+      criterion: "ess",
+      value: r1(ess),
+      threshold: ESS_MIN,
+      ess: r1(ess),
+      pareto_k: null,
+      smoothed: false,
+      message: ok
+        ? `Fast update reliable (ESS ${fmt(ess)} of ${fmt(N)})`
+        : `Refit needed — only ${fmt(ess)} of ${fmt(N)} samples carry any weight.`,
+    };
+  }
 
   let pPost = 0, pPrior = 0, sw = 0;
   for (let i = 0; i < N; i++) {
     sw += w[i];
-    if (profTot[i] > 0) {
+    if (incProf[i] > 0) {
       pPost += w[i];
       pPrior += 1;
     }
@@ -530,6 +561,9 @@ export function updateWithLaunch(
       total_units: wInterval(unitsTot, w),
       total_revenue: wInterval(revTot, w),
       total_profit: wInterval(profTot, w),
+      incremental_units: wInterval(incUnits, w),
+      incremental_revenue: wInterval(incRev, w),
+      incremental_profit: wInterval(incProf, w),
       p_profit_positive: pPost / sw,
       weekly,
     },
@@ -537,6 +571,9 @@ export function updateWithLaunch(
       total_units: wInterval(unitsTot, wPrior),
       total_revenue: wInterval(revTot, wPrior),
       total_profit: wInterval(profTot, wPrior),
+      incremental_units: wInterval(incUnits, wPrior),
+      incremental_revenue: wInterval(incRev, wPrior),
+      incremental_profit: wInterval(incProf, wPrior),
       p_profit_positive: pPrior / N,
     },
     causal: {

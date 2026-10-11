@@ -14,45 +14,40 @@ import type { LaunchesFile, Posterior } from "@/lib/types";
 const pub = path.resolve(__dirname, "../public/model");
 const posterior = JSON.parse(readFileSync(path.join(pub, "posterior.json"), "utf8")) as Posterior;
 const launches = (JSON.parse(readFileSync(path.join(pub, "launches.json"), "utf8")) as LaunchesFile).launches;
-const ref = JSON.parse(readFileSync(path.join(__dirname, "fixtures/update.reference.json"), "utf8")) as {
+const parity = JSON.parse(readFileSync(path.resolve(__dirname, "../../contract/update_parity.fixture.json"), "utf8")) as {
   k_per_draw: number;
-  u: Record<string, number[]>;
+  tolerance: { summary: number };
+  ignore_fields: string[];
+  priors: Record<string, { u: number[] }>;
   cases: { launch_id: string; weeks_used: number; expected: Record<string, unknown> }[];
 };
 
-function diff(got: unknown, want: unknown, tol: number, at: string, out: string[]) {
+function diff(got: unknown, want: unknown, tol: number, at: string, out: string[], ignore: Set<string> = new Set()) {
+  if (ignore.has(at.replace(/^\./, ""))) return;
   if (typeof want === "number") {
     if (typeof got !== "number" || Math.abs(got - want) > tol * Math.max(1, Math.abs(want)))
       out.push(`${at}: got ${got} want ${want}`);
   } else if (Array.isArray(want)) {
     if (!Array.isArray(got) || got.length !== want.length) out.push(`${at}: length`);
-    else want.forEach((w, i) => diff(got[i], w, tol, `${at}[${i}]`, out));
+    else want.forEach((w, i) => diff(got[i], w, tol, `${at}[${i}]`, out, ignore));
   } else if (want && typeof want === "object") {
     for (const [k, v] of Object.entries(want)) {
-      diff((got as Record<string, unknown> | undefined)?.[k], v, tol, `${at}.${k}`, out);
+      diff((got as Record<string, unknown> | undefined)?.[k], v, tol, `${at}.${k}`, out, ignore);
     }
   } else if (got !== want) out.push(`${at}: got ${JSON.stringify(got)} want ${JSON.stringify(want)}`);
 }
 
-describe("update.ts parity with update.py (tests/fixtures/update.reference.json)", () => {
-  for (const c of ref.cases) {
-    it(`${c.launch_id} @ week ${c.weeks_used}: every field within 1e-6`, () => {
+describe("update.ts parity with update.py (contract/update_parity.fixture.json)", () => {
+  const ignore = new Set(parity.ignore_fields);
+  for (const c of parity.cases) {
+    it(`${c.launch_id} @ week ${c.weeks_used}: every field within ${parity.tolerance.summary}`, () => {
       const launch = launches.find((l) => l.id === c.launch_id)!;
       const got = updateWithLaunch(posterior, launch, c.weeks_used, {
-        kPerDraw: ref.k_per_draw,
-        u: ref.u[c.launch_id],
+        kPerDraw: parity.k_per_draw,
+        u: parity.priors[c.launch_id].u,
       });
       const out: string[] = [];
-      // Python gates on Pareto k-hat, the browser on ESS: compare the weights' ESS, not the badge.
-      const want = structuredClone(c.expected) as { gate: Record<string, unknown> };
-      delete want.gate.criterion;
-      delete want.gate.value;
-      delete want.gate.threshold;
-      delete want.gate.message;
-      delete want.gate.smoothed;
-      delete want.gate.pareto_k;
-      delete want.gate.ok;
-      diff(got, want, 1e-6, "", out);
+      diff(got, c.expected, parity.tolerance.summary, "", out, ignore);
       expect(out.slice(0, 8)).toEqual([]);
     });
   }

@@ -184,19 +184,19 @@ export function updateTool(ctx: AgentContext, launchId: string, weeks: number): 
   const p0 = updateWithLaunch(ctx.posterior, launch, 0, { includeDensity: false });
   const pr = r.unknown.display === "percent_lift" ? r.unknown.posterior_percent : r.unknown.posterior;
   const fmtU = (x: number) => (r.unknown.display === "percent_lift" ? signedPercent(x, 1) : x.toFixed(2));
-  const pf = r.forecast.total_profit;
+  const pf = r.forecast.incremental_profit;
+  const iu = r.forecast.incremental_units;
   const claims: C[] = [
     claim("Weeks of real data used", `${w} of ${launch.weeks_observed}`),
     claim("Chance it pays before any data", percent(p0.forecast.p_profit_positive)),
     claim("Chance it pays now", percent(r.forecast.p_profit_positive)),
     claim(`${r.unknown.label}`, fmtU(pr!.mean)),
     claim(`${r.unknown.label}, 90% interval`, interval(pr!.p05, pr!.p95, fmtU)),
-    claim("Forecast units over the horizon", units(r.forecast.total_units.mean, false)),
-    claim("Forecast units, 90% interval", interval(r.forecast.total_units.p05, r.forecast.total_units.p95, (x) => units(x, false))),
+    claim("Extra units over the horizon", units(iu.mean, false)),
+    claim("Extra units, 90% interval", interval(iu.p05, iu.p95, (x) => units(x, false))),
+    claim("Forecast profit", money(pf.mean)),
+    claim("Forecast profit, 90% interval", interval(pf.p05, pf.p95, money)),
   ];
-  if (pf) {
-    claims.push(claim("Forecast profit", money(pf.mean)), claim("Forecast profit, 90% interval", interval(pf.p05, pf.p95, money)));
-  }
   claims.push(claim("Update reliability", r.gate.message));
   return {
     output: {

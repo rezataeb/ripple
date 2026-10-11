@@ -267,6 +267,10 @@ export interface UpdateResult {
     total_units: Interval;
     total_revenue?: Interval;
     total_profit?: Interval;
+    incremental_units: Interval;
+    incremental_revenue: Interval;
+    /** THE HEADLINE: (mu_forecast - mu_counterfactual) x margin - fixed cost, differenced inside each sample. */
+    incremental_profit: Interval;
     p_profit_positive: number;
     weekly: UpdateWeeklyRow[];
   };
@@ -274,6 +278,9 @@ export interface UpdateResult {
     total_units: Interval;
     total_revenue?: Interval;
     total_profit?: Interval;
+    incremental_units: Interval;
+    incremental_revenue: Interval;
+    incremental_profit: Interval;
     p_profit_positive: number;
   };
   causal: {

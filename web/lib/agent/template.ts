@@ -49,7 +49,7 @@ export function composeTemplate(i: TemplateInput): string {
       `What the launch has taught us: ${i.launchUnknownLabel} is ${get(c, i.launchUnknownLabel ?? "")} (90%: ${get(c, `${i.launchUnknownLabel}, 90% interval`)}).`,
     ];
     const fp = get(c, "Forecast profit");
-    if (fp) out.push(`Forecast profit over the horizon: ${fp} (90%: ${get(c, "Forecast profit, 90% interval")}).`);
+    if (fp) out.push(`Added profit over the horizon, against no change: ${fp} (90%: ${get(c, "Forecast profit, 90% interval")}).`);
     out.push(`Update status: ${get(c, "Update reliability")}.`);
     return out.join("\n");
   }
