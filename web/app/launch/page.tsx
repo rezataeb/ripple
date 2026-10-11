@@ -3,6 +3,7 @@
 import { useDeferredValue, useEffect, useMemo, useState } from "react";
 import { DensityPlot } from "@/components/launch/density-plot";
 import { LaunchChart } from "@/components/launch/launch-chart";
+import { UploadPanel } from "@/components/launch/upload-panel";
 import { Topbar } from "@/components/topbar";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -15,6 +16,7 @@ import type { Launch, Posterior, UpdateResult } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 // Module-level memo: the 9 week positions per launch are revisited constantly while sliding.
+const UPLOAD_ID = "__upload__";
 const updateCache = new Map<string, UpdateResult>();
 function cachedUpdate(p: Posterior, l: Launch, weeks: number, sigma: number | null): UpdateResult {
   const key = `${p.meta.fitted_at ?? p.meta.seed}|${l.id}|${weeks}|${sigma ?? "default"}`;
@@ -29,6 +31,7 @@ function cachedUpdate(p: Posterior, l: Launch, weeks: number, sigma: number | nu
 export default function LaunchPage() {
   const [posterior, setPosterior] = useState<Posterior | null>(null);
   const [launches, setLaunches] = useState<Launch[]>([]);
+  const [uploaded, setUploaded] = useState<Launch[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [launchId, setLaunchId] = useState<string>("");
   const [weeks, setWeeks] = useState(0);
@@ -39,13 +42,17 @@ export default function LaunchPage() {
     Promise.all([loadPosterior(), loadLaunches()])
       .then(([p, l]) => {
         setPosterior(p.posterior);
-        setLaunches(l.launches);
-        setLaunchId(l.launches[0]?.id ?? "");
+        // the built-in launches describe the demo company; on your own model only uploads make sense
+        const mine = p.source === "user";
+        setLaunches(mine ? [] : l.launches);
+        setLaunchId(mine ? UPLOAD_ID : (l.launches[0]?.id ?? ""));
       })
       .catch((e: Error) => setError(e.message));
   }, []);
 
-  const launch = launches.find((l) => l.id === launchId);
+  const uploading = launchId === UPLOAD_ID;
+  const allLaunches = [...launches, ...uploaded];
+  const launch = allLaunches.find((l) => l.id === launchId);
   const deferredWeeks = useDeferredValue(weeks);
   const deferredSigma = useDeferredValue(sigma);
 
@@ -80,7 +87,7 @@ export default function LaunchPage() {
         <div className="space-y-3">
           <h1 className="text-xl font-semibold tracking-tight">Launch tracker</h1>
           <div className="flex flex-wrap gap-2" role="tablist" aria-label="Choose a launch">
-            {launches.map((l) => (
+            {allLaunches.map((l) => (
               <button
                 key={l.id}
                 role="tab"
@@ -98,11 +105,35 @@ export default function LaunchPage() {
                 {l.label}
               </button>
             ))}
+            <button
+              role="tab"
+              aria-selected={uploading}
+              onClick={() => {
+                setLaunchId(UPLOAD_ID);
+                setWeeks(0);
+              }}
+              className={cn(
+                "rounded-lg border border-dashed px-3 py-1.5 text-sm transition-colors duration-150",
+                uploading ? "border-brand bg-brand-soft" : "text-muted-foreground",
+              )}
+            >
+              + Upload launch weeks
+            </button>
           </div>
-          {launch?.description && <p className="text-sm text-muted-foreground">{launch.description}</p>}
+          {launch?.description && !uploading && <p className="text-sm text-muted-foreground">{launch.description}</p>}
         </div>
 
-        {!posterior || !launch || !result || !prior ? (
+        {uploading && posterior ? (
+          <UploadPanel
+            posterior={posterior}
+            onLaunch={(l) => {
+              setUploaded((u) => [...u, l]);
+              setLaunchId(l.id);
+              setWeeks(0);
+              setSigma(null);
+            }}
+          />
+        ) : !posterior || !launch || !result || !prior ? (
           <div className="space-y-4">
             <Skeleton className="h-12 w-64" />
             <Skeleton className="h-[340px] w-full" />
@@ -180,6 +211,12 @@ export default function LaunchPage() {
             </aside>
 
             <div className="min-w-0 flex-1 space-y-6">
+              {!result.gate.ok && (
+                <p role="status" className="rounded-xl border border-warning/40 bg-warning/5 px-4 py-3 text-sm">
+                  The fast update is not reliable for these weeks, so the numbers below should not be used for a decision.
+                  Ripple needs to refit the full model with these rows.
+                </p>
+              )}
               <section className="space-y-3" aria-live="polite">
                 <p className="text-sm text-muted-foreground">
                   Added profit vs. no change over {result.forecast.horizon} weeks, after {money(launch.fixed_cost, false)} launch cost

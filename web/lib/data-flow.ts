@@ -61,35 +61,42 @@ export function ruleMapping(columns: string[]): MappingResult {
   };
 }
 
-/** Header and a few rows from the CSV text. Handles quoted fields; good enough for a preview. */
-export function parseCsvHead(text: string, rows = 3): { columns: string[]; sample: Record<string, string>[] } {
-  const parseLine = (line: string): string[] => {
-    const out: string[] = [];
-    let cur = "";
-    let q = false;
-    for (let i = 0; i < line.length; i++) {
-      const ch = line[i];
-      if (ch === '"') {
-        if (q && line[i + 1] === '"') {
-          cur += '"';
-          i++;
-        } else q = !q;
-      } else if (ch === "," && !q) {
-        out.push(cur);
-        cur = "";
-      } else cur += ch;
-    }
-    out.push(cur);
-    return out.map((s) => s.trim());
-  };
+function parseCsvLine(line: string): string[] {
+  const out: string[] = [];
+  let cur = "";
+  let q = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (ch === '"') {
+      if (q && line[i + 1] === '"') {
+        cur += '"';
+        i++;
+      } else q = !q;
+    } else if (ch === "," && !q) {
+      out.push(cur);
+      cur = "";
+    } else cur += ch;
+  }
+  out.push(cur);
+  return out.map((s) => s.trim());
+}
+
+/** Header and all rows (quoted fields supported; no multi-line cells). */
+export function parseCsv(text: string): { columns: string[]; rows: Record<string, string>[] } {
   const lines = text.split(/\r?\n/).filter((l) => l.trim().length > 0);
-  if (lines.length === 0) return { columns: [], sample: [] };
-  const columns = parseLine(lines[0]);
-  const sample = lines.slice(1, 1 + rows).map((l) => {
-    const v = parseLine(l);
+  if (lines.length === 0) return { columns: [], rows: [] };
+  const columns = parseCsvLine(lines[0]);
+  const rows = lines.slice(1).map((l) => {
+    const v = parseCsvLine(l);
     return Object.fromEntries(columns.map((c, i) => [c, v[i] ?? ""]));
   });
-  return { columns, sample };
+  return { columns, rows };
+}
+
+/** Header and a few rows from the CSV text. */
+export function parseCsvHead(text: string, rows = 3): { columns: string[]; sample: Record<string, string>[] } {
+  const all = parseCsv(text);
+  return { columns: all.columns, sample: all.rows.slice(0, rows) };
 }
 
 // ---- API client --------------------------------------------------------------------
