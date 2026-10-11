@@ -103,3 +103,47 @@ def test_real_export_matches_schema(export: str, schema: str) -> None:
     if not path.exists():
         pytest.skip(f"{export} not exported yet")
     jsonschema.validate(load(path), load(CONTRACT / schema))
+
+
+def test_fixture_a_city_contains_g0() -> None:
+    """Regression guard.
+
+    contract/README.md says g0 is already inside the fitted a_city and is added
+    only for a NEW city. A fixture whose a_city omits g0 still validates against
+    the schema but makes every mu ~400x too small, and the UI built on it looks
+    fine while being wrong. So: check the identity, and check the magnitude.
+    """
+    import numpy as np
+    from ripple_model.simulate import mu_for_cells
+
+    f = load(CONTRACT / "posterior.fixture.json")
+    m, d = f["meta"], f["draws"]
+
+    # a_city - g0 - traits_z.g = tau_city * z_city, so dividing by tau_city must
+    # give the same z per city in every draw.
+    a_city = np.array(d["a_city"])
+    g0 = np.array(d["g0"])
+    g = np.array(d["g"])
+    tau = np.array(d["tau_city"])
+    traits_z = np.array(m["traits_z"])
+    implied_z = (a_city - g0[:, None] - g @ traits_z.T) / tau[:, None]
+    assert implied_z.std(axis=0).max() < 1e-9, "a_city does not follow g0 + Xz.g + tau*z"
+
+    # magnitude: mu on the history rows must be in the same world as the observed units
+    h = f["history"]
+    seg_idx = np.array(h["segment_idx"])
+    city_idx = np.array(h["city_idx"])
+    shares = np.array(m["shares"])
+    mu = mu_for_cells(
+        f,
+        a_city_draws=a_city[:, city_idx],
+        seg_idx=seg_idx,
+        log_share=np.log(shares[city_idx, seg_idx]),
+        t=np.array([0]),
+        price=np.array(h["price"])[None, :],
+        promo=np.array(h["promo"])[None, :],
+        promo_last=np.array(h["promo_last_week"])[None, :],
+        feature=np.array(h["feature"])[None, :],
+    )[:, 0, :]
+    ratio = mu.mean() / np.mean(h["units"])
+    assert 0.5 < ratio < 2.0, f"fixture mu is {ratio:.3g}x the observed units — g0 lost?"

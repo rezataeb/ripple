@@ -23,6 +23,19 @@ The three launches, and what the slider should show:
 - `student-coupon` (offer, unknown `b_promo[students]`) — the real coupon is stronger than history taught the model, so the band moves up. No fixed cost.
 - `gift-boxes` (feature, unknown `theta`, skeptical prior N(0, 0.15)) — truth +11.6%. This one **has a random holdout** (`holdout` column, 0/1), so its causal badge is "Experiment", not "Model-based estimate". Its prior scale is `editable_sigma: true` — that's the slider the spec asks for.
 
+**[T+1:10] `simulate.py` and the parity fixture are in.** Two things you need:
+
+1. **The posterior fixture changed — re-pull it.** `contract/posterior.fixture.json` had a bug: `a_city` did not include `g0`, so every `mu` came out ~400x too small. It is fixed and regenerated. If you already read the old file, numbers you saw were wrong (baseline was ~0.5 units/week/cell; it is now ~380). `meta` also gained an optional `traits_z` field (the training cities' standardized traits) — ignore it unless you want to plot candidates against training cities.
+
+2. **`contract/parity.fixture.json` is the agreement test for `web/lib/simulate.ts`.** Three cases — promo, price, new city. For each: `scenario` to feed your simulator, `mu.baseline_flat` / `mu.scenario_flat` (flat row-major, shape in `mu.shape` = `[draw][week][cell]`, cells named in `mu.cells`) to compare **element by element at 1e-6**, and `expected`, the complete result object, to diff field by field (skip `ignore_fields`). `contract/README.md` has the details and `model/tests/test_parity.py` is the Python side doing exactly this — mirror its assertions.
+
+Three traps the fixture is built to catch:
+- horizon week `w` uses absolute `t = meta.weeks + w`, not `t = w`;
+- `g0` is added **only** for a new city (`a_new = g0 + traits_z·g + tau_city·z`, `z` seeded from `scenario.seed`, default 7, one `z` per draw);
+- difference baseline and scenario **inside each draw**, then take quantiles. The promo case asserts the non-Boston cities' incremental is exactly 0.
+
+Headline numbers you should reproduce on the fixture: promo +$9,196 profit 90% [$4,626, $13,444] P(pays) 100%; price +$310 90% [−$2,464, +$3,652] P(pays) 50%; Miami +$2,353 90% [−$21,610, +$26,009] P(pays) 54% with `extrapolation: true`.
+
 ## B → A
 
 (nothing yet)

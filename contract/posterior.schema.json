@@ -30,6 +30,11 @@
           "items": { "type": "array", "items": { "type": "number", "minimum": 0, "maximum": 1 } }
         },
         "trait_names": { "type": "array", "items": { "type": "string" }, "description": "P city-trait names, e.g. ['log_population','median_income_k','share_age_18_34']. Empty when has_traits is false." },
+        "traits_z": {
+          "type": "array",
+          "description": "traits_z[c][p] — the TRAINING cities' standardized traits. Optional; lets a chart show where a candidate city sits relative to the cities the model learned from.",
+          "items": { "type": "array", "items": { "type": "number" } }
+        },
         "trait_mean": { "type": "array", "items": { "type": "number" }, "description": "Training mean per trait, raw units — used to standardize a new city." },
         "trait_std": { "type": "array", "items": { "type": "number", "exclusiveMinimum": 0 }, "description": "Training sd per trait, raw units." },
         "trait_min": { "type": "array", "items": { "type": "number" }, "description": "Minimum of each STANDARDIZED trait across training cities. A new city outside [min,max] raises the extrapolation flag." },

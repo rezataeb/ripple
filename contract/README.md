@@ -12,7 +12,9 @@ The one thing both sessions agree on. Session A (`model/`, `api/`) writes these 
 | `launch.schema.json` | the real weekly data that arrives after a launch (3 demo launches, truth known) |
 | `update.schema.json` | the result of the Bayesian update, including the validity gate |
 | `calibration.schema.json` | the calibration study: coverage by week, plus the stress arm |
-| `make_fixture.py` | regenerates the fixture (`uv run python contract/make_fixture.py`) |
+| `parity.fixture.json` | **the Python↔TS agreement test** — 3 scenarios with expected `mu` arrays and full results |
+| `make_fixture.py` | regenerates the posterior fixture (`uv run python contract/make_fixture.py`) |
+| `make_parity_fixture.py` | regenerates the parity fixture (run it after any change to `simulate.py`) |
 
 The real export lands at `web/public/model/posterior.json` + `trust.json`. Until it does, point the UI at the fixture — the shapes are identical.
 
@@ -62,7 +64,34 @@ profit  = units * (net_price - unit_cost) - fixed_cost
 
 `p_profit_positive` is the share of draws with incremental profit > 0.
 
-Tolerance for the Python↔TS parity test: **1e-6 on `mu`**.
+## The parity fixture
+
+`parity.fixture.json` is how `web/lib/simulate.ts` proves it agrees with
+`model/ripple_model/simulate.py`. Three cases:
+
+| case | what it pins down |
+|---|---|
+| `promo-students-boston` | `b_promo`, the price term, the `b_dip` week, and the rule that unselected cells cancel out of the incremental |
+| `price-plus-8pct-all` | the elasticity term on every cell, with no promo weeks |
+| `new-city-miami` | `a_new = g0 + traits_z·g + tau_city·z` with the seeded `z`, the zero baseline, the candidate's segment mix, and the extrapolation flag |
+
+Each case has:
+
+- `scenario` — feed this to your `simulate()`.
+- `mu.baseline_flat` / `mu.scenario_flat` — flat row-major arrays of shape
+  `mu.shape` = `[draw][week_in_mu.weeks][cell]`, with `mu.cells` naming the cells
+  in order and `mu.t` giving the absolute week index. Reshape and compare
+  **element by element**: tolerance **1e-6 on `mu`**. This is the test that catches
+  an indexing or broadcasting mistake, which a headline total would hide.
+- `expected` — the complete result object. Diff every field except those listed in
+  `ignore_fields` (`meta.source`, `meta.computed_ms`).
+
+`mu` is recorded only at `mu.weeks` (`[0, 3, 4, 5, 11]`: inside the promo window,
+the last promo week, the dip week, the week after, and a late week) to keep the file
+small. `expected.weekly` covers every horizon week, so nothing goes unchecked.
+
+The Python side of this test lives in `model/tests/test_parity.py` — the TS side
+should assert the same things.
 
 ## Hard rules
 

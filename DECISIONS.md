@@ -10,3 +10,6 @@ Choices the spec left open. One line each.
 | 0:15 | `g0` is folded into the fitted `a_city` and used only for new cities. | Keeps the simulator's mean function to one line per term, with no "is this a training city" branch except for `a_new`. |
 | 0:15 | Wrote `posterior.schema.json` + fixture first (the T+15 cut order), then the other three schemas in the same step. **Nothing was cut.** | The other schemas are small; writing them now unblocks Session B's verdict and trust cards. |
 | 0:15 | Wrote `launch.schema.json` and `update.schema.json` at T+15 instead of T+1:15. | Session B builds `update.ts` in parallel from 1:15 and would otherwise be blocked waiting on Session A. |
+- [B] web: shadcn init wired `cn` to an npm package named `cn`; replaced with clsx + tailwind-merge in `web/lib/utils.ts` (same helper, standard shadcn).
+- [B] web: UI loads `/model/posterior.json`, falls back to `/model/posterior.fixture.json` (a copy of `contract/posterior.fixture.json`) until Session A's export lands.
+- [B] web: no result is shown until `web/lib/simulate.ts` exists; the verdict is a skeleton, never a placeholder number.

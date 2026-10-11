@@ -8,7 +8,7 @@ export function SegmentBars({ result }: { result: ScenarioResult | null }) {
   const x = (v: number) => 50 + (v / extent) * 50;
   return (
     <div className="rounded-xl border p-4">
-      <h2 className="mb-4 text-base font-medium">Incremental profit by customer group</h2>
+      <h2 className="mb-4 text-base font-medium">Incremental profit by customer group <span className="text-xs font-normal text-muted-foreground">(before fixed cost)</span></h2>
       <ul className="space-y-4">
         {rows.map((r) => {
           const pr = r.incremental.profit;

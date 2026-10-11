@@ -56,9 +56,9 @@ export function FanChart({
   return (
     <div className="rounded-xl border p-4">
       <div className="mb-2 flex items-baseline justify-between">
-        <h2 className="text-base font-medium">Weekly units, all selected cells</h2>
+        <h2 className="text-base font-medium">Weekly units, all cities and groups</h2>
         <p className="text-xs text-muted-foreground">
-          {result ? "Grey: no change · Indigo: with change · bands are 90%" : "Observed history (the forecast appears when you pick a scenario)"}
+          {result ? "Grey: no change · Indigo: with change · bands are 90%" : "Observed history"}
         </p>
       </div>
       <div className="h-[320px] w-full" role="img" aria-label="Weekly units: history and forecast bands">

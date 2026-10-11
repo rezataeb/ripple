@@ -128,6 +128,15 @@ def standardize(raw: list[float] | np.ndarray) -> np.ndarray:
     return (np.asarray(raw, dtype=float) - mu) / sd
 
 
+def mix_slug(segment: str) -> str:
+    """Segment name -> its column in the cities file, e.g. 'mix_young_professionals'."""
+    return segment.strip().lower().replace(" ", "_")
+
+
+def _center(x: np.ndarray) -> np.ndarray:
+    return x - x.mean()
+
+
 def make_truth(rng: np.random.Generator) -> Truth:
     return Truth(
         # exp(6.6) ~ 735 units/week for an average city before the share offset
@@ -135,8 +144,10 @@ def make_truth(rng: np.random.Generator) -> Truth:
         g=np.array([0.55, 0.18, 0.30]),
         tau_city=0.16,
         z_city=rng.normal(0.0, 1.0, len(CITIES)),
-        # students buy fewer per head than families; the share offset carries volume
-        a_seg=np.array([-0.15, 0.20, 0.10, -0.25]),
+        # students buy fewer per head than families; the share offset carries volume.
+        # Centered to sum to zero: g0 is the only intercept, so an uncentered a_seg
+        # would be unidentified against it and recovery would compare the wrong thing.
+        a_seg=_center(np.array([-0.15, 0.20, 0.10, -0.25])),
         e=np.array([-2.20, -1.60, -1.10, -0.80]),
         b_promo=np.array([0.42, 0.30, 0.22, 0.10]),
         b_feature=0.08,
@@ -519,8 +530,19 @@ def main() -> None:
     csv = panel[["week", "city", "segment", "units", "price", "promo", "feature"]]
     csv.to_csv(DATA / "brightside_weekly.csv", index=False)
 
+    # The cities file carries the traits AND the customer mix. The mix is a property of
+    # the city, not of what it happened to buy, so the model must not re-derive it from
+    # observed volume: that would fold price and promo exposure into the offset and make
+    # a_seg and a_city unrecoverable. A customer CSV can supply mix_* columns the same way.
     cities = pd.DataFrame(
-        [{"city": c, **dict(zip(TRAIT_NAMES, v, strict=True))} for c, v in CITIES.items()]
+        [
+            {
+                "city": c,
+                **dict(zip(TRAIT_NAMES, v, strict=True)),
+                **{f"mix_{mix_slug(seg)}": CITY_SHARES[c][i] for i, seg in enumerate(SEGMENTS)},
+            }
+            for c, v in CITIES.items()
+        ]
     )
     cities.to_csv(DATA / "brightside_cities.csv", index=False)
 

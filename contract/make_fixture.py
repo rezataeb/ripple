@@ -55,7 +55,10 @@ def main() -> None:
     shares = np.array([[0.45, 0.55], [0.60, 0.40]])  # rows sum to 1
 
     # --- posterior draws ------------------------------------------------------
-    g0 = rng.normal(5.30, 0.06, D)
+    # g0 is the global intercept. It must be folded INTO a_city for the training
+    # cities, because contract/README.md says the simulator adds g0 only for a new
+    # city — an a_city without it would make every mu ~400x too small.
+    g0 = rng.normal(6.40, 0.06, D)
     g = np.column_stack(
         [
             rng.normal(0.22, 0.05, D),  # bigger city -> more demand
@@ -64,7 +67,10 @@ def main() -> None:
         ]
     )
     tau_city = np.abs(rng.normal(0.18, 0.04, D))
-    a_city = np.column_stack([rng.normal(0.12, 0.05, D), rng.normal(-0.09, 0.05, D)])
+    # a_city[d][c] = g0[d] + traits_z[c].g[d] + tau_city[d]*z_city[c] — the same
+    # identity the fitted model exports, so the fixture is a valid posterior.
+    z_city = np.array([0.55, -0.40])  # fixed per city, so the fixture is reproducible
+    a_city = g0[:, None] + (g @ traits_z.T) + tau_city[:, None] * z_city[None, :]
     a_seg = np.column_stack([rng.normal(0.05, 0.04, D), rng.normal(-0.05, 0.04, D)])
     e = np.column_stack(
         [
@@ -111,6 +117,8 @@ def main() -> None:
             for si in range(S):
                 sr = season.mean(axis=0)
                 basis = season_row(t)
+                # exactly the mean function in contract/README.md — a_city already
+                # carries g0, so g0 must NOT be added again here
                 log_mu = (
                     np.log(shares[ci, si])
                     + a_city[:, ci].mean()
@@ -120,7 +128,6 @@ def main() -> None:
                     + b_feature.mean() * feature
                     + b_dip.mean() * promo_prev
                     + float(basis @ sr)
-                    + g0.mean()
                 )
                 units = float(np.round(np.exp(log_mu) * rng.normal(1.0, 0.05)))
                 hist["week_start"].append(str(week0 + np.timedelta64(7 * t, "D")))
@@ -169,6 +176,7 @@ def main() -> None:
             "unit_cost": UNIT_COST,
             "shares": r(shares),
             "trait_names": TRAIT_NAMES,
+            "traits_z": r(traits_z),
             "trait_mean": r(trait_mean),
             "trait_std": r(trait_std),
             "trait_min": r(trait_min),

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ScenarioControls, presetsFor } from "@/components/scenario-controls";
 import { Topbar } from "@/components/topbar";
 import { Verdict } from "@/components/verdict";
@@ -9,6 +9,7 @@ import { SegmentBars } from "@/components/segment-bars";
 import { Warnings } from "@/components/extrapolation-banner";
 import { Skeleton } from "@/components/ui/skeleton";
 import { loadPosterior } from "@/lib/posterior";
+import { simulate } from "@/lib/simulate";
 import type { Posterior, Scenario, ScenarioResult } from "@/lib/types";
 
 export default function Simulator() {
@@ -16,8 +17,10 @@ export default function Simulator() {
   const [source, setSource] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [scenario, setScenario] = useState<Scenario | null>(null);
-  // Filled by lib/simulate.ts in the next step; never faked.
-  const [result] = useState<ScenarioResult | null>(null);
+  const result: ScenarioResult | null = useMemo(
+    () => (posterior && scenario ? simulate(posterior, scenario) : null),
+    [posterior, scenario],
+  );
 
   useEffect(() => {
     loadPosterior()
