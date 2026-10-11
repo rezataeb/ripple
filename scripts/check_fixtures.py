@@ -33,6 +33,10 @@ GENERATORS: list[tuple[list[str], list[str]]] = [
     (["python", "contract/make_fixture.py"], ["contract/posterior.fixture.json"]),
     (["python", "contract/make_parity_fixture.py"], ["contract/parity.fixture.json"]),
     (
+        ["python", "contract/make_update_parity_fixture.py"],
+        ["contract/update_parity.fixture.json"],
+    ),
+    (
         ["python", "model/scripts/make_demo_scan.py"],
         ["web/public/model/market_scan.demo.json"],
     ),

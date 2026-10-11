@@ -212,3 +212,127 @@ def test_result_matches_the_update_schema(post, launches, launch_id) -> None:
     r = update_with_launch(post, launches[launch_id], 4)
     r.pop("_net_price", None)
     jsonschema.validate(r, schema)
+
+
+# --------------------------------------------------------------------------
+# the incremental verdict (Session B's finding)
+# --------------------------------------------------------------------------
+def test_the_headline_is_incremental_not_gross(post, launches) -> None:
+    """P(pays) must come from incremental profit, or it is trivially 1.00.
+
+    For an offer or a feature launch the treated cells are an existing business,
+    so gross profit over the horizon carries the baseline margin and is nowhere
+    near zero. Reporting that as "chance it pays" says a coupon pays whatever
+    the coupon actually does.
+    """
+    for launch_id in ("student-coupon", "gift-boxes"):
+        r = update_with_launch(post, launches[launch_id], 0)["forecast"]
+        assert r["total_profit"]["p05"] > 0, "setup: gross profit should be clearly positive"
+        assert abs(r["incremental_profit"]["mean"]) < r["total_profit"]["mean"], (
+            f"{launch_id}: incremental should be much smaller than gross"
+        )
+        # the verdict must be the incremental one
+        assert r["p_profit_positive"] < 0.999, (
+            f"{launch_id}: P(pays) is {r['p_profit_positive']:.3f} before any data — "
+            "that is the gross-profit bug"
+        )
+
+
+def test_new_city_incremental_equals_gross(post, launches) -> None:
+    """A city that does not exist has no baseline, so the two must coincide."""
+    for weeks in (0, 4, 8):
+        f = update_with_launch(post, launches["austin-launch"], weeks)["forecast"]
+        for key in ("mean", "p05", "p50", "p95"):
+            assert f["incremental_profit"][key] == pytest.approx(
+                f["total_profit"][key], rel=1e-12
+            )
+
+
+def test_p_profit_positive_agrees_with_the_incremental_interval(post, launches) -> None:
+    """Internal consistency: a mostly-negative interval cannot be a high chance."""
+    for launch_id in LAUNCH_IDS:
+        for weeks in (0, 2, 8):
+            f = update_with_launch(post, launches[launch_id], weeks)["forecast"]
+            p, lo, hi = f["p_profit_positive"], f["incremental_profit"]["p05"], (
+                f["incremental_profit"]["p95"]
+            )
+            if lo > 0:
+                assert p > 0.95, f"{launch_id} wk{weeks}: interval all positive but p={p:.2f}"
+            if hi < 0:
+                assert p < 0.05, f"{launch_id} wk{weeks}: interval all negative but p={p:.2f}"
+
+
+def test_the_coupon_verdict_moves_as_data_arrives(post, launches) -> None:
+    """The spec's story: 'Chance it pays: 61% -> 78%'. It has to actually move."""
+    before = update_with_launch(post, launches["student-coupon"], 0)
+    after = update_with_launch(post, launches["student-coupon"], 8)
+    assert before["forecast"]["p_profit_positive"] < 0.8, "week 0 should be genuinely unsure"
+    assert after["forecast"]["p_profit_positive"] > before["forecast"]["p_profit_positive"] + 0.2
+    assert after["prior_forecast"]["p_profit_positive"] == pytest.approx(
+        before["forecast"]["p_profit_positive"]
+    ), "prior_forecast must equal the week-0 forecast"
+
+
+def test_weighted_quantile_is_tie_stable(post, launches) -> None:
+    """K samples per draw tie exactly; an unstable sort made TS differ by ~5e-5."""
+    import numpy as np
+
+    x = np.repeat(np.array([3.0, 1.0, 2.0, 1.0]), 5)
+    w = np.full(x.size, 1.0 / x.size)
+    first = [weighted_quantile(x, q, w)[0] for q in (0.05, 0.5, 0.95)]
+    for _ in range(5):
+        again = [weighted_quantile(x, q, w)[0] for q in (0.05, 0.5, 0.95)]
+        assert again == first, "weighted_quantile is not deterministic across calls"
+
+
+def test_update_parity_fixture_is_reproducible() -> None:
+    """Every case in the shipped fixture must still come out of update.py."""
+    import json as _json
+
+    path = ROOT / "contract" / "update_parity.fixture.json"
+    if not path.exists():
+        pytest.skip("run contract/make_update_parity_fixture.py first")
+    fixture = _json.loads(path.read_text())
+    post_doc = _json.loads((PUBLIC / "posterior.json").read_text())
+    launch_docs = {
+        x["id"]: x for x in _json.loads((PUBLIC / "launches.json").read_text())["launches"]
+    }
+    k, seed = fixture["k_per_draw"], fixture["seed"]
+
+    for case in fixture["cases"]:
+        got = update_with_launch(
+            post_doc, launch_docs[case["launch_id"]], case["weeks_used"],
+            k_per_draw=k, seed=seed,
+        )
+        want = case["expected"]
+        label = f"{case['launch_id']} wk{case['weeks_used']}"
+        assert got["gate"]["ok"] == want["gate"]["ok"], label
+        for field in ("incremental_profit", "total_units"):
+            for q in ("mean", "p05", "p95"):
+                assert got["forecast"][field][q] == pytest.approx(
+                    want["forecast"][field][q], rel=1e-9
+                ), f"{label}.{field}.{q}"
+        assert got["forecast"]["p_profit_positive"] == pytest.approx(
+            want["forecast"]["p_profit_positive"], rel=1e-9
+        ), label
+
+
+def test_update_parity_fixture_ships_the_prior_samples() -> None:
+    """update.ts cannot generate these, so they must be in the fixture."""
+    import json as _json
+
+    import numpy as np
+
+    path = ROOT / "contract" / "update_parity.fixture.json"
+    if not path.exists():
+        pytest.skip("run contract/make_update_parity_fixture.py first")
+    fixture = _json.loads(path.read_text())
+    post_doc = _json.loads((PUBLIC / "posterior.json").read_text())
+    k = fixture["k_per_draw"]
+    expected_n = int(post_doc["meta"]["n_draws"]) * k
+
+    assert set(fixture["priors"]) == set(LAUNCH_IDS)
+    for launch_id, prior in fixture["priors"].items():
+        assert len(prior["u"]) == expected_n, launch_id
+        assert prior["prior_sigma"] > 0, launch_id
+        assert np.all(np.isfinite(prior["u"])), launch_id

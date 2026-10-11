@@ -49,7 +49,10 @@ def weighted_quantile(x: np.ndarray, q: float | np.ndarray, w: np.ndarray) -> np
     """Quantiles of x under normalized weights w. Mirrored in update.ts."""
     x = np.asarray(x, dtype=float).ravel()
     w = np.asarray(w, dtype=float).ravel()
-    order = np.argsort(x)
+    # stable: K samples share each posterior draw, so counterfactual values tie
+    # exactly. With an unstable sort the interpolated quantile depends on tie
+    # order, which made update.ts disagree with this file by ~5e-5 relative.
+    order = np.argsort(x, kind="stable")
     xs, ws = x[order], w[order]
     cum = np.cumsum(ws)
     total = cum[-1]
@@ -406,9 +409,22 @@ def update_with_launch(
         mu_cf = np.zeros_like(mu_cf)  # with no launch there is no city
 
     net_price = float(launch.get("net_price", meta["base_price"]))
+    margin = (fdes["price"] - unit_cost)[None, :, :]
     units_tot = mu_f.sum(axis=(1, 2))
     revenue_tot = (mu_f * fdes["price"][None, :, :]).sum(axis=(1, 2))
-    profit_tot = (mu_f * (fdes["price"] - unit_cost)[None, :, :]).sum(axis=(1, 2)) - fixed_cost
+    profit_tot = (mu_f * margin).sum(axis=(1, 2)) - fixed_cost
+
+    # The headline is INCREMENTAL, against the model's counterfactual for the same
+    # cells and weeks, differenced inside each sample before any summary.
+    #
+    # The totals above are not a verdict for an offer or a feature launch: those
+    # cells are an existing business, so total profit carries the baseline margin
+    # and P(total profit > 0) is trivially 1.00. For a new city the counterfactual
+    # is zero, so incremental and total coincide.
+    delta = mu_f - mu_cf
+    inc_units = delta.sum(axis=(1, 2))
+    inc_revenue = (delta * fdes["price"][None, :, :]).sum(axis=(1, 2))
+    inc_profit = (delta * margin).sum(axis=(1, 2)) - fixed_cost
 
     observed_by_week = _observed_totals(launch, weeks_used)
     weekly = []
@@ -510,14 +526,20 @@ def update_with_launch(
             "total_units": w_interval(units_tot, w),
             "total_revenue": w_interval(revenue_tot, w),
             "total_profit": w_interval(profit_tot, w),
-            "p_profit_positive": float(np.sum(w[profit_tot > 0]) / np.sum(w)),
+            "incremental_units": w_interval(inc_units, w),
+            "incremental_revenue": w_interval(inc_revenue, w),
+            "incremental_profit": w_interval(inc_profit, w),
+            "p_profit_positive": float(np.sum(w[inc_profit > 0]) / np.sum(w)),
             "weekly": weekly,
         },
         "prior_forecast": {
             "total_units": w_interval(units_tot, w_prior),
             "total_revenue": w_interval(revenue_tot, w_prior),
             "total_profit": w_interval(profit_tot, w_prior),
-            "p_profit_positive": float(np.mean(profit_tot > 0)),
+            "incremental_units": w_interval(inc_units, w_prior),
+            "incremental_revenue": w_interval(inc_revenue, w_prior),
+            "incremental_profit": w_interval(inc_profit, w_prior),
+            "p_profit_positive": float(np.mean(inc_profit > 0)),
         },
         "causal": causal,
         "meta": {

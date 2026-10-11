@@ -80,14 +80,17 @@
     "forecast": {
       "type": "object",
       "description": "Updated forecast over the launch horizon, using the importance-weighted draws.",
-      "required": ["horizon", "total_units", "total_profit", "p_profit_positive", "weekly"],
+      "required": ["horizon", "total_units", "total_profit", "incremental_profit", "p_profit_positive", "weekly"],
       "additionalProperties": false,
       "properties": {
         "horizon": { "type": "integer", "minimum": 1 },
         "total_units": { "$ref": "#/$defs/interval" },
         "total_revenue": { "$ref": "#/$defs/interval" },
-        "total_profit": { "$ref": "#/$defs/interval" },
-        "p_profit_positive": { "type": "number", "minimum": 0, "maximum": 1 },
+        "total_profit": { "$ref": "#/$defs/interval", "description": "Gross profit of all launch cells over the horizon, minus fixed_cost. NOT a verdict for an offer or feature launch, where these cells are an existing business." },
+        "incremental_units": { "$ref": "#/$defs/interval" },
+        "incremental_revenue": { "$ref": "#/$defs/interval" },
+        "incremental_profit": { "$ref": "#/$defs/interval", "description": "THE HEADLINE. (mu_forecast - mu_counterfactual) x (price - unit_cost), summed over the horizon, minus fixed_cost, differenced inside each sample before any summary. Equals total_profit for a new city, whose counterfactual is zero." },
+        "p_profit_positive": { "type": "number", "minimum": 0, "maximum": 1, "description": "Share of weight on samples with incremental_profit > 0 — the 'chance it pays' number." },
         "weekly": {
           "type": "array",
           "items": {
@@ -109,12 +112,15 @@
     "prior_forecast": {
       "type": "object",
       "description": "The same forecast before any launch data, so the UI can show 'Chance it pays: 61% → 78%'.",
-      "required": ["total_units", "total_profit", "p_profit_positive"],
+      "required": ["total_units", "total_profit", "incremental_profit", "p_profit_positive"],
       "additionalProperties": false,
       "properties": {
         "total_units": { "$ref": "#/$defs/interval" },
         "total_revenue": { "$ref": "#/$defs/interval" },
         "total_profit": { "$ref": "#/$defs/interval" },
+        "incremental_units": { "$ref": "#/$defs/interval" },
+        "incremental_revenue": { "$ref": "#/$defs/interval" },
+        "incremental_profit": { "$ref": "#/$defs/interval" },
         "p_profit_positive": { "type": "number", "minimum": 0, "maximum": 1 }
       }
     },

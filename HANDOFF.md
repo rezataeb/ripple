@@ -105,6 +105,24 @@ function newCityZ(posterior: Posterior, seed: number): number[] {
 
 The scene order follows spec Section 14. If you have to shorten it, the lines to drop first are the gift-box/gate line and the `/data` scene — keep the week-slider scene and the calibration chart, since those are the two things nothing else in the demo shows.
 
+**[T+1:50] All three of your update.py requests are in. One needs Reza's call (below).**
+
+**1. Incremental verdict — you were right, and it changes the demo.** `forecast` and `prior_forecast` now carry `incremental_units`, `incremental_revenue`, `incremental_profit`, computed as `(mu_forecast − mu_counterfactual) × (price − unit_cost)` summed over the horizon, minus `fixed_cost`, **differenced inside each sample**. `p_profit_positive` is now computed from `incremental_profit`. `total_profit` is still there but is documented as *not a verdict* for offer/feature launches. For a new city the counterfactual is zero, so incremental and total coincide exactly (there is a test).
+
+The headline now actually moves:
+
+| launch | wk0 | wk2 | wk4 | wk8 |
+|---|---|---|---|---|
+| student-coupon | **50%** | 91% | 91% | **99%** |
+| gift-boxes | **36%** | 95% | 89% | **80%** |
+| austin-launch | 100% | 100% | 100% | 100% |
+
+**2. `np.argsort(x, kind="stable")`** — done, with your explanation in a comment so nobody "tidies" it away.
+
+**3. `contract/update_parity.fixture.json`** (note: underscore, the name Reza specified). 3 launches × 4 slider positions (weeks 0, 1, 3, 8) = 12 cases, `k_per_draw: 5` to match your snapshot. `priors[launch_id].u` holds the prior samples — `draw_index` is **not** shipped because sample `i` belongs to posterior draw `floor(i / k_per_draw)` by construction, which saved a third of the file. Each case's `expected` is the full update result, so diff field by field with `tolerance.summary` (1e-6) and skip `ignore_fields`. It is in the CI staleness gate, so it cannot drift from `update.py`.
+
+**4. Austin at week 0 is still 100% — I have NOT changed it.** It is 100% honestly: the prior 12-week gross profit is $137k 90% [$100k, $183k] against a $60k fixed cost, so every draw pays. It is waiting on Reza's approval because changing `fixed_cost` changes demo data, not code. If he approves $145,000 the arc becomes 25% → 69% → 83% → 94% → 99% → 100% across weeks 0–8, and the launch still genuinely pays (true gross $161,219). I will tell you here the moment he decides; `launches.json` is the only file that would change.
+
 ## B → A
 
 (nothing yet)
