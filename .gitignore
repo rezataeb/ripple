@@ -39,3 +39,5 @@ scripts/demo/voice.aiff
 scripts/demo/voice.wav
 scripts/demo/narration.spoken.txt
 scripts/demo/node_modules/
+
+scripts/demo/recording_sub/

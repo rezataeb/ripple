@@ -40,6 +40,12 @@ duration_of() {
     | awk -F'[ ,]' '/Duration:/ {split($4,t,":"); print t[1]*3600 + t[2]*60 + t[3]; exit}'
 }
 
+# OUT_NAME picks the output stem; RECORDING_DIR picks which capture to use;
+# SILENT=1 burns no audio (the subtitles are already in the picture).
+OUT_NAME="${OUT_NAME:-demo}"
+RECORDING_DIR="${RECORDING_DIR:-recording}"
+SILENT="${SILENT:-0}"
+MAKE_GIF="${MAKE_GIF:-1}"
 PAD="${PAD:-0.6}"
 TITLE_SECONDS="${TITLE_SECONDS:-2}"
 GIF_SECONDS="${GIF_SECONDS:-15}"
@@ -49,14 +55,34 @@ H=900
 ASSETS="../../assets"
 mkdir -p "$ASSETS"
 
-[[ -d voice ]] || { echo "no voice/ — run 'make voice' first" >&2; exit 1; }
-RECORDING=$(ls -t recording/*.webm 2>/dev/null | head -1 || true)
-[[ -n "$RECORDING" ]] || { echo "no recording — run 'make record' first" >&2; exit 1; }
+if [[ "$SILENT" != "1" ]]; then
+  [[ -d voice ]] || { echo "no voice/ — run 'make voice' first" >&2; exit 1; }
+fi
+RECORDING=$(ls -t "$RECORDING_DIR"/*.webm 2>/dev/null | head -1 || true)
+[[ -n "$RECORDING" ]] || { echo "no recording in $RECORDING_DIR — run 'make record' first" >&2; exit 1; }
 [[ -f title.png ]] || node title_card.ts
 
 echo "recording: $RECORDING"
 
 # ---- 1. the voice track: each line, then PAD seconds of silence ------------
+if [[ "$SILENT" == "1" ]]; then
+  echo "silent build: subtitles are burned into the picture, no audio track"
+  "$FFMPEG" -y -v error \
+    -loop 1 -t "$TITLE_SECONDS" -i title.png \
+    -i "$RECORDING" \
+    -filter_complex "\
+      [0:v]scale=${W}:${H},fps=${FPS},format=yuv420p,setsar=1[v0]; \
+      [1:v]scale=${W}:${H},fps=${FPS},format=yuv420p,setsar=1[v1]; \
+      [v0][v1]concat=n=2:v=1:a=0[v]" \
+    -map "[v]" -an \
+    -c:v libx264 -preset slow -crf 20 -pix_fmt yuv420p -movflags +faststart \
+    "$ASSETS/${OUT_NAME}.mp4"
+  DUR=$(duration_of "$ASSETS/${OUT_NAME}.mp4")
+  printf "assets/%s.mp4  %.1fs  %s\n" "$OUT_NAME" "$DUR" "$(du -h "$ASSETS/${OUT_NAME}.mp4" | cut -f1)"
+  awk -v d="$DUR" 'BEGIN{ if (d >= 120) { print "ERROR: over the 2-minute limit"; exit 1 } }'
+  exit 0
+fi
+
 # NB: no `mapfile` — macOS ships bash 3.2, where it does not exist.
 LINES=()
 while IFS= read -r f; do LINES+=("$f"); done < <(ls voice/*.aiff | sort)
@@ -87,18 +113,19 @@ echo "voice.wav: ${VOICE_SECS}s"
   -map "[v]" -map "[a]" \
   -c:v libx264 -preset slow -crf 20 -pix_fmt yuv420p -movflags +faststart \
   -c:a aac -b:a 160k \
-  "$ASSETS/demo.mp4"
+  "$ASSETS/${OUT_NAME}.mp4"
 
-DUR=$(duration_of "$ASSETS/demo.mp4")
-printf "assets/demo.mp4  %.1fs  %s\n" "$DUR" "$(du -h "$ASSETS/demo.mp4" | cut -f1)"
+DUR=$(duration_of "$ASSETS/${OUT_NAME}.mp4")
+printf "assets/%s.mp4  %.1fs  %s\n" "$OUT_NAME" "$DUR" "$(du -h "$ASSETS/${OUT_NAME}.mp4" | cut -f1)"
 awk -v d="$DUR" 'BEGIN{ if (d >= 120) { print "ERROR: over the 2-minute limit"; exit 1 } }'
 
 # ---- 3. a 15s GIF of the launch slider, the one thing nothing else shows ---
+if [[ "$MAKE_GIF" != "1" ]]; then exit 0; fi
 GIF_START=$(awk -v s="$(node narration.ts --start 'week slider')" -v t="$TITLE_SECONDS" \
   'BEGIN{ printf "%.2f", s + t - 1 }')
 echo "gif window: ${GIF_START}s +${GIF_SECONDS}s (the launch week slider)"
-"$FFMPEG" -y -v error -ss "$GIF_START" -t "$GIF_SECONDS" -i "$ASSETS/demo.mp4" \
+"$FFMPEG" -y -v error -ss "$GIF_START" -t "$GIF_SECONDS" -i "$ASSETS/${OUT_NAME}.mp4" \
   -filter_complex "fps=12,scale=900:-1:flags=lanczos,split[s0][s1];\
                    [s0]palettegen=max_colors=160[p];[s1][p]paletteuse=dither=bayer:bayer_scale=3" \
-  "$ASSETS/demo.gif"
-printf "assets/demo.gif  %ss  %s\n" "$GIF_SECONDS" "$(du -h "$ASSETS/demo.gif" | cut -f1)"
+  "$ASSETS/${OUT_NAME}.gif"
+printf "assets/%s.gif  %ss  %s\n" "$OUT_NAME" "$GIF_SECONDS" "$(du -h "$ASSETS/${OUT_NAME}.gif" | cut -f1)"

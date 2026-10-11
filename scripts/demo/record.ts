@@ -36,6 +36,7 @@ const BASE = (positional[0] ?? process.env.RIPPLE_BASE_URL ?? "http://127.0.0.1:
 );
 const OUT = outIdx >= 0 ? args[outIdx + 1] : join(DEMO_DIR, "recording");
 const HEADED = flags.has("--headed");
+const SUBTITLES = flags.has("--subtitles");
 
 const VIEWPORT = { width: 1440, height: 900 };
 /** Short on purpose: a missing element must fail fast, not eat the scene. */
@@ -54,6 +55,61 @@ async function act(cue: string, fn: () => Promise<string>): Promise<void> {
 }
 
 const sleep = (s: number) => new Promise((r) => setTimeout(r, Math.max(0, s) * 1000));
+
+const CAPTION_ID = "__ripple_caption__";
+/** The line currently on screen, so a navigation can restore it immediately. */
+let currentCaption = "";
+
+/**
+ * Draw one subtitle line over the page.
+ *
+ * Re-injected per scene rather than installed once, because a full navigation
+ * wipes the DOM and the caption would silently vanish for the rest of the video.
+ */
+async function showCaption(page: Page, text: string): Promise<void> {
+  if (!SUBTITLES) return;
+  currentCaption = text;
+  await page.evaluate(
+    ({ id, text }) => {
+      let el = document.getElementById(id);
+      if (!el) {
+        el = document.createElement("div");
+        el.id = id;
+        el.setAttribute("aria-hidden", "true");
+        Object.assign(el.style, {
+          position: "fixed",
+          left: "0",
+          right: "0",
+          bottom: "0",
+          zIndex: "2147483647",
+          display: "flex",
+          justifyContent: "center",
+          padding: "0 64px 38px",
+          pointerEvents: "none",
+          font: '500 25px/1.42 -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif',
+          letterSpacing: "-0.01em",
+        } as Partial<CSSStyleDeclaration>);
+        const inner = document.createElement("span");
+        inner.id = id + "_t";
+        Object.assign(inner.style, {
+          background: "rgba(10,10,10,0.92)",
+          color: "#FFFFFF",
+          padding: "15px 26px",
+          borderRadius: "14px",
+          maxWidth: "1120px",
+          textAlign: "center",
+          boxShadow: "0 8px 30px rgba(0,0,0,0.28)",
+          textWrap: "balance",
+        } as Partial<CSSStyleDeclaration>);
+        el.appendChild(inner);
+        document.body.appendChild(el);
+      }
+      const t = document.getElementById(id + "_t");
+      if (t) t.textContent = text;
+    },
+    { id: CAPTION_ID, text },
+  );
+}
 
 /**
  * Abandon an action that overruns its scene.
@@ -288,7 +344,10 @@ function actionFor(cue: string): ((page: Page, scene: Scene) => Promise<void>) |
 async function main(): Promise<void> {
   const scenes = scenesWithTimings();
   const planned = totalSeconds(scenes);
-  console.log(`recording ${scenes.length} scenes, ${planned.toFixed(1)}s, against ${BASE}`);
+  console.log(
+    `recording ${scenes.length} scenes, ${planned.toFixed(1)}s, against ${BASE}` +
+      (SUBTITLES ? " [subtitles burned in]" : ""),
+  );
 
   rmSync(OUT, { recursive: true, force: true });
   mkdirSync(OUT, { recursive: true });
@@ -303,6 +362,16 @@ async function main(): Promise<void> {
       recordVideo: { dir: OUT, size: VIEWPORT },
     });
     const page = await context.newPage();
+    if (SUBTITLES) {
+      // a goto wipes the overlay; without this the caption is missing for the
+      // first seconds of every scene that navigates, including scene 1
+      page.on("load", () => {
+        if (currentCaption) void showCaption(page, currentCaption).catch(() => {});
+      });
+      page.on("domcontentloaded", () => {
+        if (currentCaption) void showCaption(page, currentCaption).catch(() => {});
+      });
+    }
 
     // warm the cache so the first scene is not a loading skeleton on camera
     await page.goto(`${BASE}/`, { waitUntil: "networkidle" });
@@ -317,6 +386,7 @@ async function main(): Promise<void> {
       );
       const action = actionFor(scene.cue);
       if (action) {
+        await showCaption(page, scene.text).catch(() => {});
         // keep a slice of the scene for the picture to settle before the cut
         await withDeadline(action(page, scene), scene.seconds * 0.85, scene.cue).catch((e) => {
           console.warn(`  ! ${String(e).split("\n")[0].slice(0, 110)}`);
@@ -325,6 +395,8 @@ async function main(): Promise<void> {
         bound.push({ cue: scene.cue, ok: true, note: "hold (no action mapped)" });
       }
 
+      // an action may have navigated, which wipes the overlay: put it back
+      await showCaption(page, scene.text).catch(() => {});
       // hold whatever is left of the scene so the cut lands on the spoken line
       await sleep(scene.seconds - (Date.now() - sceneStart) / 1000);
     }

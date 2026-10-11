@@ -1,48 +1,49 @@
 # Demo narration — AI Engineer Hackathon NYC, 2026-10-11
-# Target: under 100 seconds. Line 1 names the hackathon, which is a submission rule.
-# One line per scene; scene cues in [brackets] are for the Playwright script, not spoken.
+# Conversational register: short sentences, contractions, no lists.
+# Every number here was checked against https://ripple-opal.vercel.app.
+# One line per scene; [bracketed] cues are for record.ts and are never spoken.
 
 [home]
 Hi, I'm Reza, and this is Ripple, my project for the AI Engineer Hackathon NYC.
 
 [home — verdict + fan chart visible]
-Ripple answers "what happens to sales if" with a distribution, never a single number.
+Most pricing decisions come down to a single number that nobody really believes. Ripple gives you the whole range instead.
 
 [home — preset "Student coupon in Boston"]
-A twenty percent student coupon in Boston: incremental profit, a ninety percent interval, and the chance it pays.
+Here's a twenty percent student coupon in Boston. It adds about eight thousand four hundred dollars, and it's very likely to pay off.
 
 [home — drag discount 10% to 30%]
-Drag the discount and everything moves at once, because the whole posterior is in the browser.
+I can drag the discount and everything moves right away. The model's already in the browser, so there's no waiting.
 
 [home — point at the dip after the promo weeks]
-Notice the dip after the promotion. A promo borrows sales from next week, and the model charges it back.
+Look at what happens after the promo ends. Demand dips, because a discount borrows sales from next week. If you ignore that, every promotion looks better than it really was.
 
 [/launch — Austin launch, slider at 0]
-Then reality arrives. Here is the Austin launch before any data.
+Now the hard part. We've just opened in Austin, and we don't know yet if it was a good idea.
 
 [/launch — drag the week slider 0 to 8]
-Each real week updates the forecast with Bayes' rule. The band narrows, and the chance it pays updates.
+Before any data, Ripple gives it a twenty-five percent chance of paying off. So, probably not. But then the real weeks start coming in.
 
 [/launch — truth toggle on]
-The data was generated with a known answer, so I can show you the truth. It stays inside the interval the whole way.
+By week four it's up to ninety-four percent. By week eight it's basically certain. The forecast was wrong, and the data fixed it.
 
 [/launch — gate badge]
-And when the launch is too surprising for the fast update, this badge says "refit needed" instead of pretending.
+And when a launch is too strange for the quick update, Ripple says so instead of guessing. That's what this badge is for.
 
 [cmd-K — "Is Miami a good next city?"]
-The agent turns the question into a scenario, runs the model, and checks the live market.
+I can also just ask. It builds the scenario, runs the model, and checks what competitors are charging.
 
 [Ask panel — extrapolation warning + market sources]
-Miami is outside the training range, and Ripple says so. Every number comes from a tool, with sources.
+Miami sits outside anything we've seen, and it tells me that up front. Every number here came from a tool, not from the language model.
 
 [/data — bring your own data]
-Your own CSV goes through the same path: map the columns, check them, fit the same model.
+Your own spreadsheet goes through exactly the same path. Ripple maps the columns, checks them, and fits the same model.
 
 [/method — recovery + calibration charts]
-Thirty of thirty planted values recovered. Six of six trust checks pass.
+I built the demo data myself, so I know the true answers. The model found all thirty of them.
 
 [/method — stress arm on the calibration chart]
-And two hundred simulated launches say the intervals are honest, including the one case where they are not.
+And I ran two hundred fake launches to see if the intervals hold up. They do. There's one case where they don't, and I put that on the page too.
 
 [end]
 The model makes the numbers. The agent explains them. The web gives context. Thanks for watching.

@@ -79,6 +79,16 @@ video:              ## ffmpeg: title card + recording + voice -> assets/demo.mp4
 
 demo: voice record video   ## the whole video pipeline
 
+# The two alternate cuts, both recorded from the same flow:
+demo-voice:         ## narrated cut -> assets/demo-voice.mp4
+	VOICE=$${VOICE:-Daniel} RATE=$${RATE:-195} PAD=0.4 ./scripts/demo/make_voice.sh
+	node scripts/demo/record.ts $(BASE)
+	OUT_NAME=demo-voice PAD=0.4 MAKE_GIF=0 ./scripts/demo/make_video.sh
+
+demo-subtitles:     ## silent cut with burned-in captions -> assets/demo-subtitles.mp4
+	node scripts/demo/record.ts $(BASE) --subtitles --out scripts/demo/recording_sub
+	OUT_NAME=demo-subtitles RECORDING_DIR=recording_sub SILENT=1 ./scripts/demo/make_video.sh
+
 clean:
 	rm -rf .pytest_cache .ruff_cache model/data/*.npz
 	rm -rf scripts/demo/recording scripts/demo/voice scripts/demo/voice.wav
