@@ -91,7 +91,14 @@ The same math runs twice: `model/ripple_model/simulate.py` as the reference and
 `web/lib/simulate.ts` in the browser. `contract/parity.fixture.json` holds three
 scenarios with cell-level `mu` arrays and complete expected results, and both
 implementations are tested against it to **1e-6 on `mu`**. The browser is a port, not a
-re-derivation.
+re-derivation. `contract/update_parity.fixture.json` does the same job for the launch
+update, across three launches and four slider positions.
+
+Two inputs have to travel *with* the data rather than be regenerated, because numpy's
+RNG and a browser PRNG cannot agree and a parity test that recovers them from the
+expected output would stay green while the live app diverged: the new-city `z` draws ship
+in `posterior.draws.z_new` (the scenario seed rotates that array), and the launch
+update's prior samples ship in the update parity fixture.
 
 ---
 
@@ -114,6 +121,27 @@ is the prior, the new weeks are the likelihood.**
 | New city | `a_new = g0 + X_new·g + tau_city·z` | `z ~ N(0,1)` — the hierarchical prior |
 | New offer | `b_promo[s]` for *this* offer | the fitted posterior, widened for a new offer |
 | A feature never seen before | log-lift `theta` | **skeptical** `N(0, 0.15)`, adjustable in the UI |
+
+**The verdict is incremental.** "Chance it pays" is the share of samples where
+`(mu_forecast − mu_counterfactual) × (price − unit_cost) − fixed_cost` is positive,
+differenced **inside each sample**. That distinction is not pedantic: for an offer or a
+feature launch the treated cells are an existing business, so *gross* profit over the
+horizon carries the baseline margin and "chance it pays" would read 100% whatever the
+coupon actually did. For a new city the counterfactual is zero, so the two coincide.
+
+What the slider shows on the three demo launches — the planted truth is inside the 90%
+interval at every week of all three:
+
+| launch | week 0 | week 2 | week 4 | week 8 | truth |
+|---|---|---|---|---|---|
+| **Austin** (new city, $145k launch budget) | **25%** | 83% | 94% | **100%** | pays, +$16.2k |
+| **Student coupon** (new offer, Boston) | **50%** | 91% | 91% | **99%** | lift +0.62, found +0.57 |
+| **Gift boxes** (unseen feature, random holdout) | **36%** | 95% | 89% | **80%** | lift +11.6%, found +8.1% |
+
+Austin is the one to watch: before any data the model says *probably don't* — 25%, with a
+90% interval of −$44.6k to +$38.4k. Eight real weeks move it to 100% and +$21.2k 90%
+[+$10.9k, +$32.6k]. The forecast was wrong and the data corrected it, which is the entire
+reason this page exists.
 
 **The gate.** This is exact Bayes only while the weights behave. When the launch weeks
 are too surprising, a handful of samples carry all the weight and the answer is noise.

@@ -28,6 +28,12 @@ WEEKS = 104
 WEEK0 = np.datetime64("2024-01-01")  # a Monday
 BASE_PRICE = 24.0
 UNIT_COST = 9.0
+# Austin's launch budget. Chosen as a demo-scenario input, not a model parameter:
+# at a low fixed cost every posterior draw pays and the verdict reads 100% before
+# any data arrives, so the week slider has nothing to reveal. At 145k the prior is
+# genuinely unsure (25%) and real weeks move it to 100%, while the planted truth
+# still pays (true 12-week gross profit 161,219). See DECISIONS.md.
+AUSTIN_FIXED_COST = 145_000.0
 SEASON_PERIOD = 52.0
 N_FOURIER = 2
 
@@ -379,10 +385,11 @@ def generate_launches(rng: np.random.Generator, truth: Truth) -> dict:
             "observations": obs,
             "has_holdout": False,
             "unit_cost": UNIT_COST,
-            "fixed_cost": 60000.0,
+            "fixed_cost": AUSTIN_FIXED_COST,
             "net_price": BASE_PRICE,
             "truth": _truth_block(
-                truth, a_new, CANDIDATE_SHARES[name], t0, 12, BASE_PRICE, 60000.0, z_true
+                truth, a_new, CANDIDATE_SHARES[name], t0, 12, BASE_PRICE,
+                AUSTIN_FIXED_COST, z_true,
             ),
             "causal_assumptions": CAUSAL,
         }

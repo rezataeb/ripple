@@ -464,13 +464,13 @@
    },
    "has_holdout": false,
    "unit_cost": 9.0,
-   "fixed_cost": 60000.0,
+   "fixed_cost": 145000.0,
    "net_price": 24.0,
    "truth": {
     "unknown_value": 0.85,
     "unknown_percent": 0.14568189359486183,
     "total_units": 10747.9553,
-    "total_profit": 101219.3302,
+    "total_profit": 16219.3302,
     "pays": true
    },
    "causal_assumptions": [

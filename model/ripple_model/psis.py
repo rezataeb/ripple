@@ -63,12 +63,19 @@ def gpdfit(x: np.ndarray) -> tuple[float, float]:
     return k_post, sigma
 
 
+# exp() overflows past ~709. A degenerate tail fit (a stress-arm run produced
+# k-hat > 100) sends the exponent far beyond that; the resulting weight is capped
+# at the largest raw weight by psis_smooth anyway, so clipping changes no usable
+# result and keeps inf out of the weighted summaries.
+_MAX_EXP = 700.0
+
+
 def gpd_quantiles(p: np.ndarray, k: float, sigma: float) -> np.ndarray:
     """Inverse CDF of the generalized Pareto, numerically safe as k -> 0."""
     p = np.asarray(p, dtype=float)
     if abs(k) < 1e-10:
         return sigma * -np.log1p(-p)
-    return sigma / k * np.expm1(-k * np.log1p(-p))
+    return sigma / k * np.expm1(np.clip(-k * np.log1p(-p), -_MAX_EXP, _MAX_EXP))
 
 
 def psis_smooth(log_weights: np.ndarray) -> tuple[np.ndarray, float]:
@@ -108,11 +115,12 @@ def psis_smooth(log_weights: np.ndarray) -> tuple[np.ndarray, float]:
         m = n_tail
         probs = (np.arange(1, m + 1, dtype=float) - 0.5) / m
         smoothed = np.log(gpd_quantiles(probs, k_hat, sigma) + np.exp(cutoff))
-        # put the smoothed values back in the tail's own rank order
-        ranks = np.argsort(np.argsort(exceed))
-        lw[tail_idx] = smoothed[ranks]
-        # never let smoothing push a weight above the largest raw weight
-        lw = np.minimum(lw, 0.0)
+        if np.all(np.isfinite(smoothed)):
+            # put the smoothed values back in the tail's own rank order
+            ranks = np.argsort(np.argsort(exceed), kind="stable")
+            lw[tail_idx] = smoothed[ranks]
+            # never let smoothing push a weight above the largest raw weight
+            lw = np.minimum(lw, 0.0)
 
     return lw, float(k_hat)
 

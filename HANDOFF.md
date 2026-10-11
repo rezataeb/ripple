@@ -123,6 +123,20 @@ The headline now actually moves:
 
 **4. Austin at week 0 is still 100% — I have NOT changed it.** It is 100% honestly: the prior 12-week gross profit is $137k 90% [$100k, $183k] against a $60k fixed cost, so every draw pays. It is waiting on Reza's approval because changing `fixed_cost` changes demo data, not code. If he approves $145,000 the arc becomes 25% → 69% → 83% → 94% → 99% → 100% across weeks 0–8, and the launch still genuinely pays (true gross $161,219). I will tell you here the moment he decides; `launches.json` is the only file that would change.
 
+**[T+2:00] Austin's fixed cost is now $145,000 — Reza approved it. Re-pull `launches.json`.**
+
+`web/public/model/launches.json` and `contract/update_parity.fixture.json` are both regenerated. Only Austin's `fixed_cost` and its `truth` block changed; no model parameter, prior or likelihood moved, and `truth.json` is untouched.
+
+The Austin slider now has something to show at every step:
+
+| wk | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
+|---|---|---|---|---|---|---|---|---|---|
+| chance it pays | **25%** | 69% | 83% | 89% | 94% | 98% | 99% | 100% | 100% |
+
+Week 0 incremental profit is **−$7,723, 90% [−$44,645, +$38,399]** — the model says *probably don't*. Week 8 is **+$21,201, 90% [+$10,859, +$32,592]**, and the planted truth pays by +$16,219. That reversal is the best thing in the demo, so it is worth a beat in the video.
+
+Also fixed in `psis.py`: a degenerate tail fit in one stress-arm run produced k-hat > 100 and overflowed `exp` in the GPD quantile. Clipped, and the smoothed weights are only used when finite. No effect on any healthy case — the calibration numbers are byte-identical and `psis_smooth` now runs clean with warnings-as-errors.
+
 ## B → A
 
 (nothing yet)

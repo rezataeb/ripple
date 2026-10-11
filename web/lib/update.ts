@@ -2,8 +2,10 @@
 //
 // prior = fitted posterior draws x K values of ONE unknown; likelihood = Negative Binomial of the
 // observed launch weeks; posterior = self-normalized importance weights. Every summary is a
-// weighted quantile. Gate: weight ESS < 300 means "Refit needed" (the browser does not PSIS-smooth).
+// weighted quantile. Weights are Pareto-smoothed (PSIS) as in update.py; gate: k-hat > 0.7 or weight ESS < 300
+// means "Refit needed".
 import { drawZ, seasonRow } from "./simulate";
+import { K_HAT_THRESHOLD, psisSmooth } from "./psis";
 import type { Interval, Launch, Posterior, UpdateGate, UpdateResult, UpdateWeeklyRow } from "./types";
 
 export const K_PER_DRAW = 20;
@@ -375,6 +377,7 @@ export function updateWithLaunch(
 
   // likelihood of the revealed weeks
   let w: Float64Array;
+  let paretoK: number | null = null;
   let nObsCells = 0;
   if (weeksUsed > 0) {
     const obsWeeks = Array.from({ length: weeksUsed }, (_, i) => i + 1);
@@ -405,7 +408,9 @@ export function updateWithLaunch(
       }
       logw[i] = acc;
     }
-    w = normalizeLogWeights(logw);
+    const sm = psisSmooth(logw);
+    paretoK = sm.kHat;
+    w = normalizeLogWeights(sm.logw);
     nObsCells = per;
   } else {
     w = new Float64Array(N).fill(1 / N);

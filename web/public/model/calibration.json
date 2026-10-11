@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-11T17:57:38+00:00",
+ "generated_at": "2026-10-11T18:32:30+00:00",
  "seed": 20261011,
  "n_launches": 200,
  "target_coverage": 0.9,
@@ -370,5 +370,5 @@
   }
  ],
  "headline": "Across 200 synthetic launches per arm, the 90% interval covers the true 12-week total at least 88% of the time when the assumptions hold. Break one assumption \u2014 a launch that ramps up \u2014 and coverage drops to 6%, which is the limit we want you to know about.",
- "runtime_seconds": 28.0
+ "runtime_seconds": 32.8
 }
