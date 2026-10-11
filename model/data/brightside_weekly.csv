@@ -1,0 +1,2497 @@
+week,city,segment,units,price,promo,feature
+2024-01-01,New York,students,340,24.73,0,1
+2024-01-01,New York,young professionals,875,24.73,0,1
+2024-01-01,New York,families,436,24.73,0,1
+2024-01-01,New York,retirees,184,24.73,0,1
+2024-01-08,New York,students,437,24.73,0,1
+2024-01-08,New York,young professionals,1113,24.73,0,1
+2024-01-08,New York,families,618,24.73,0,1
+2024-01-08,New York,retirees,244,24.73,0,1
+2024-01-15,New York,students,313,24.73,0,1
+2024-01-15,New York,young professionals,930,24.73,0,1
+2024-01-15,New York,families,795,24.73,0,1
+2024-01-15,New York,retirees,250,24.73,0,1
+2024-01-22,New York,students,879,17.31,1,0
+2024-01-22,New York,young professionals,2243,17.31,1,0
+2024-01-22,New York,families,830,17.31,1,0
+2024-01-22,New York,retirees,312,17.31,1,0
+2024-01-29,New York,students,786,17.31,1,0
+2024-01-29,New York,young professionals,1744,17.31,1,0
+2024-01-29,New York,families,836,17.31,1,0
+2024-01-29,New York,retirees,293,17.31,1,0
+2024-02-05,New York,students,606,17.31,1,0
+2024-02-05,New York,young professionals,1362,17.31,1,0
+2024-02-05,New York,families,910,17.31,1,0
+2024-02-05,New York,retirees,242,17.31,1,0
+2024-02-12,New York,students,178,24.73,0,0
+2024-02-12,New York,young professionals,490,24.73,0,0
+2024-02-12,New York,families,653,24.73,0,0
+2024-02-12,New York,retirees,231,24.73,0,0
+2024-02-19,New York,students,295,24.73,0,0
+2024-02-19,New York,young professionals,965,24.73,0,0
+2024-02-19,New York,families,744,24.73,0,0
+2024-02-19,New York,retirees,250,24.73,0,0
+2024-02-26,New York,students,339,24.73,0,0
+2024-02-26,New York,young professionals,901,24.73,0,0
+2024-02-26,New York,families,654,24.73,0,0
+2024-02-26,New York,retirees,282,24.73,0,0
+2024-03-04,New York,students,326,24.73,0,0
+2024-03-04,New York,young professionals,1076,24.73,0,0
+2024-03-04,New York,families,581,24.73,0,0
+2024-03-04,New York,retirees,202,24.73,0,0
+2024-03-11,New York,students,209,24.73,0,0
+2024-03-11,New York,young professionals,687,24.73,0,0
+2024-03-11,New York,families,749,24.73,0,0
+2024-03-11,New York,retirees,276,24.73,0,0
+2024-03-18,New York,students,376,24.73,0,0
+2024-03-18,New York,young professionals,541,24.73,0,0
+2024-03-18,New York,families,465,24.73,0,0
+2024-03-18,New York,retirees,309,24.73,0,0
+2024-03-25,New York,students,796,17.31,1,0
+2024-03-25,New York,young professionals,1947,17.31,1,0
+2024-03-25,New York,families,679,17.31,1,0
+2024-03-25,New York,retirees,440,17.31,1,0
+2024-04-01,New York,students,240,24.73,0,1
+2024-04-01,New York,young professionals,838,24.73,0,1
+2024-04-01,New York,families,533,24.73,0,1
+2024-04-01,New York,retirees,312,24.73,0,1
+2024-04-08,New York,students,324,24.73,0,0
+2024-04-08,New York,young professionals,1188,24.73,0,0
+2024-04-08,New York,families,597,24.73,0,0
+2024-04-08,New York,retirees,269,24.73,0,0
+2024-04-15,New York,students,371,24.73,0,0
+2024-04-15,New York,young professionals,818,24.73,0,0
+2024-04-15,New York,families,323,24.73,0,0
+2024-04-15,New York,retirees,195,24.73,0,0
+2024-04-22,New York,students,248,24.73,0,0
+2024-04-22,New York,young professionals,507,24.73,0,0
+2024-04-22,New York,families,405,24.73,0,0
+2024-04-22,New York,retirees,332,22.26,1,0
+2024-04-29,New York,students,345,24.73,0,0
+2024-04-29,New York,young professionals,811,24.73,0,0
+2024-04-29,New York,families,569,24.73,0,0
+2024-04-29,New York,retirees,210,22.26,1,0
+2024-05-06,New York,students,328,24.73,0,0
+2024-05-06,New York,young professionals,836,24.73,0,0
+2024-05-06,New York,families,677,24.73,0,0
+2024-05-06,New York,retirees,149,22.26,1,0
+2024-05-13,New York,students,251,24.73,0,0
+2024-05-13,New York,young professionals,1080,24.73,0,0
+2024-05-13,New York,families,695,24.73,0,0
+2024-05-13,New York,retirees,196,22.26,1,0
+2024-05-20,New York,students,302,24.73,0,0
+2024-05-20,New York,young professionals,664,24.73,0,0
+2024-05-20,New York,families,704,24.73,0,0
+2024-05-20,New York,retirees,275,24.73,0,0
+2024-05-27,New York,students,166,24.73,0,0
+2024-05-27,New York,young professionals,710,24.73,0,0
+2024-05-27,New York,families,513,24.73,0,0
+2024-05-27,New York,retirees,273,24.73,0,0
+2024-06-03,New York,students,215,24.73,0,1
+2024-06-03,New York,young professionals,1135,24.73,0,1
+2024-06-03,New York,families,515,24.73,0,1
+2024-06-03,New York,retirees,272,24.73,0,1
+2024-06-10,New York,students,262,24.73,0,1
+2024-06-10,New York,young professionals,1229,24.73,0,1
+2024-06-10,New York,families,575,24.73,0,1
+2024-06-10,New York,retirees,299,24.73,0,1
+2024-06-17,New York,students,302,24.73,0,1
+2024-06-17,New York,young professionals,799,24.73,0,1
+2024-06-17,New York,families,454,24.73,0,1
+2024-06-17,New York,retirees,282,24.73,0,1
+2024-06-24,New York,students,339,24.73,0,0
+2024-06-24,New York,young professionals,1001,24.73,0,0
+2024-06-24,New York,families,737,24.73,0,0
+2024-06-24,New York,retirees,258,24.73,0,0
+2024-07-01,New York,students,341,24.73,0,0
+2024-07-01,New York,young professionals,853,24.73,0,0
+2024-07-01,New York,families,544,24.73,0,0
+2024-07-01,New York,retirees,269,24.73,0,0
+2024-07-08,New York,students,259,22.26,1,0
+2024-07-08,New York,young professionals,1387,22.26,1,0
+2024-07-08,New York,families,638,22.26,1,0
+2024-07-08,New York,retirees,299,22.26,1,0
+2024-07-15,New York,students,412,22.26,1,0
+2024-07-15,New York,young professionals,984,22.26,1,0
+2024-07-15,New York,families,582,22.26,1,0
+2024-07-15,New York,retirees,373,22.26,1,0
+2024-07-22,New York,students,471,22.26,1,0
+2024-07-22,New York,young professionals,932,22.26,1,0
+2024-07-22,New York,families,618,22.26,1,0
+2024-07-22,New York,retirees,163,22.26,1,0
+2024-07-29,New York,students,482,22.26,1,0
+2024-07-29,New York,young professionals,1347,22.26,1,0
+2024-07-29,New York,families,526,22.26,1,0
+2024-07-29,New York,retirees,223,22.26,1,0
+2024-08-05,New York,students,184,24.73,0,1
+2024-08-05,New York,young professionals,679,24.73,0,1
+2024-08-05,New York,families,488,24.73,0,1
+2024-08-05,New York,retirees,249,24.73,0,1
+2024-08-12,New York,students,326,24.73,0,1
+2024-08-12,New York,young professionals,631,24.73,0,1
+2024-08-12,New York,families,518,24.73,0,1
+2024-08-12,New York,retirees,188,24.73,0,1
+2024-08-19,New York,students,283,24.73,0,0
+2024-08-19,New York,young professionals,782,24.73,0,0
+2024-08-19,New York,families,511,24.73,0,0
+2024-08-19,New York,retirees,228,24.73,0,0
+2024-08-26,New York,students,207,24.73,0,0
+2024-08-26,New York,young professionals,738,24.73,0,0
+2024-08-26,New York,families,499,24.73,0,0
+2024-08-26,New York,retirees,150,24.73,0,0
+2024-09-02,New York,students,249,24.73,0,0
+2024-09-02,New York,young professionals,553,24.73,0,0
+2024-09-02,New York,families,459,24.73,0,0
+2024-09-02,New York,retirees,179,24.73,0,0
+2024-09-09,New York,students,178,24.73,0,0
+2024-09-09,New York,young professionals,865,24.73,0,0
+2024-09-09,New York,families,599,24.73,0,0
+2024-09-09,New York,retirees,185,24.73,0,0
+2024-09-16,New York,students,326,24.73,0,0
+2024-09-16,New York,young professionals,535,24.73,0,0
+2024-09-16,New York,families,430,24.73,0,0
+2024-09-16,New York,retirees,261,24.73,0,0
+2024-09-23,New York,students,270,24.73,0,0
+2024-09-23,New York,young professionals,630,24.73,0,0
+2024-09-23,New York,families,588,24.73,0,0
+2024-09-23,New York,retirees,227,24.73,0,0
+2024-09-30,New York,students,261,24.73,0,1
+2024-09-30,New York,young professionals,545,24.73,0,1
+2024-09-30,New York,families,607,24.73,0,1
+2024-09-30,New York,retirees,229,24.73,0,1
+2024-10-07,New York,students,208,24.73,0,0
+2024-10-07,New York,young professionals,685,24.73,0,0
+2024-10-07,New York,families,374,24.73,0,0
+2024-10-07,New York,retirees,178,24.73,0,0
+2024-10-14,New York,students,221,24.73,0,0
+2024-10-14,New York,young professionals,762,24.73,0,0
+2024-10-14,New York,families,373,24.73,0,0
+2024-10-14,New York,retirees,195,24.73,0,0
+2024-10-21,New York,students,202,24.73,0,1
+2024-10-21,New York,young professionals,638,24.73,0,1
+2024-10-21,New York,families,474,24.73,0,1
+2024-10-21,New York,retirees,190,24.73,0,1
+2024-10-28,New York,students,262,24.73,0,1
+2024-10-28,New York,young professionals,746,24.73,0,1
+2024-10-28,New York,families,678,24.73,0,1
+2024-10-28,New York,retirees,155,24.73,0,1
+2024-11-04,New York,students,553,19.78,1,1
+2024-11-04,New York,young professionals,1022,19.78,1,1
+2024-11-04,New York,families,578,19.78,1,1
+2024-11-04,New York,retirees,244,19.78,1,1
+2024-11-11,New York,students,466,19.78,1,0
+2024-11-11,New York,young professionals,1173,19.78,1,0
+2024-11-11,New York,families,509,19.78,1,0
+2024-11-11,New York,retirees,173,19.78,1,0
+2024-11-18,New York,students,206,24.73,0,0
+2024-11-18,New York,young professionals,640,24.73,0,0
+2024-11-18,New York,families,375,24.73,0,0
+2024-11-18,New York,retirees,130,24.73,0,0
+2024-11-25,New York,students,184,24.73,0,0
+2024-11-25,New York,young professionals,666,24.73,0,0
+2024-11-25,New York,families,600,24.73,0,0
+2024-11-25,New York,retirees,245,24.73,0,0
+2024-12-02,New York,students,295,24.73,0,0
+2024-12-02,New York,young professionals,633,24.73,0,0
+2024-12-02,New York,families,409,24.73,0,0
+2024-12-02,New York,retirees,173,24.73,0,0
+2024-12-09,New York,students,177,24.73,0,1
+2024-12-09,New York,young professionals,674,24.73,0,1
+2024-12-09,New York,families,324,24.73,0,1
+2024-12-09,New York,retirees,224,24.73,0,1
+2024-12-16,New York,students,990,17.31,1,0
+2024-12-16,New York,young professionals,1700,17.31,1,0
+2024-12-16,New York,families,842,17.31,1,0
+2024-12-16,New York,retirees,384,17.31,1,0
+2024-12-23,New York,students,546,17.31,1,0
+2024-12-23,New York,young professionals,1813,17.31,1,0
+2024-12-23,New York,families,803,17.31,1,0
+2024-12-23,New York,retirees,267,17.31,1,0
+2024-12-30,New York,students,260,24.73,0,0
+2024-12-30,New York,young professionals,603,24.73,0,0
+2024-12-30,New York,families,470,24.73,0,0
+2024-12-30,New York,retirees,205,24.73,0,0
+2025-01-06,New York,students,236,24.73,0,0
+2025-01-06,New York,young professionals,761,24.73,0,0
+2025-01-06,New York,families,406,24.73,0,0
+2025-01-06,New York,retirees,230,24.73,0,0
+2025-01-13,New York,students,240,24.73,0,0
+2025-01-13,New York,young professionals,594,24.73,0,0
+2025-01-13,New York,families,457,24.73,0,0
+2025-01-13,New York,retirees,223,24.73,0,0
+2025-01-20,New York,students,406,24.73,0,0
+2025-01-20,New York,young professionals,765,24.73,0,0
+2025-01-20,New York,families,538,24.73,0,0
+2025-01-20,New York,retirees,238,24.73,0,0
+2025-01-27,New York,students,267,24.73,0,0
+2025-01-27,New York,young professionals,624,24.73,0,0
+2025-01-27,New York,families,500,24.73,0,0
+2025-01-27,New York,retirees,167,24.73,0,0
+2025-02-03,New York,students,207,24.73,0,1
+2025-02-03,New York,young professionals,581,24.73,0,1
+2025-02-03,New York,families,619,24.73,0,1
+2025-02-03,New York,retirees,237,24.73,0,1
+2025-02-10,New York,students,286,24.73,0,1
+2025-02-10,New York,young professionals,817,24.73,0,1
+2025-02-10,New York,families,880,24.73,0,1
+2025-02-10,New York,retirees,274,24.73,0,1
+2025-02-17,New York,students,271,24.73,0,1
+2025-02-17,New York,young professionals,938,24.73,0,1
+2025-02-17,New York,families,636,24.73,0,1
+2025-02-17,New York,retirees,228,24.73,0,1
+2025-02-24,New York,students,468,24.73,0,0
+2025-02-24,New York,young professionals,1942,17.31,1,0
+2025-02-24,New York,families,562,24.73,0,0
+2025-02-24,New York,retirees,266,24.73,0,0
+2025-03-03,New York,students,301,24.73,0,0
+2025-03-03,New York,young professionals,2331,17.31,1,0
+2025-03-03,New York,families,639,24.73,0,0
+2025-03-03,New York,retirees,353,24.73,0,0
+2025-03-10,New York,students,333,24.73,0,0
+2025-03-10,New York,young professionals,1483,17.31,1,0
+2025-03-10,New York,families,722,24.73,0,0
+2025-03-10,New York,retirees,225,24.73,0,0
+2025-03-17,New York,students,293,24.73,0,0
+2025-03-17,New York,young professionals,754,24.73,0,0
+2025-03-17,New York,families,573,24.73,0,0
+2025-03-17,New York,retirees,281,24.73,0,0
+2025-03-24,New York,students,338,24.73,0,0
+2025-03-24,New York,young professionals,927,24.73,0,0
+2025-03-24,New York,families,633,24.73,0,0
+2025-03-24,New York,retirees,327,24.73,0,0
+2025-03-31,New York,students,330,24.73,0,0
+2025-03-31,New York,young professionals,1038,24.73,0,0
+2025-03-31,New York,families,518,24.73,0,0
+2025-03-31,New York,retirees,265,24.73,0,0
+2025-04-07,New York,students,926,17.31,1,0
+2025-04-07,New York,young professionals,899,17.31,1,0
+2025-04-07,New York,families,1292,17.31,1,0
+2025-04-07,New York,retirees,611,17.31,1,0
+2025-04-14,New York,students,971,17.31,1,0
+2025-04-14,New York,young professionals,1783,17.31,1,0
+2025-04-14,New York,families,1143,17.31,1,0
+2025-04-14,New York,retirees,331,17.31,1,0
+2025-04-21,New York,students,242,24.73,0,0
+2025-04-21,New York,young professionals,844,24.73,0,0
+2025-04-21,New York,families,395,24.73,0,0
+2025-04-21,New York,retirees,254,24.73,0,0
+2025-04-28,New York,students,329,24.73,0,1
+2025-04-28,New York,young professionals,1012,24.73,0,1
+2025-04-28,New York,families,441,24.73,0,1
+2025-04-28,New York,retirees,308,24.73,0,1
+2025-05-05,New York,students,269,24.73,0,1
+2025-05-05,New York,young professionals,753,24.73,0,1
+2025-05-05,New York,families,904,24.73,0,1
+2025-05-05,New York,retirees,331,24.73,0,1
+2025-05-12,New York,students,323,24.73,0,1
+2025-05-12,New York,young professionals,679,24.73,0,1
+2025-05-12,New York,families,971,22.26,1,1
+2025-05-12,New York,retirees,287,24.73,0,1
+2025-05-19,New York,students,295,24.73,0,0
+2025-05-19,New York,young professionals,726,24.73,0,0
+2025-05-19,New York,families,597,22.26,1,0
+2025-05-19,New York,retirees,214,24.73,0,0
+2025-05-26,New York,students,355,24.73,0,0
+2025-05-26,New York,young professionals,723,24.73,0,0
+2025-05-26,New York,families,408,22.26,1,0
+2025-05-26,New York,retirees,288,24.73,0,0
+2025-06-02,New York,students,322,24.73,0,0
+2025-06-02,New York,young professionals,560,24.73,0,0
+2025-06-02,New York,families,390,24.73,0,0
+2025-06-02,New York,retirees,404,24.73,0,0
+2025-06-09,New York,students,251,24.73,0,0
+2025-06-09,New York,young professionals,858,24.73,0,0
+2025-06-09,New York,families,562,24.73,0,0
+2025-06-09,New York,retirees,225,24.73,0,0
+2025-06-16,New York,students,308,24.73,0,0
+2025-06-16,New York,young professionals,982,24.73,0,0
+2025-06-16,New York,families,488,24.73,0,0
+2025-06-16,New York,retirees,302,24.73,0,0
+2025-06-23,New York,students,209,24.73,0,0
+2025-06-23,New York,young professionals,1410,24.73,0,0
+2025-06-23,New York,families,511,24.73,0,0
+2025-06-23,New York,retirees,180,24.73,0,0
+2025-06-30,New York,students,307,24.73,0,1
+2025-06-30,New York,young professionals,1064,24.73,0,1
+2025-06-30,New York,families,691,24.73,0,1
+2025-06-30,New York,retirees,276,24.73,0,1
+2025-07-07,New York,students,639,19.78,1,1
+2025-07-07,New York,young professionals,705,24.73,0,1
+2025-07-07,New York,families,746,24.73,0,1
+2025-07-07,New York,retirees,298,24.73,0,1
+2025-07-14,New York,students,223,24.73,0,0
+2025-07-14,New York,young professionals,979,24.73,0,0
+2025-07-14,New York,families,479,24.73,0,0
+2025-07-14,New York,retirees,218,24.73,0,0
+2025-07-21,New York,students,283,24.73,0,0
+2025-07-21,New York,young professionals,2137,17.31,1,0
+2025-07-21,New York,families,635,24.73,0,0
+2025-07-21,New York,retirees,193,24.73,0,0
+2025-07-28,New York,students,192,24.73,0,0
+2025-07-28,New York,young professionals,487,24.73,0,0
+2025-07-28,New York,families,796,24.73,0,0
+2025-07-28,New York,retirees,241,24.73,0,0
+2025-08-04,New York,students,228,24.73,0,1
+2025-08-04,New York,young professionals,609,24.73,0,1
+2025-08-04,New York,families,924,24.73,0,1
+2025-08-04,New York,retirees,223,24.73,0,1
+2025-08-11,New York,students,249,24.73,0,1
+2025-08-11,New York,young professionals,625,24.73,0,1
+2025-08-11,New York,families,648,24.73,0,1
+2025-08-11,New York,retirees,215,24.73,0,1
+2025-08-18,New York,students,618,17.31,1,0
+2025-08-18,New York,young professionals,1455,17.31,1,0
+2025-08-18,New York,families,1166,17.31,1,0
+2025-08-18,New York,retirees,261,17.31,1,0
+2025-08-25,New York,students,822,17.31,1,0
+2025-08-25,New York,young professionals,1795,17.31,1,0
+2025-08-25,New York,families,592,17.31,1,0
+2025-08-25,New York,retirees,222,17.31,1,0
+2025-09-01,New York,students,196,24.73,0,0
+2025-09-01,New York,young professionals,422,24.73,0,0
+2025-09-01,New York,families,398,24.73,0,0
+2025-09-01,New York,retirees,193,24.73,0,0
+2025-09-08,New York,students,326,24.73,0,0
+2025-09-08,New York,young professionals,773,24.73,0,0
+2025-09-08,New York,families,797,24.73,0,0
+2025-09-08,New York,retirees,231,24.73,0,0
+2025-09-15,New York,students,279,24.73,0,0
+2025-09-15,New York,young professionals,723,24.73,0,0
+2025-09-15,New York,families,582,24.73,0,0
+2025-09-15,New York,retirees,164,24.73,0,0
+2025-09-22,New York,students,245,24.73,0,0
+2025-09-22,New York,young professionals,979,24.73,0,0
+2025-09-22,New York,families,620,24.73,0,0
+2025-09-22,New York,retirees,181,24.73,0,0
+2025-09-29,New York,students,198,24.73,0,0
+2025-09-29,New York,young professionals,1012,24.73,0,0
+2025-09-29,New York,families,349,24.73,0,0
+2025-09-29,New York,retirees,260,24.73,0,0
+2025-10-06,New York,students,186,24.73,0,0
+2025-10-06,New York,young professionals,853,24.73,0,0
+2025-10-06,New York,families,627,24.73,0,0
+2025-10-06,New York,retirees,240,24.73,0,0
+2025-10-13,New York,students,187,24.73,0,0
+2025-10-13,New York,young professionals,559,24.73,0,0
+2025-10-13,New York,families,297,24.73,0,0
+2025-10-13,New York,retirees,107,24.73,0,0
+2025-10-20,New York,students,177,24.73,0,0
+2025-10-20,New York,young professionals,813,24.73,0,0
+2025-10-20,New York,families,419,24.73,0,0
+2025-10-20,New York,retirees,163,24.73,0,0
+2025-10-27,New York,students,254,24.73,0,1
+2025-10-27,New York,young professionals,658,24.73,0,1
+2025-10-27,New York,families,372,24.73,0,1
+2025-10-27,New York,retirees,259,24.73,0,1
+2025-11-03,New York,students,282,24.73,0,0
+2025-11-03,New York,young professionals,527,24.73,0,0
+2025-11-03,New York,families,392,24.73,0,0
+2025-11-03,New York,retirees,213,24.73,0,0
+2025-11-10,New York,students,212,24.73,0,0
+2025-11-10,New York,young professionals,668,24.73,0,0
+2025-11-10,New York,families,293,24.73,0,0
+2025-11-10,New York,retirees,196,24.73,0,0
+2025-11-17,New York,students,225,24.73,0,0
+2025-11-17,New York,young professionals,654,24.73,0,0
+2025-11-17,New York,families,323,24.73,0,0
+2025-11-17,New York,retirees,167,24.73,0,0
+2025-11-24,New York,students,258,24.73,0,0
+2025-11-24,New York,young professionals,1166,17.31,1,0
+2025-11-24,New York,families,351,24.73,0,0
+2025-11-24,New York,retirees,184,24.73,0,0
+2025-12-01,New York,students,233,24.73,0,0
+2025-12-01,New York,young professionals,1336,17.31,1,0
+2025-12-01,New York,families,484,24.73,0,0
+2025-12-01,New York,retirees,148,24.73,0,0
+2025-12-08,New York,students,268,24.73,0,0
+2025-12-08,New York,young professionals,1494,17.31,1,0
+2025-12-08,New York,families,335,24.73,0,0
+2025-12-08,New York,retirees,160,24.73,0,0
+2025-12-15,New York,students,165,24.73,0,0
+2025-12-15,New York,young professionals,749,24.73,0,0
+2025-12-15,New York,families,471,24.73,0,0
+2025-12-15,New York,retirees,238,24.73,0,0
+2025-12-22,New York,students,334,24.73,0,0
+2025-12-22,New York,young professionals,356,24.73,0,0
+2025-12-22,New York,families,708,24.73,0,0
+2025-12-22,New York,retirees,195,24.73,0,0
+2024-01-01,Chicago,students,72,25.79,0,1
+2024-01-01,Chicago,young professionals,254,25.79,0,1
+2024-01-01,Chicago,families,291,25.79,0,1
+2024-01-01,Chicago,retirees,143,25.79,0,1
+2024-01-08,Chicago,students,63,25.79,0,0
+2024-01-08,Chicago,young professionals,346,25.79,0,0
+2024-01-08,Chicago,families,248,25.79,0,0
+2024-01-08,Chicago,retirees,125,25.79,0,0
+2024-01-15,Chicago,students,76,25.79,0,0
+2024-01-15,Chicago,young professionals,220,25.79,0,0
+2024-01-15,Chicago,families,235,25.79,0,0
+2024-01-15,Chicago,retirees,87,25.79,0,0
+2024-01-22,Chicago,students,303,18.05,1,0
+2024-01-22,Chicago,young professionals,752,18.05,1,0
+2024-01-22,Chicago,families,503,18.05,1,0
+2024-01-22,Chicago,retirees,175,18.05,1,0
+2024-01-29,Chicago,students,205,18.05,1,0
+2024-01-29,Chicago,young professionals,395,18.05,1,0
+2024-01-29,Chicago,families,262,18.05,1,0
+2024-01-29,Chicago,retirees,125,18.05,1,0
+2024-02-05,Chicago,students,72,25.79,0,0
+2024-02-05,Chicago,young professionals,168,25.79,0,0
+2024-02-05,Chicago,families,154,25.79,0,0
+2024-02-05,Chicago,retirees,100,25.79,0,0
+2024-02-12,Chicago,students,116,25.79,0,0
+2024-02-12,Chicago,young professionals,243,25.79,0,0
+2024-02-12,Chicago,families,220,25.79,0,0
+2024-02-12,Chicago,retirees,123,25.79,0,0
+2024-02-19,Chicago,students,135,25.79,0,1
+2024-02-19,Chicago,young professionals,268,25.79,0,1
+2024-02-19,Chicago,families,388,25.79,0,1
+2024-02-19,Chicago,retirees,141,25.79,0,1
+2024-02-26,Chicago,students,90,25.79,0,1
+2024-02-26,Chicago,young professionals,275,25.79,0,1
+2024-02-26,Chicago,families,266,25.79,0,1
+2024-02-26,Chicago,retirees,115,25.79,0,1
+2024-03-04,Chicago,students,98,25.79,0,1
+2024-03-04,Chicago,young professionals,338,25.79,0,1
+2024-03-04,Chicago,families,270,25.79,0,1
+2024-03-04,Chicago,retirees,144,25.79,0,1
+2024-03-11,Chicago,students,81,25.79,0,0
+2024-03-11,Chicago,young professionals,233,25.79,0,0
+2024-03-11,Chicago,families,192,25.79,0,0
+2024-03-11,Chicago,retirees,51,25.79,0,0
+2024-03-18,Chicago,students,83,25.79,0,0
+2024-03-18,Chicago,young professionals,335,25.79,0,0
+2024-03-18,Chicago,families,335,25.79,0,0
+2024-03-18,Chicago,retirees,74,25.79,0,0
+2024-03-25,Chicago,students,57,25.79,0,1
+2024-03-25,Chicago,young professionals,154,25.79,0,1
+2024-03-25,Chicago,families,373,25.79,0,1
+2024-03-25,Chicago,retirees,105,25.79,0,1
+2024-04-01,Chicago,students,81,25.79,0,0
+2024-04-01,Chicago,young professionals,318,25.79,0,0
+2024-04-01,Chicago,families,286,25.79,0,0
+2024-04-01,Chicago,retirees,167,25.79,0,0
+2024-04-08,Chicago,students,81,25.79,0,0
+2024-04-08,Chicago,young professionals,143,25.79,0,0
+2024-04-08,Chicago,families,287,25.79,0,0
+2024-04-08,Chicago,retirees,111,25.79,0,0
+2024-04-15,Chicago,students,80,25.79,0,0
+2024-04-15,Chicago,young professionals,340,25.79,0,0
+2024-04-15,Chicago,families,276,25.79,0,0
+2024-04-15,Chicago,retirees,88,25.79,0,0
+2024-04-22,Chicago,students,113,25.79,0,0
+2024-04-22,Chicago,young professionals,278,25.79,0,0
+2024-04-22,Chicago,families,259,25.79,0,0
+2024-04-22,Chicago,retirees,124,25.79,0,0
+2024-04-29,Chicago,students,93,25.79,0,0
+2024-04-29,Chicago,young professionals,372,25.79,0,0
+2024-04-29,Chicago,families,161,25.79,0,0
+2024-04-29,Chicago,retirees,106,25.79,0,0
+2024-05-06,Chicago,students,92,25.79,0,0
+2024-05-06,Chicago,young professionals,196,25.79,0,0
+2024-05-06,Chicago,families,312,25.79,0,0
+2024-05-06,Chicago,retirees,125,25.79,0,0
+2024-05-13,Chicago,students,308,20.63,1,0
+2024-05-13,Chicago,young professionals,543,20.63,1,0
+2024-05-13,Chicago,families,522,20.63,1,0
+2024-05-13,Chicago,retirees,117,20.63,1,0
+2024-05-20,Chicago,students,192,20.63,1,0
+2024-05-20,Chicago,young professionals,591,20.63,1,0
+2024-05-20,Chicago,families,334,20.63,1,0
+2024-05-20,Chicago,retirees,85,20.63,1,0
+2024-05-27,Chicago,students,208,20.63,1,1
+2024-05-27,Chicago,young professionals,399,20.63,1,1
+2024-05-27,Chicago,families,410,20.63,1,1
+2024-05-27,Chicago,retirees,101,20.63,1,1
+2024-06-03,Chicago,students,62,25.79,0,1
+2024-06-03,Chicago,young professionals,230,25.79,0,1
+2024-06-03,Chicago,families,218,25.79,0,1
+2024-06-03,Chicago,retirees,179,25.79,0,1
+2024-06-10,Chicago,students,81,25.79,0,0
+2024-06-10,Chicago,young professionals,334,25.79,0,0
+2024-06-10,Chicago,families,191,25.79,0,0
+2024-06-10,Chicago,retirees,144,25.79,0,0
+2024-06-17,Chicago,students,67,25.79,0,0
+2024-06-17,Chicago,young professionals,311,25.79,0,0
+2024-06-17,Chicago,families,263,25.79,0,0
+2024-06-17,Chicago,retirees,214,23.21,1,0
+2024-06-24,Chicago,students,53,25.79,0,0
+2024-06-24,Chicago,young professionals,173,25.79,0,0
+2024-06-24,Chicago,families,246,25.79,0,0
+2024-06-24,Chicago,retirees,85,23.21,1,0
+2024-07-01,Chicago,students,87,25.79,0,0
+2024-07-01,Chicago,young professionals,228,25.79,0,0
+2024-07-01,Chicago,families,241,25.79,0,0
+2024-07-01,Chicago,retirees,108,23.21,1,0
+2024-07-08,Chicago,students,66,25.79,0,0
+2024-07-08,Chicago,young professionals,341,25.79,0,0
+2024-07-08,Chicago,families,162,25.79,0,0
+2024-07-08,Chicago,retirees,132,25.79,0,0
+2024-07-15,Chicago,students,95,25.79,0,0
+2024-07-15,Chicago,young professionals,201,25.79,0,0
+2024-07-15,Chicago,families,256,25.79,0,0
+2024-07-15,Chicago,retirees,98,25.79,0,0
+2024-07-22,Chicago,students,101,25.79,0,1
+2024-07-22,Chicago,young professionals,224,25.79,0,1
+2024-07-22,Chicago,families,241,25.79,0,1
+2024-07-22,Chicago,retirees,135,25.79,0,1
+2024-07-29,Chicago,students,242,23.21,1,1
+2024-07-29,Chicago,young professionals,621,23.21,1,1
+2024-07-29,Chicago,families,487,23.21,1,1
+2024-07-29,Chicago,retirees,172,23.21,1,1
+2024-08-05,Chicago,students,85,25.79,0,1
+2024-08-05,Chicago,young professionals,339,25.79,0,1
+2024-08-05,Chicago,families,265,25.79,0,1
+2024-08-05,Chicago,retirees,113,25.79,0,1
+2024-08-12,Chicago,students,65,25.79,0,0
+2024-08-12,Chicago,young professionals,230,25.79,0,0
+2024-08-12,Chicago,families,245,25.79,0,0
+2024-08-12,Chicago,retirees,105,25.79,0,0
+2024-08-19,Chicago,students,72,25.79,0,0
+2024-08-19,Chicago,young professionals,242,25.79,0,0
+2024-08-19,Chicago,families,259,25.79,0,0
+2024-08-19,Chicago,retirees,93,25.79,0,0
+2024-08-26,Chicago,students,53,25.79,0,0
+2024-08-26,Chicago,young professionals,129,25.79,0,0
+2024-08-26,Chicago,families,181,25.79,0,0
+2024-08-26,Chicago,retirees,62,25.79,0,0
+2024-09-02,Chicago,students,179,18.05,1,0
+2024-09-02,Chicago,young professionals,265,25.79,0,0
+2024-09-02,Chicago,families,240,25.79,0,0
+2024-09-02,Chicago,retirees,102,25.79,0,0
+2024-09-09,Chicago,students,256,18.05,1,0
+2024-09-09,Chicago,young professionals,264,25.79,0,0
+2024-09-09,Chicago,families,140,25.79,0,0
+2024-09-09,Chicago,retirees,88,25.79,0,0
+2024-09-16,Chicago,students,60,25.79,0,0
+2024-09-16,Chicago,young professionals,126,25.79,0,0
+2024-09-16,Chicago,families,173,25.79,0,0
+2024-09-16,Chicago,retirees,100,25.79,0,0
+2024-09-23,Chicago,students,59,25.79,0,0
+2024-09-23,Chicago,young professionals,183,25.79,0,0
+2024-09-23,Chicago,families,135,25.79,0,0
+2024-09-23,Chicago,retirees,69,25.79,0,0
+2024-09-30,Chicago,students,79,25.79,0,0
+2024-09-30,Chicago,young professionals,222,25.79,0,0
+2024-09-30,Chicago,families,262,25.79,0,0
+2024-09-30,Chicago,retirees,69,25.79,0,0
+2024-10-07,Chicago,students,174,20.63,1,0
+2024-10-07,Chicago,young professionals,676,20.63,1,0
+2024-10-07,Chicago,families,341,20.63,1,0
+2024-10-07,Chicago,retirees,114,20.63,1,0
+2024-10-14,Chicago,students,61,20.63,1,0
+2024-10-14,Chicago,young professionals,266,20.63,1,0
+2024-10-14,Chicago,families,323,20.63,1,0
+2024-10-14,Chicago,retirees,77,20.63,1,0
+2024-10-21,Chicago,students,81,20.63,1,0
+2024-10-21,Chicago,young professionals,309,20.63,1,0
+2024-10-21,Chicago,families,266,20.63,1,0
+2024-10-21,Chicago,retirees,52,20.63,1,0
+2024-10-28,Chicago,students,164,20.63,1,0
+2024-10-28,Chicago,young professionals,448,20.63,1,0
+2024-10-28,Chicago,families,221,20.63,1,0
+2024-10-28,Chicago,retirees,66,20.63,1,0
+2024-11-04,Chicago,students,83,25.79,0,0
+2024-11-04,Chicago,young professionals,183,25.79,0,0
+2024-11-04,Chicago,families,140,25.79,0,0
+2024-11-04,Chicago,retirees,91,25.79,0,0
+2024-11-11,Chicago,students,55,25.79,0,0
+2024-11-11,Chicago,young professionals,255,25.79,0,0
+2024-11-11,Chicago,families,233,25.79,0,0
+2024-11-11,Chicago,retirees,81,25.79,0,0
+2024-11-18,Chicago,students,63,25.79,0,0
+2024-11-18,Chicago,young professionals,264,25.79,0,0
+2024-11-18,Chicago,families,244,25.79,0,0
+2024-11-18,Chicago,retirees,66,25.79,0,0
+2024-11-25,Chicago,students,72,25.79,0,1
+2024-11-25,Chicago,young professionals,267,25.79,0,1
+2024-11-25,Chicago,families,231,25.79,0,1
+2024-11-25,Chicago,retirees,91,25.79,0,1
+2024-12-02,Chicago,students,73,25.79,0,1
+2024-12-02,Chicago,young professionals,241,25.79,0,1
+2024-12-02,Chicago,families,176,25.79,0,1
+2024-12-02,Chicago,retirees,68,25.79,0,1
+2024-12-09,Chicago,students,122,25.79,0,1
+2024-12-09,Chicago,young professionals,267,25.79,0,1
+2024-12-09,Chicago,families,290,25.79,0,1
+2024-12-09,Chicago,retirees,120,25.79,0,1
+2024-12-16,Chicago,students,113,25.79,0,0
+2024-12-16,Chicago,young professionals,259,25.79,0,0
+2024-12-16,Chicago,families,227,25.79,0,0
+2024-12-16,Chicago,retirees,81,25.79,0,0
+2024-12-23,Chicago,students,70,25.79,0,0
+2024-12-23,Chicago,young professionals,207,25.79,0,0
+2024-12-23,Chicago,families,322,25.79,0,0
+2024-12-23,Chicago,retirees,85,25.79,0,0
+2024-12-30,Chicago,students,63,25.79,0,0
+2024-12-30,Chicago,young professionals,183,25.79,0,0
+2024-12-30,Chicago,families,241,25.79,0,0
+2024-12-30,Chicago,retirees,80,25.79,0,0
+2025-01-06,Chicago,students,86,25.79,0,0
+2025-01-06,Chicago,young professionals,155,25.79,0,0
+2025-01-06,Chicago,families,312,25.79,0,0
+2025-01-06,Chicago,retirees,52,25.79,0,0
+2025-01-13,Chicago,students,73,25.79,0,0
+2025-01-13,Chicago,young professionals,241,25.79,0,0
+2025-01-13,Chicago,families,196,25.79,0,0
+2025-01-13,Chicago,retirees,72,25.79,0,0
+2025-01-20,Chicago,students,71,25.79,0,0
+2025-01-20,Chicago,young professionals,244,25.79,0,0
+2025-01-20,Chicago,families,236,25.79,0,0
+2025-01-20,Chicago,retirees,136,25.79,0,0
+2025-01-27,Chicago,students,115,25.79,0,0
+2025-01-27,Chicago,young professionals,219,25.79,0,0
+2025-01-27,Chicago,families,329,20.63,1,0
+2025-01-27,Chicago,retirees,78,25.79,0,0
+2025-02-03,Chicago,students,112,25.79,0,1
+2025-02-03,Chicago,young professionals,232,25.79,0,1
+2025-02-03,Chicago,families,292,20.63,1,1
+2025-02-03,Chicago,retirees,136,25.79,0,1
+2025-02-10,Chicago,students,54,25.79,0,1
+2025-02-10,Chicago,young professionals,349,25.79,0,1
+2025-02-10,Chicago,families,391,20.63,1,1
+2025-02-10,Chicago,retirees,115,25.79,0,1
+2025-02-17,Chicago,students,90,25.79,0,0
+2025-02-17,Chicago,young professionals,287,25.79,0,0
+2025-02-17,Chicago,families,267,25.79,0,0
+2025-02-17,Chicago,retirees,85,25.79,0,0
+2025-02-24,Chicago,students,227,18.05,1,0
+2025-02-24,Chicago,young professionals,478,18.05,1,0
+2025-02-24,Chicago,families,421,18.05,1,0
+2025-02-24,Chicago,retirees,182,18.05,1,0
+2025-03-03,Chicago,students,194,18.05,1,0
+2025-03-03,Chicago,young professionals,463,18.05,1,0
+2025-03-03,Chicago,families,352,18.05,1,0
+2025-03-03,Chicago,retirees,69,18.05,1,0
+2025-03-10,Chicago,students,228,18.05,1,0
+2025-03-10,Chicago,young professionals,597,18.05,1,0
+2025-03-10,Chicago,families,354,18.05,1,0
+2025-03-10,Chicago,retirees,81,18.05,1,0
+2025-03-17,Chicago,students,278,18.05,1,0
+2025-03-17,Chicago,young professionals,483,18.05,1,0
+2025-03-17,Chicago,families,434,18.05,1,0
+2025-03-17,Chicago,retirees,96,18.05,1,0
+2025-03-24,Chicago,students,98,25.79,0,0
+2025-03-24,Chicago,young professionals,308,25.79,0,0
+2025-03-24,Chicago,families,284,25.79,0,0
+2025-03-24,Chicago,retirees,100,25.79,0,0
+2025-03-31,Chicago,students,87,25.79,0,0
+2025-03-31,Chicago,young professionals,233,25.79,0,0
+2025-03-31,Chicago,families,231,25.79,0,0
+2025-03-31,Chicago,retirees,137,25.79,0,0
+2025-04-07,Chicago,students,113,25.79,0,0
+2025-04-07,Chicago,young professionals,321,25.79,0,0
+2025-04-07,Chicago,families,354,25.79,0,0
+2025-04-07,Chicago,retirees,61,25.79,0,0
+2025-04-14,Chicago,students,74,25.79,0,0
+2025-04-14,Chicago,young professionals,264,25.79,0,0
+2025-04-14,Chicago,families,267,25.79,0,0
+2025-04-14,Chicago,retirees,104,25.79,0,0
+2025-04-21,Chicago,students,186,20.63,1,0
+2025-04-21,Chicago,young professionals,723,20.63,1,0
+2025-04-21,Chicago,families,436,20.63,1,0
+2025-04-21,Chicago,retirees,95,20.63,1,0
+2025-04-28,Chicago,students,77,25.79,0,0
+2025-04-28,Chicago,young professionals,162,25.79,0,0
+2025-04-28,Chicago,families,181,25.79,0,0
+2025-04-28,Chicago,retirees,69,25.79,0,0
+2025-05-05,Chicago,students,67,25.79,0,0
+2025-05-05,Chicago,young professionals,277,25.79,0,0
+2025-05-05,Chicago,families,215,25.79,0,0
+2025-05-05,Chicago,retirees,114,25.79,0,0
+2025-05-12,Chicago,students,124,25.79,0,0
+2025-05-12,Chicago,young professionals,266,25.79,0,0
+2025-05-12,Chicago,families,200,25.79,0,0
+2025-05-12,Chicago,retirees,90,25.79,0,0
+2025-05-19,Chicago,students,118,25.79,0,0
+2025-05-19,Chicago,young professionals,289,25.79,0,0
+2025-05-19,Chicago,families,317,25.79,0,0
+2025-05-19,Chicago,retirees,96,25.79,0,0
+2025-05-26,Chicago,students,276,18.05,1,0
+2025-05-26,Chicago,young professionals,274,25.79,0,0
+2025-05-26,Chicago,families,180,25.79,0,0
+2025-05-26,Chicago,retirees,81,25.79,0,0
+2025-06-02,Chicago,students,79,25.79,0,0
+2025-06-02,Chicago,young professionals,299,25.79,0,0
+2025-06-02,Chicago,families,285,25.79,0,0
+2025-06-02,Chicago,retirees,75,25.79,0,0
+2025-06-09,Chicago,students,129,25.79,0,0
+2025-06-09,Chicago,young professionals,304,25.79,0,0
+2025-06-09,Chicago,families,256,25.79,0,0
+2025-06-09,Chicago,retirees,116,25.79,0,0
+2025-06-16,Chicago,students,84,25.79,0,0
+2025-06-16,Chicago,young professionals,292,25.79,0,0
+2025-06-16,Chicago,families,192,25.79,0,0
+2025-06-16,Chicago,retirees,159,25.79,0,0
+2025-06-23,Chicago,students,87,25.79,0,0
+2025-06-23,Chicago,young professionals,299,25.79,0,0
+2025-06-23,Chicago,families,330,25.79,0,0
+2025-06-23,Chicago,retirees,128,25.79,0,0
+2025-06-30,Chicago,students,123,25.79,0,0
+2025-06-30,Chicago,young professionals,359,25.79,0,0
+2025-06-30,Chicago,families,200,25.79,0,0
+2025-06-30,Chicago,retirees,130,25.79,0,0
+2025-07-07,Chicago,students,56,25.79,0,0
+2025-07-07,Chicago,young professionals,358,25.79,0,0
+2025-07-07,Chicago,families,208,25.79,0,0
+2025-07-07,Chicago,retirees,117,25.79,0,0
+2025-07-14,Chicago,students,83,25.79,0,0
+2025-07-14,Chicago,young professionals,253,25.79,0,0
+2025-07-14,Chicago,families,330,25.79,0,0
+2025-07-14,Chicago,retirees,114,25.79,0,0
+2025-07-21,Chicago,students,63,25.79,0,0
+2025-07-21,Chicago,young professionals,192,25.79,0,0
+2025-07-21,Chicago,families,179,25.79,0,0
+2025-07-21,Chicago,retirees,75,25.79,0,0
+2025-07-28,Chicago,students,99,25.79,0,1
+2025-07-28,Chicago,young professionals,413,20.63,1,1
+2025-07-28,Chicago,families,268,25.79,0,1
+2025-07-28,Chicago,retirees,97,25.79,0,1
+2025-08-04,Chicago,students,78,25.79,0,0
+2025-08-04,Chicago,young professionals,174,25.79,0,0
+2025-08-04,Chicago,families,209,25.79,0,0
+2025-08-04,Chicago,retirees,127,25.79,0,0
+2025-08-11,Chicago,students,82,25.79,0,0
+2025-08-11,Chicago,young professionals,200,25.79,0,0
+2025-08-11,Chicago,families,223,25.79,0,0
+2025-08-11,Chicago,retirees,83,25.79,0,0
+2025-08-18,Chicago,students,121,25.79,0,0
+2025-08-18,Chicago,young professionals,260,25.79,0,0
+2025-08-18,Chicago,families,285,25.79,0,0
+2025-08-18,Chicago,retirees,96,25.79,0,0
+2025-08-25,Chicago,students,56,25.79,0,0
+2025-08-25,Chicago,young professionals,164,25.79,0,0
+2025-08-25,Chicago,families,276,25.79,0,0
+2025-08-25,Chicago,retirees,41,25.79,0,0
+2025-09-01,Chicago,students,173,23.21,1,1
+2025-09-01,Chicago,young professionals,555,23.21,1,1
+2025-09-01,Chicago,families,290,23.21,1,1
+2025-09-01,Chicago,retirees,113,23.21,1,1
+2025-09-08,Chicago,students,140,23.21,1,0
+2025-09-08,Chicago,young professionals,299,23.21,1,0
+2025-09-08,Chicago,families,238,23.21,1,0
+2025-09-08,Chicago,retirees,124,23.21,1,0
+2025-09-15,Chicago,students,97,23.21,1,0
+2025-09-15,Chicago,young professionals,198,23.21,1,0
+2025-09-15,Chicago,families,308,23.21,1,0
+2025-09-15,Chicago,retirees,101,23.21,1,0
+2025-09-22,Chicago,students,238,23.21,1,0
+2025-09-22,Chicago,young professionals,265,23.21,1,0
+2025-09-22,Chicago,families,249,23.21,1,0
+2025-09-22,Chicago,retirees,80,23.21,1,0
+2025-09-29,Chicago,students,87,25.79,0,0
+2025-09-29,Chicago,young professionals,171,25.79,0,0
+2025-09-29,Chicago,families,183,25.79,0,0
+2025-09-29,Chicago,retirees,46,25.79,0,0
+2025-10-06,Chicago,students,86,25.79,0,1
+2025-10-06,Chicago,young professionals,299,25.79,0,1
+2025-10-06,Chicago,families,221,25.79,0,1
+2025-10-06,Chicago,retirees,102,25.79,0,1
+2025-10-13,Chicago,students,60,25.79,0,1
+2025-10-13,Chicago,young professionals,219,25.79,0,1
+2025-10-13,Chicago,families,253,25.79,0,1
+2025-10-13,Chicago,retirees,119,25.79,0,1
+2025-10-20,Chicago,students,86,25.79,0,0
+2025-10-20,Chicago,young professionals,151,25.79,0,0
+2025-10-20,Chicago,families,183,25.79,0,0
+2025-10-20,Chicago,retirees,43,25.79,0,0
+2025-10-27,Chicago,students,48,25.79,0,0
+2025-10-27,Chicago,young professionals,180,25.79,0,0
+2025-10-27,Chicago,families,222,25.79,0,0
+2025-10-27,Chicago,retirees,61,25.79,0,0
+2025-11-03,Chicago,students,54,25.79,0,0
+2025-11-03,Chicago,young professionals,232,25.79,0,0
+2025-11-03,Chicago,families,191,25.79,0,0
+2025-11-03,Chicago,retirees,92,25.79,0,0
+2025-11-10,Chicago,students,87,25.79,0,0
+2025-11-10,Chicago,young professionals,187,25.79,0,0
+2025-11-10,Chicago,families,234,25.79,0,0
+2025-11-10,Chicago,retirees,106,25.79,0,0
+2025-11-17,Chicago,students,72,25.79,0,0
+2025-11-17,Chicago,young professionals,154,25.79,0,0
+2025-11-17,Chicago,families,248,25.79,0,0
+2025-11-17,Chicago,retirees,69,25.79,0,0
+2025-11-24,Chicago,students,63,25.79,0,0
+2025-11-24,Chicago,young professionals,170,25.79,0,0
+2025-11-24,Chicago,families,186,25.79,0,0
+2025-11-24,Chicago,retirees,85,25.79,0,0
+2025-12-01,Chicago,students,69,25.79,0,0
+2025-12-01,Chicago,young professionals,208,25.79,0,0
+2025-12-01,Chicago,families,239,25.79,0,0
+2025-12-01,Chicago,retirees,82,25.79,0,0
+2025-12-08,Chicago,students,38,25.79,0,0
+2025-12-08,Chicago,young professionals,245,25.79,0,0
+2025-12-08,Chicago,families,184,25.79,0,0
+2025-12-08,Chicago,retirees,88,25.79,0,0
+2025-12-15,Chicago,students,80,25.79,0,1
+2025-12-15,Chicago,young professionals,325,25.79,0,1
+2025-12-15,Chicago,families,182,25.79,0,1
+2025-12-15,Chicago,retirees,78,25.79,0,1
+2025-12-22,Chicago,students,122,25.79,0,0
+2025-12-22,Chicago,young professionals,238,25.79,0,0
+2025-12-22,Chicago,families,117,25.79,0,0
+2025-12-22,Chicago,retirees,74,25.79,0,0
+2024-01-01,Boston,students,128,23.09,0,0
+2024-01-01,Boston,young professionals,387,23.09,0,0
+2024-01-01,Boston,families,211,23.09,0,0
+2024-01-01,Boston,retirees,73,23.09,0,0
+2024-01-08,Boston,students,215,23.09,0,0
+2024-01-08,Boston,young professionals,339,23.09,0,0
+2024-01-08,Boston,families,193,23.09,0,0
+2024-01-08,Boston,retirees,136,23.09,0,0
+2024-01-15,Boston,students,224,23.09,0,0
+2024-01-15,Boston,young professionals,354,23.09,0,0
+2024-01-15,Boston,families,230,23.09,0,0
+2024-01-15,Boston,retirees,99,16.17,1,0
+2024-01-22,Boston,students,346,23.09,0,0
+2024-01-22,Boston,young professionals,392,23.09,0,0
+2024-01-22,Boston,families,242,23.09,0,0
+2024-01-22,Boston,retirees,132,16.17,1,0
+2024-01-29,Boston,students,243,23.09,0,0
+2024-01-29,Boston,young professionals,485,23.09,0,0
+2024-01-29,Boston,families,200,23.09,0,0
+2024-01-29,Boston,retirees,129,16.17,1,0
+2024-02-05,Boston,students,247,23.09,0,0
+2024-02-05,Boston,young professionals,432,23.09,0,0
+2024-02-05,Boston,families,165,23.09,0,0
+2024-02-05,Boston,retirees,134,16.17,1,0
+2024-02-12,Boston,students,295,23.09,0,0
+2024-02-12,Boston,young professionals,395,23.09,0,0
+2024-02-12,Boston,families,249,23.09,0,0
+2024-02-12,Boston,retirees,71,23.09,0,0
+2024-02-19,Boston,students,308,23.09,0,0
+2024-02-19,Boston,young professionals,310,23.09,0,0
+2024-02-19,Boston,families,375,23.09,0,0
+2024-02-19,Boston,retirees,156,23.09,0,0
+2024-02-26,Boston,students,585,18.48,1,0
+2024-02-26,Boston,young professionals,454,23.09,0,0
+2024-02-26,Boston,families,271,23.09,0,0
+2024-02-26,Boston,retirees,135,23.09,0,0
+2024-03-04,Boston,students,456,18.48,1,0
+2024-03-04,Boston,young professionals,416,23.09,0,0
+2024-03-04,Boston,families,258,23.09,0,0
+2024-03-04,Boston,retirees,111,23.09,0,0
+2024-03-11,Boston,students,542,18.48,1,0
+2024-03-11,Boston,young professionals,382,23.09,0,0
+2024-03-11,Boston,families,210,23.09,0,0
+2024-03-11,Boston,retirees,84,23.09,0,0
+2024-03-18,Boston,students,236,23.09,0,0
+2024-03-18,Boston,young professionals,455,23.09,0,0
+2024-03-18,Boston,families,272,23.09,0,0
+2024-03-18,Boston,retirees,133,23.09,0,0
+2024-03-25,Boston,students,290,23.09,0,0
+2024-03-25,Boston,young professionals,410,23.09,0,0
+2024-03-25,Boston,families,211,23.09,0,0
+2024-03-25,Boston,retirees,132,23.09,0,0
+2024-04-01,Boston,students,876,16.17,1,0
+2024-04-01,Boston,young professionals,455,23.09,0,0
+2024-04-01,Boston,families,208,23.09,0,0
+2024-04-01,Boston,retirees,136,23.09,0,0
+2024-04-08,Boston,students,628,16.17,1,1
+2024-04-08,Boston,young professionals,213,23.09,0,1
+2024-04-08,Boston,families,273,23.09,0,1
+2024-04-08,Boston,retirees,87,23.09,0,1
+2024-04-15,Boston,students,274,23.09,0,1
+2024-04-15,Boston,young professionals,289,23.09,0,1
+2024-04-15,Boston,families,132,23.09,0,1
+2024-04-15,Boston,retirees,133,23.09,0,1
+2024-04-22,Boston,students,290,23.09,0,1
+2024-04-22,Boston,young professionals,463,23.09,0,1
+2024-04-22,Boston,families,243,23.09,0,1
+2024-04-22,Boston,retirees,106,23.09,0,1
+2024-04-29,Boston,students,231,23.09,0,0
+2024-04-29,Boston,young professionals,362,23.09,0,0
+2024-04-29,Boston,families,199,23.09,0,0
+2024-04-29,Boston,retirees,79,23.09,0,0
+2024-05-06,Boston,students,246,23.09,0,0
+2024-05-06,Boston,young professionals,432,23.09,0,0
+2024-05-06,Boston,families,270,23.09,0,0
+2024-05-06,Boston,retirees,91,23.09,0,0
+2024-05-13,Boston,students,790,18.48,1,0
+2024-05-13,Boston,young professionals,619,18.48,1,0
+2024-05-13,Boston,families,324,18.48,1,0
+2024-05-13,Boston,retirees,78,18.48,1,0
+2024-05-20,Boston,students,223,23.09,0,1
+2024-05-20,Boston,young professionals,326,23.09,0,1
+2024-05-20,Boston,families,180,23.09,0,1
+2024-05-20,Boston,retirees,108,23.09,0,1
+2024-05-27,Boston,students,280,23.09,0,0
+2024-05-27,Boston,young professionals,599,23.09,0,0
+2024-05-27,Boston,families,349,23.09,0,0
+2024-05-27,Boston,retirees,128,23.09,0,0
+2024-06-03,Boston,students,288,23.09,0,0
+2024-06-03,Boston,young professionals,549,23.09,0,0
+2024-06-03,Boston,families,230,23.09,0,0
+2024-06-03,Boston,retirees,96,23.09,0,0
+2024-06-10,Boston,students,279,23.09,0,0
+2024-06-10,Boston,young professionals,459,23.09,0,0
+2024-06-10,Boston,families,202,23.09,0,0
+2024-06-10,Boston,retirees,81,23.09,0,0
+2024-06-17,Boston,students,322,23.09,0,0
+2024-06-17,Boston,young professionals,301,23.09,0,0
+2024-06-17,Boston,families,230,23.09,0,0
+2024-06-17,Boston,retirees,113,23.09,0,0
+2024-06-24,Boston,students,290,23.09,0,0
+2024-06-24,Boston,young professionals,523,23.09,0,0
+2024-06-24,Boston,families,240,23.09,0,0
+2024-06-24,Boston,retirees,143,23.09,0,0
+2024-07-01,Boston,students,578,18.48,1,0
+2024-07-01,Boston,young professionals,523,18.48,1,0
+2024-07-01,Boston,families,269,18.48,1,0
+2024-07-01,Boston,retirees,142,18.48,1,0
+2024-07-08,Boston,students,174,23.09,0,1
+2024-07-08,Boston,young professionals,385,23.09,0,1
+2024-07-08,Boston,families,232,23.09,0,1
+2024-07-08,Boston,retirees,104,23.09,0,1
+2024-07-15,Boston,students,320,23.09,0,0
+2024-07-15,Boston,young professionals,389,23.09,0,0
+2024-07-15,Boston,families,236,23.09,0,0
+2024-07-15,Boston,retirees,112,23.09,0,0
+2024-07-22,Boston,students,171,23.09,0,0
+2024-07-22,Boston,young professionals,305,23.09,0,0
+2024-07-22,Boston,families,232,23.09,0,0
+2024-07-22,Boston,retirees,98,23.09,0,0
+2024-07-29,Boston,students,245,23.09,0,0
+2024-07-29,Boston,young professionals,517,23.09,0,0
+2024-07-29,Boston,families,207,23.09,0,0
+2024-07-29,Boston,retirees,75,23.09,0,0
+2024-08-05,Boston,students,286,23.09,0,0
+2024-08-05,Boston,young professionals,281,23.09,0,0
+2024-08-05,Boston,families,233,23.09,0,0
+2024-08-05,Boston,retirees,151,23.09,0,0
+2024-08-12,Boston,students,203,23.09,0,0
+2024-08-12,Boston,young professionals,370,23.09,0,0
+2024-08-12,Boston,families,276,23.09,0,0
+2024-08-12,Boston,retirees,124,23.09,0,0
+2024-08-19,Boston,students,202,23.09,0,0
+2024-08-19,Boston,young professionals,474,18.48,1,0
+2024-08-19,Boston,families,219,23.09,0,0
+2024-08-19,Boston,retirees,103,23.09,0,0
+2024-08-26,Boston,students,156,23.09,0,0
+2024-08-26,Boston,young professionals,457,18.48,1,0
+2024-08-26,Boston,families,228,23.09,0,0
+2024-08-26,Boston,retirees,116,23.09,0,0
+2024-09-02,Boston,students,160,23.09,0,0
+2024-09-02,Boston,young professionals,421,18.48,1,0
+2024-09-02,Boston,families,219,23.09,0,0
+2024-09-02,Boston,retirees,107,23.09,0,0
+2024-09-09,Boston,students,209,23.09,0,0
+2024-09-09,Boston,young professionals,547,18.48,1,0
+2024-09-09,Boston,families,159,23.09,0,0
+2024-09-09,Boston,retirees,80,23.09,0,0
+2024-09-16,Boston,students,158,23.09,0,0
+2024-09-16,Boston,young professionals,288,23.09,0,0
+2024-09-16,Boston,families,253,23.09,0,0
+2024-09-16,Boston,retirees,109,23.09,0,0
+2024-09-23,Boston,students,165,23.09,0,0
+2024-09-23,Boston,young professionals,400,23.09,0,0
+2024-09-23,Boston,families,245,23.09,0,0
+2024-09-23,Boston,retirees,56,23.09,0,0
+2024-09-30,Boston,students,175,23.09,0,0
+2024-09-30,Boston,young professionals,402,23.09,0,0
+2024-09-30,Boston,families,248,23.09,0,0
+2024-09-30,Boston,retirees,100,23.09,0,0
+2024-10-07,Boston,students,179,23.09,0,1
+2024-10-07,Boston,young professionals,342,23.09,0,1
+2024-10-07,Boston,families,270,23.09,0,1
+2024-10-07,Boston,retirees,64,23.09,0,1
+2024-10-14,Boston,students,170,23.09,0,1
+2024-10-14,Boston,young professionals,516,23.09,0,1
+2024-10-14,Boston,families,192,23.09,0,1
+2024-10-14,Boston,retirees,99,23.09,0,1
+2024-10-21,Boston,students,225,23.09,0,0
+2024-10-21,Boston,young professionals,331,23.09,0,0
+2024-10-21,Boston,families,189,23.09,0,0
+2024-10-21,Boston,retirees,103,23.09,0,0
+2024-10-28,Boston,students,425,18.48,1,0
+2024-10-28,Boston,young professionals,715,18.48,1,0
+2024-10-28,Boston,families,252,18.48,1,0
+2024-10-28,Boston,retirees,102,18.48,1,0
+2024-11-04,Boston,students,274,18.48,1,0
+2024-11-04,Boston,young professionals,357,18.48,1,0
+2024-11-04,Boston,families,240,18.48,1,0
+2024-11-04,Boston,retirees,138,18.48,1,0
+2024-11-11,Boston,students,142,23.09,0,0
+2024-11-11,Boston,young professionals,262,23.09,0,0
+2024-11-11,Boston,families,83,23.09,0,0
+2024-11-11,Boston,retirees,103,23.09,0,0
+2024-11-18,Boston,students,238,23.09,0,0
+2024-11-18,Boston,young professionals,288,23.09,0,0
+2024-11-18,Boston,families,138,23.09,0,0
+2024-11-18,Boston,retirees,76,23.09,0,0
+2024-11-25,Boston,students,135,23.09,0,0
+2024-11-25,Boston,young professionals,332,23.09,0,0
+2024-11-25,Boston,families,272,23.09,0,0
+2024-11-25,Boston,retirees,89,23.09,0,0
+2024-12-02,Boston,students,274,23.09,0,1
+2024-12-02,Boston,young professionals,277,23.09,0,1
+2024-12-02,Boston,families,198,23.09,0,1
+2024-12-02,Boston,retirees,89,23.09,0,1
+2024-12-09,Boston,students,163,23.09,0,0
+2024-12-09,Boston,young professionals,423,23.09,0,0
+2024-12-09,Boston,families,221,23.09,0,0
+2024-12-09,Boston,retirees,71,23.09,0,0
+2024-12-16,Boston,students,249,23.09,0,0
+2024-12-16,Boston,young professionals,447,23.09,0,0
+2024-12-16,Boston,families,232,23.09,0,0
+2024-12-16,Boston,retirees,127,23.09,0,0
+2024-12-23,Boston,students,182,23.09,0,1
+2024-12-23,Boston,young professionals,337,23.09,0,1
+2024-12-23,Boston,families,236,23.09,0,1
+2024-12-23,Boston,retirees,135,23.09,0,1
+2024-12-30,Boston,students,285,23.09,0,1
+2024-12-30,Boston,young professionals,515,23.09,0,1
+2024-12-30,Boston,families,271,23.09,0,1
+2024-12-30,Boston,retirees,120,23.09,0,1
+2025-01-06,Boston,students,144,23.09,0,1
+2025-01-06,Boston,young professionals,442,23.09,0,1
+2025-01-06,Boston,families,263,23.09,0,1
+2025-01-06,Boston,retirees,82,23.09,0,1
+2025-01-13,Boston,students,480,20.78,1,0
+2025-01-13,Boston,young professionals,435,23.09,0,0
+2025-01-13,Boston,families,157,23.09,0,0
+2025-01-13,Boston,retirees,115,23.09,0,0
+2025-01-20,Boston,students,227,20.78,1,0
+2025-01-20,Boston,young professionals,230,23.09,0,0
+2025-01-20,Boston,families,176,23.09,0,0
+2025-01-20,Boston,retirees,138,23.09,0,0
+2025-01-27,Boston,students,349,20.78,1,0
+2025-01-27,Boston,young professionals,463,23.09,0,0
+2025-01-27,Boston,families,188,23.09,0,0
+2025-01-27,Boston,retirees,151,23.09,0,0
+2025-02-03,Boston,students,422,20.78,1,0
+2025-02-03,Boston,young professionals,354,23.09,0,0
+2025-02-03,Boston,families,255,23.09,0,0
+2025-02-03,Boston,retirees,143,23.09,0,0
+2025-02-10,Boston,students,202,23.09,0,0
+2025-02-10,Boston,young professionals,562,23.09,0,0
+2025-02-10,Boston,families,183,23.09,0,0
+2025-02-10,Boston,retirees,145,23.09,0,0
+2025-02-17,Boston,students,171,23.09,0,0
+2025-02-17,Boston,young professionals,432,23.09,0,0
+2025-02-17,Boston,families,154,23.09,0,0
+2025-02-17,Boston,retirees,114,23.09,0,0
+2025-02-24,Boston,students,821,16.17,1,0
+2025-02-24,Boston,young professionals,1270,16.17,1,0
+2025-02-24,Boston,families,431,16.17,1,0
+2025-02-24,Boston,retirees,157,16.17,1,0
+2025-03-03,Boston,students,775,16.17,1,0
+2025-03-03,Boston,young professionals,1055,16.17,1,0
+2025-03-03,Boston,families,377,16.17,1,0
+2025-03-03,Boston,retirees,133,16.17,1,0
+2025-03-10,Boston,students,655,16.17,1,0
+2025-03-10,Boston,young professionals,755,16.17,1,0
+2025-03-10,Boston,families,274,16.17,1,0
+2025-03-10,Boston,retirees,170,16.17,1,0
+2025-03-17,Boston,students,752,16.17,1,0
+2025-03-17,Boston,young professionals,832,16.17,1,0
+2025-03-17,Boston,families,386,16.17,1,0
+2025-03-17,Boston,retirees,146,16.17,1,0
+2025-03-24,Boston,students,291,23.09,0,1
+2025-03-24,Boston,young professionals,386,23.09,0,1
+2025-03-24,Boston,families,269,23.09,0,1
+2025-03-24,Boston,retirees,104,23.09,0,1
+2025-03-31,Boston,students,378,23.09,0,1
+2025-03-31,Boston,young professionals,277,23.09,0,1
+2025-03-31,Boston,families,262,23.09,0,1
+2025-03-31,Boston,retirees,100,23.09,0,1
+2025-04-07,Boston,students,263,23.09,0,1
+2025-04-07,Boston,young professionals,340,23.09,0,1
+2025-04-07,Boston,families,226,23.09,0,1
+2025-04-07,Boston,retirees,98,23.09,0,1
+2025-04-14,Boston,students,163,23.09,0,0
+2025-04-14,Boston,young professionals,663,18.48,1,0
+2025-04-14,Boston,families,153,23.09,0,0
+2025-04-14,Boston,retirees,107,23.09,0,0
+2025-04-21,Boston,students,306,23.09,0,0
+2025-04-21,Boston,young professionals,619,18.48,1,0
+2025-04-21,Boston,families,351,23.09,0,0
+2025-04-21,Boston,retirees,104,23.09,0,0
+2025-04-28,Boston,students,199,23.09,0,0
+2025-04-28,Boston,young professionals,296,23.09,0,0
+2025-04-28,Boston,families,273,23.09,0,0
+2025-04-28,Boston,retirees,125,23.09,0,0
+2025-05-05,Boston,students,195,23.09,0,0
+2025-05-05,Boston,young professionals,525,23.09,0,0
+2025-05-05,Boston,families,234,23.09,0,0
+2025-05-05,Boston,retirees,103,23.09,0,0
+2025-05-12,Boston,students,331,23.09,0,0
+2025-05-12,Boston,young professionals,616,23.09,0,0
+2025-05-12,Boston,families,185,23.09,0,0
+2025-05-12,Boston,retirees,115,23.09,0,0
+2025-05-19,Boston,students,236,23.09,0,0
+2025-05-19,Boston,young professionals,452,23.09,0,0
+2025-05-19,Boston,families,230,23.09,0,0
+2025-05-19,Boston,retirees,123,23.09,0,0
+2025-05-26,Boston,students,239,23.09,0,1
+2025-05-26,Boston,young professionals,288,23.09,0,1
+2025-05-26,Boston,families,221,23.09,0,1
+2025-05-26,Boston,retirees,112,23.09,0,1
+2025-06-02,Boston,students,361,23.09,0,1
+2025-06-02,Boston,young professionals,324,23.09,0,1
+2025-06-02,Boston,families,303,23.09,0,1
+2025-06-02,Boston,retirees,80,23.09,0,1
+2025-06-09,Boston,students,334,23.09,0,0
+2025-06-09,Boston,young professionals,417,23.09,0,0
+2025-06-09,Boston,families,296,23.09,0,0
+2025-06-09,Boston,retirees,67,23.09,0,0
+2025-06-16,Boston,students,193,23.09,0,0
+2025-06-16,Boston,young professionals,361,23.09,0,0
+2025-06-16,Boston,families,187,23.09,0,0
+2025-06-16,Boston,retirees,134,23.09,0,0
+2025-06-23,Boston,students,683,18.48,1,0
+2025-06-23,Boston,young professionals,862,18.48,1,0
+2025-06-23,Boston,families,386,18.48,1,0
+2025-06-23,Boston,retirees,138,18.48,1,0
+2025-06-30,Boston,students,598,18.48,1,0
+2025-06-30,Boston,young professionals,614,18.48,1,0
+2025-06-30,Boston,families,310,18.48,1,0
+2025-06-30,Boston,retirees,121,18.48,1,0
+2025-07-07,Boston,students,546,18.48,1,0
+2025-07-07,Boston,young professionals,547,18.48,1,0
+2025-07-07,Boston,families,322,18.48,1,0
+2025-07-07,Boston,retirees,104,18.48,1,0
+2025-07-14,Boston,students,542,18.48,1,0
+2025-07-14,Boston,young professionals,559,18.48,1,0
+2025-07-14,Boston,families,228,18.48,1,0
+2025-07-14,Boston,retirees,126,18.48,1,0
+2025-07-21,Boston,students,196,23.09,0,0
+2025-07-21,Boston,young professionals,326,23.09,0,0
+2025-07-21,Boston,families,198,23.09,0,0
+2025-07-21,Boston,retirees,105,23.09,0,0
+2025-07-28,Boston,students,360,23.09,0,0
+2025-07-28,Boston,young professionals,373,23.09,0,0
+2025-07-28,Boston,families,293,23.09,0,0
+2025-07-28,Boston,retirees,83,23.09,0,0
+2025-08-04,Boston,students,201,23.09,0,0
+2025-08-04,Boston,young professionals,474,23.09,0,0
+2025-08-04,Boston,families,226,23.09,0,0
+2025-08-04,Boston,retirees,127,23.09,0,0
+2025-08-11,Boston,students,223,23.09,0,0
+2025-08-11,Boston,young professionals,302,23.09,0,0
+2025-08-11,Boston,families,230,23.09,0,0
+2025-08-11,Boston,retirees,97,23.09,0,0
+2025-08-18,Boston,students,259,23.09,0,0
+2025-08-18,Boston,young professionals,423,23.09,0,0
+2025-08-18,Boston,families,237,23.09,0,0
+2025-08-18,Boston,retirees,69,23.09,0,0
+2025-08-25,Boston,students,315,23.09,0,1
+2025-08-25,Boston,young professionals,390,23.09,0,1
+2025-08-25,Boston,families,194,23.09,0,1
+2025-08-25,Boston,retirees,85,23.09,0,1
+2025-09-01,Boston,students,236,23.09,0,1
+2025-09-01,Boston,young professionals,481,23.09,0,1
+2025-09-01,Boston,families,218,23.09,0,1
+2025-09-01,Boston,retirees,136,23.09,0,1
+2025-09-08,Boston,students,263,23.09,0,0
+2025-09-08,Boston,young professionals,289,23.09,0,0
+2025-09-08,Boston,families,139,23.09,0,0
+2025-09-08,Boston,retirees,50,23.09,0,0
+2025-09-15,Boston,students,177,23.09,0,0
+2025-09-15,Boston,young professionals,421,23.09,0,0
+2025-09-15,Boston,families,231,23.09,0,0
+2025-09-15,Boston,retirees,65,23.09,0,0
+2025-09-22,Boston,students,213,23.09,0,0
+2025-09-22,Boston,young professionals,253,23.09,0,0
+2025-09-22,Boston,families,163,23.09,0,0
+2025-09-22,Boston,retirees,141,23.09,0,0
+2025-09-29,Boston,students,211,23.09,0,0
+2025-09-29,Boston,young professionals,295,23.09,0,0
+2025-09-29,Boston,families,224,23.09,0,0
+2025-09-29,Boston,retirees,72,23.09,0,0
+2025-10-06,Boston,students,172,23.09,0,0
+2025-10-06,Boston,young professionals,312,23.09,0,0
+2025-10-06,Boston,families,213,23.09,0,0
+2025-10-06,Boston,retirees,76,23.09,0,0
+2025-10-13,Boston,students,165,23.09,0,1
+2025-10-13,Boston,young professionals,261,23.09,0,1
+2025-10-13,Boston,families,232,23.09,0,1
+2025-10-13,Boston,retirees,77,23.09,0,1
+2025-10-20,Boston,students,177,23.09,0,1
+2025-10-20,Boston,young professionals,347,23.09,0,1
+2025-10-20,Boston,families,163,23.09,0,1
+2025-10-20,Boston,retirees,78,23.09,0,1
+2025-10-27,Boston,students,803,16.17,1,1
+2025-10-27,Boston,young professionals,640,16.17,1,1
+2025-10-27,Boston,families,574,16.17,1,1
+2025-10-27,Boston,retirees,123,16.17,1,1
+2025-11-03,Boston,students,168,23.09,0,0
+2025-11-03,Boston,young professionals,196,23.09,0,0
+2025-11-03,Boston,families,113,23.09,0,0
+2025-11-03,Boston,retirees,95,23.09,0,0
+2025-11-10,Boston,students,270,23.09,0,0
+2025-11-10,Boston,young professionals,294,23.09,0,0
+2025-11-10,Boston,families,147,23.09,0,0
+2025-11-10,Boston,retirees,68,23.09,0,0
+2025-11-17,Boston,students,211,23.09,0,0
+2025-11-17,Boston,young professionals,281,23.09,0,0
+2025-11-17,Boston,families,101,23.09,0,0
+2025-11-17,Boston,retirees,74,23.09,0,0
+2025-11-24,Boston,students,250,23.09,0,0
+2025-11-24,Boston,young professionals,313,23.09,0,0
+2025-11-24,Boston,families,140,23.09,0,0
+2025-11-24,Boston,retirees,80,23.09,0,0
+2025-12-01,Boston,students,191,23.09,0,0
+2025-12-01,Boston,young professionals,358,23.09,0,0
+2025-12-01,Boston,families,148,23.09,0,0
+2025-12-01,Boston,retirees,51,23.09,0,0
+2025-12-08,Boston,students,144,23.09,0,0
+2025-12-08,Boston,young professionals,490,23.09,0,0
+2025-12-08,Boston,families,156,23.09,0,0
+2025-12-08,Boston,retirees,107,23.09,0,0
+2025-12-15,Boston,students,554,16.17,1,0
+2025-12-15,Boston,young professionals,811,16.17,1,0
+2025-12-15,Boston,families,273,16.17,1,0
+2025-12-15,Boston,retirees,89,16.17,1,0
+2025-12-22,Boston,students,654,16.17,1,0
+2025-12-22,Boston,young professionals,763,16.17,1,0
+2025-12-22,Boston,families,246,16.17,1,0
+2025-12-22,Boston,retirees,118,16.17,1,0
+2024-01-01,Seattle,students,122,23.17,0,0
+2024-01-01,Seattle,young professionals,411,23.17,0,0
+2024-01-01,Seattle,families,126,23.17,0,0
+2024-01-01,Seattle,retirees,131,23.17,0,0
+2024-01-08,Seattle,students,88,23.17,0,0
+2024-01-08,Seattle,young professionals,372,23.17,0,0
+2024-01-08,Seattle,families,262,23.17,0,0
+2024-01-08,Seattle,retirees,69,23.17,0,0
+2024-01-15,Seattle,students,145,23.17,0,0
+2024-01-15,Seattle,young professionals,234,23.17,0,0
+2024-01-15,Seattle,families,284,23.17,0,0
+2024-01-15,Seattle,retirees,82,23.17,0,0
+2024-01-22,Seattle,students,125,23.17,0,0
+2024-01-22,Seattle,young professionals,367,23.17,0,0
+2024-01-22,Seattle,families,206,23.17,0,0
+2024-01-22,Seattle,retirees,114,23.17,0,0
+2024-01-29,Seattle,students,126,23.17,0,0
+2024-01-29,Seattle,young professionals,432,23.17,0,0
+2024-01-29,Seattle,families,184,23.17,0,0
+2024-01-29,Seattle,retirees,99,23.17,0,0
+2024-02-05,Seattle,students,153,23.17,0,0
+2024-02-05,Seattle,young professionals,336,23.17,0,0
+2024-02-05,Seattle,families,271,23.17,0,0
+2024-02-05,Seattle,retirees,74,23.17,0,0
+2024-02-12,Seattle,students,183,23.17,0,0
+2024-02-12,Seattle,young professionals,492,23.17,0,0
+2024-02-12,Seattle,families,211,23.17,0,0
+2024-02-12,Seattle,retirees,101,23.17,0,0
+2024-02-19,Seattle,students,180,23.17,0,0
+2024-02-19,Seattle,young professionals,452,23.17,0,0
+2024-02-19,Seattle,families,272,23.17,0,0
+2024-02-19,Seattle,retirees,65,23.17,0,0
+2024-02-26,Seattle,students,129,23.17,0,1
+2024-02-26,Seattle,young professionals,368,23.17,0,1
+2024-02-26,Seattle,families,257,23.17,0,1
+2024-02-26,Seattle,retirees,78,23.17,0,1
+2024-03-04,Seattle,students,155,23.17,0,1
+2024-03-04,Seattle,young professionals,301,23.17,0,1
+2024-03-04,Seattle,families,222,23.17,0,1
+2024-03-04,Seattle,retirees,57,23.17,0,1
+2024-03-11,Seattle,students,148,23.17,0,1
+2024-03-11,Seattle,young professionals,405,23.17,0,1
+2024-03-11,Seattle,families,294,23.17,0,1
+2024-03-11,Seattle,retirees,104,23.17,0,1
+2024-03-18,Seattle,students,135,23.17,0,0
+2024-03-18,Seattle,young professionals,393,23.17,0,0
+2024-03-18,Seattle,families,206,23.17,0,0
+2024-03-18,Seattle,retirees,116,23.17,0,0
+2024-03-25,Seattle,students,190,23.17,0,0
+2024-03-25,Seattle,young professionals,443,23.17,0,0
+2024-03-25,Seattle,families,220,23.17,0,0
+2024-03-25,Seattle,retirees,125,23.17,0,0
+2024-04-01,Seattle,students,182,23.17,0,0
+2024-04-01,Seattle,young professionals,334,23.17,0,0
+2024-04-01,Seattle,families,266,23.17,0,0
+2024-04-01,Seattle,retirees,112,23.17,0,0
+2024-04-08,Seattle,students,151,23.17,0,0
+2024-04-08,Seattle,young professionals,480,23.17,0,0
+2024-04-08,Seattle,families,239,23.17,0,0
+2024-04-08,Seattle,retirees,115,23.17,0,0
+2024-04-15,Seattle,students,115,23.17,0,0
+2024-04-15,Seattle,young professionals,562,23.17,0,0
+2024-04-15,Seattle,families,189,23.17,0,0
+2024-04-15,Seattle,retirees,106,23.17,0,0
+2024-04-22,Seattle,students,240,23.17,0,0
+2024-04-22,Seattle,young professionals,581,23.17,0,0
+2024-04-22,Seattle,families,323,23.17,0,0
+2024-04-22,Seattle,retirees,94,23.17,0,0
+2024-04-29,Seattle,students,151,23.17,0,0
+2024-04-29,Seattle,young professionals,388,23.17,0,0
+2024-04-29,Seattle,families,244,23.17,0,0
+2024-04-29,Seattle,retirees,70,23.17,0,0
+2024-05-06,Seattle,students,125,23.17,0,0
+2024-05-06,Seattle,young professionals,581,23.17,0,0
+2024-05-06,Seattle,families,291,23.17,0,0
+2024-05-06,Seattle,retirees,71,23.17,0,0
+2024-05-13,Seattle,students,145,23.17,0,0
+2024-05-13,Seattle,young professionals,381,23.17,0,0
+2024-05-13,Seattle,families,122,23.17,0,0
+2024-05-13,Seattle,retirees,111,23.17,0,0
+2024-05-20,Seattle,students,112,23.17,0,0
+2024-05-20,Seattle,young professionals,484,23.17,0,0
+2024-05-20,Seattle,families,164,23.17,0,0
+2024-05-20,Seattle,retirees,67,23.17,0,0
+2024-05-27,Seattle,students,167,23.17,0,0
+2024-05-27,Seattle,young professionals,271,23.17,0,0
+2024-05-27,Seattle,families,191,23.17,0,0
+2024-05-27,Seattle,retirees,133,23.17,0,0
+2024-06-03,Seattle,students,144,23.17,0,0
+2024-06-03,Seattle,young professionals,513,23.17,0,0
+2024-06-03,Seattle,families,150,23.17,0,0
+2024-06-03,Seattle,retirees,105,23.17,0,0
+2024-06-10,Seattle,students,91,23.17,0,0
+2024-06-10,Seattle,young professionals,293,23.17,0,0
+2024-06-10,Seattle,families,193,23.17,0,0
+2024-06-10,Seattle,retirees,107,23.17,0,0
+2024-06-17,Seattle,students,152,23.17,0,0
+2024-06-17,Seattle,young professionals,327,23.17,0,0
+2024-06-17,Seattle,families,281,23.17,0,0
+2024-06-17,Seattle,retirees,77,23.17,0,0
+2024-06-24,Seattle,students,184,23.17,0,0
+2024-06-24,Seattle,young professionals,400,23.17,0,0
+2024-06-24,Seattle,families,194,23.17,0,0
+2024-06-24,Seattle,retirees,66,23.17,0,0
+2024-07-01,Seattle,students,388,18.53,1,0
+2024-07-01,Seattle,young professionals,486,18.53,1,0
+2024-07-01,Seattle,families,409,18.53,1,0
+2024-07-01,Seattle,retirees,99,18.53,1,0
+2024-07-08,Seattle,students,225,18.53,1,0
+2024-07-08,Seattle,young professionals,796,18.53,1,0
+2024-07-08,Seattle,families,336,18.53,1,0
+2024-07-08,Seattle,retirees,89,18.53,1,0
+2024-07-15,Seattle,students,419,18.53,1,0
+2024-07-15,Seattle,young professionals,422,18.53,1,0
+2024-07-15,Seattle,families,310,18.53,1,0
+2024-07-15,Seattle,retirees,89,18.53,1,0
+2024-07-22,Seattle,students,336,18.53,1,0
+2024-07-22,Seattle,young professionals,749,18.53,1,0
+2024-07-22,Seattle,families,427,18.53,1,0
+2024-07-22,Seattle,retirees,77,18.53,1,0
+2024-07-29,Seattle,students,141,23.17,0,0
+2024-07-29,Seattle,young professionals,248,23.17,0,0
+2024-07-29,Seattle,families,161,23.17,0,0
+2024-07-29,Seattle,retirees,101,23.17,0,0
+2024-08-05,Seattle,students,74,23.17,0,1
+2024-08-05,Seattle,young professionals,346,23.17,0,1
+2024-08-05,Seattle,families,148,23.17,0,1
+2024-08-05,Seattle,retirees,87,23.17,0,1
+2024-08-12,Seattle,students,126,23.17,0,1
+2024-08-12,Seattle,young professionals,306,23.17,0,1
+2024-08-12,Seattle,families,179,23.17,0,1
+2024-08-12,Seattle,retirees,117,23.17,0,1
+2024-08-19,Seattle,students,139,23.17,0,1
+2024-08-19,Seattle,young professionals,590,23.17,0,1
+2024-08-19,Seattle,families,261,23.17,0,1
+2024-08-19,Seattle,retirees,95,23.17,0,1
+2024-08-26,Seattle,students,207,23.17,0,0
+2024-08-26,Seattle,young professionals,387,23.17,0,0
+2024-08-26,Seattle,families,190,23.17,0,0
+2024-08-26,Seattle,retirees,47,23.17,0,0
+2024-09-02,Seattle,students,113,23.17,0,0
+2024-09-02,Seattle,young professionals,512,23.17,0,0
+2024-09-02,Seattle,families,159,23.17,0,0
+2024-09-02,Seattle,retirees,69,23.17,0,0
+2024-09-09,Seattle,students,103,23.17,0,0
+2024-09-09,Seattle,young professionals,290,23.17,0,0
+2024-09-09,Seattle,families,119,23.17,0,0
+2024-09-09,Seattle,retirees,111,23.17,0,0
+2024-09-16,Seattle,students,152,23.17,0,0
+2024-09-16,Seattle,young professionals,348,23.17,0,0
+2024-09-16,Seattle,families,184,23.17,0,0
+2024-09-16,Seattle,retirees,65,23.17,0,0
+2024-09-23,Seattle,students,147,23.17,0,1
+2024-09-23,Seattle,young professionals,334,23.17,0,1
+2024-09-23,Seattle,families,114,23.17,0,1
+2024-09-23,Seattle,retirees,81,23.17,0,1
+2024-09-30,Seattle,students,468,16.22,1,1
+2024-09-30,Seattle,young professionals,832,16.22,1,1
+2024-09-30,Seattle,families,375,16.22,1,1
+2024-09-30,Seattle,retirees,96,16.22,1,1
+2024-10-07,Seattle,students,432,16.22,1,1
+2024-10-07,Seattle,young professionals,338,16.22,1,1
+2024-10-07,Seattle,families,156,16.22,1,1
+2024-10-07,Seattle,retirees,111,16.22,1,1
+2024-10-14,Seattle,students,228,16.22,1,0
+2024-10-14,Seattle,young professionals,649,16.22,1,0
+2024-10-14,Seattle,families,349,16.22,1,0
+2024-10-14,Seattle,retirees,92,16.22,1,0
+2024-10-21,Seattle,students,101,23.17,0,0
+2024-10-21,Seattle,young professionals,335,23.17,0,0
+2024-10-21,Seattle,families,115,23.17,0,0
+2024-10-21,Seattle,retirees,59,23.17,0,0
+2024-10-28,Seattle,students,111,23.17,0,0
+2024-10-28,Seattle,young professionals,256,23.17,0,0
+2024-10-28,Seattle,families,166,23.17,0,0
+2024-10-28,Seattle,retirees,77,23.17,0,0
+2024-11-04,Seattle,students,109,23.17,0,0
+2024-11-04,Seattle,young professionals,541,23.17,0,0
+2024-11-04,Seattle,families,179,23.17,0,0
+2024-11-04,Seattle,retirees,68,23.17,0,0
+2024-11-11,Seattle,students,125,23.17,0,0
+2024-11-11,Seattle,young professionals,398,23.17,0,0
+2024-11-11,Seattle,families,130,23.17,0,0
+2024-11-11,Seattle,retirees,72,23.17,0,0
+2024-11-18,Seattle,students,141,23.17,0,0
+2024-11-18,Seattle,young professionals,350,23.17,0,0
+2024-11-18,Seattle,families,137,23.17,0,0
+2024-11-18,Seattle,retirees,81,23.17,0,0
+2024-11-25,Seattle,students,85,23.17,0,1
+2024-11-25,Seattle,young professionals,316,23.17,0,1
+2024-11-25,Seattle,families,230,23.17,0,1
+2024-11-25,Seattle,retirees,49,23.17,0,1
+2024-12-02,Seattle,students,161,23.17,0,1
+2024-12-02,Seattle,young professionals,462,23.17,0,1
+2024-12-02,Seattle,families,218,23.17,0,1
+2024-12-02,Seattle,retirees,39,23.17,0,1
+2024-12-09,Seattle,students,104,23.17,0,1
+2024-12-09,Seattle,young professionals,401,23.17,0,1
+2024-12-09,Seattle,families,108,23.17,0,1
+2024-12-09,Seattle,retirees,67,23.17,0,1
+2024-12-16,Seattle,students,105,23.17,0,0
+2024-12-16,Seattle,young professionals,365,23.17,0,0
+2024-12-16,Seattle,families,219,23.17,0,0
+2024-12-16,Seattle,retirees,74,23.17,0,0
+2024-12-23,Seattle,students,163,23.17,0,0
+2024-12-23,Seattle,young professionals,329,23.17,0,0
+2024-12-23,Seattle,families,295,23.17,0,0
+2024-12-23,Seattle,retirees,83,23.17,0,0
+2024-12-30,Seattle,students,110,23.17,0,0
+2024-12-30,Seattle,young professionals,423,23.17,0,0
+2024-12-30,Seattle,families,194,23.17,0,0
+2024-12-30,Seattle,retirees,97,23.17,0,0
+2025-01-06,Seattle,students,356,20.85,1,0
+2025-01-06,Seattle,young professionals,404,20.85,1,0
+2025-01-06,Seattle,families,257,20.85,1,0
+2025-01-06,Seattle,retirees,75,20.85,1,0
+2025-01-13,Seattle,students,205,20.85,1,0
+2025-01-13,Seattle,young professionals,549,20.85,1,0
+2025-01-13,Seattle,families,280,20.85,1,0
+2025-01-13,Seattle,retirees,77,20.85,1,0
+2025-01-20,Seattle,students,247,20.85,1,0
+2025-01-20,Seattle,young professionals,372,20.85,1,0
+2025-01-20,Seattle,families,284,20.85,1,0
+2025-01-20,Seattle,retirees,76,20.85,1,0
+2025-01-27,Seattle,students,117,23.17,0,0
+2025-01-27,Seattle,young professionals,235,23.17,0,0
+2025-01-27,Seattle,families,189,23.17,0,0
+2025-01-27,Seattle,retirees,36,23.17,0,0
+2025-02-03,Seattle,students,170,23.17,0,0
+2025-02-03,Seattle,young professionals,436,23.17,0,0
+2025-02-03,Seattle,families,229,23.17,0,0
+2025-02-03,Seattle,retirees,122,23.17,0,0
+2025-02-10,Seattle,students,124,23.17,0,0
+2025-02-10,Seattle,young professionals,351,23.17,0,0
+2025-02-10,Seattle,families,281,23.17,0,0
+2025-02-10,Seattle,retirees,134,23.17,0,0
+2025-02-17,Seattle,students,147,23.17,0,0
+2025-02-17,Seattle,young professionals,432,23.17,0,0
+2025-02-17,Seattle,families,246,23.17,0,0
+2025-02-17,Seattle,retirees,111,23.17,0,0
+2025-02-24,Seattle,students,222,20.85,1,0
+2025-02-24,Seattle,young professionals,936,20.85,1,0
+2025-02-24,Seattle,families,365,20.85,1,0
+2025-02-24,Seattle,retirees,120,20.85,1,0
+2025-03-03,Seattle,students,176,20.85,1,1
+2025-03-03,Seattle,young professionals,459,20.85,1,1
+2025-03-03,Seattle,families,315,20.85,1,1
+2025-03-03,Seattle,retirees,80,20.85,1,1
+2025-03-10,Seattle,students,326,20.85,1,1
+2025-03-10,Seattle,young professionals,628,20.85,1,1
+2025-03-10,Seattle,families,472,20.85,1,1
+2025-03-10,Seattle,retirees,131,20.85,1,1
+2025-03-17,Seattle,students,210,20.85,1,0
+2025-03-17,Seattle,young professionals,545,20.85,1,0
+2025-03-17,Seattle,families,371,20.85,1,0
+2025-03-17,Seattle,retirees,130,20.85,1,0
+2025-03-24,Seattle,students,90,23.17,0,0
+2025-03-24,Seattle,young professionals,216,23.17,0,0
+2025-03-24,Seattle,families,203,23.17,0,0
+2025-03-24,Seattle,retirees,74,23.17,0,0
+2025-03-31,Seattle,students,340,20.85,1,0
+2025-03-31,Seattle,young professionals,438,23.17,0,0
+2025-03-31,Seattle,families,224,23.17,0,0
+2025-03-31,Seattle,retirees,75,23.17,0,0
+2025-04-07,Seattle,students,231,20.85,1,0
+2025-04-07,Seattle,young professionals,443,23.17,0,0
+2025-04-07,Seattle,families,305,23.17,0,0
+2025-04-07,Seattle,retirees,79,23.17,0,0
+2025-04-14,Seattle,students,262,20.85,1,0
+2025-04-14,Seattle,young professionals,415,23.17,0,0
+2025-04-14,Seattle,families,329,23.17,0,0
+2025-04-14,Seattle,retirees,74,23.17,0,0
+2025-04-21,Seattle,students,311,20.85,1,0
+2025-04-21,Seattle,young professionals,503,23.17,0,0
+2025-04-21,Seattle,families,216,23.17,0,0
+2025-04-21,Seattle,retirees,84,23.17,0,0
+2025-04-28,Seattle,students,177,23.17,0,1
+2025-04-28,Seattle,young professionals,486,23.17,0,1
+2025-04-28,Seattle,families,233,23.17,0,1
+2025-04-28,Seattle,retirees,111,23.17,0,1
+2025-05-05,Seattle,students,150,23.17,0,1
+2025-05-05,Seattle,young professionals,364,23.17,0,1
+2025-05-05,Seattle,families,267,23.17,0,1
+2025-05-05,Seattle,retirees,121,23.17,0,1
+2025-05-12,Seattle,students,160,23.17,0,0
+2025-05-12,Seattle,young professionals,380,23.17,0,0
+2025-05-12,Seattle,families,330,23.17,0,0
+2025-05-12,Seattle,retirees,58,23.17,0,0
+2025-05-19,Seattle,students,146,23.17,0,0
+2025-05-19,Seattle,young professionals,505,23.17,0,0
+2025-05-19,Seattle,families,258,23.17,0,0
+2025-05-19,Seattle,retirees,92,23.17,0,0
+2025-05-26,Seattle,students,149,23.17,0,0
+2025-05-26,Seattle,young professionals,532,23.17,0,0
+2025-05-26,Seattle,families,323,23.17,0,0
+2025-05-26,Seattle,retirees,94,23.17,0,0
+2025-06-02,Seattle,students,186,23.17,0,0
+2025-06-02,Seattle,young professionals,475,23.17,0,0
+2025-06-02,Seattle,families,226,23.17,0,0
+2025-06-02,Seattle,retirees,106,23.17,0,0
+2025-06-09,Seattle,students,157,23.17,0,0
+2025-06-09,Seattle,young professionals,450,23.17,0,0
+2025-06-09,Seattle,families,157,23.17,0,0
+2025-06-09,Seattle,retirees,67,23.17,0,0
+2025-06-16,Seattle,students,305,18.53,1,0
+2025-06-16,Seattle,young professionals,834,18.53,1,0
+2025-06-16,Seattle,families,314,18.53,1,0
+2025-06-16,Seattle,retirees,147,18.53,1,0
+2025-06-23,Seattle,students,119,23.17,0,0
+2025-06-23,Seattle,young professionals,465,23.17,0,0
+2025-06-23,Seattle,families,157,23.17,0,0
+2025-06-23,Seattle,retirees,84,23.17,0,0
+2025-06-30,Seattle,students,188,23.17,0,1
+2025-06-30,Seattle,young professionals,471,23.17,0,1
+2025-06-30,Seattle,families,442,23.17,0,1
+2025-06-30,Seattle,retirees,80,23.17,0,1
+2025-07-07,Seattle,students,140,23.17,0,0
+2025-07-07,Seattle,young professionals,567,23.17,0,0
+2025-07-07,Seattle,families,260,23.17,0,0
+2025-07-07,Seattle,retirees,69,23.17,0,0
+2025-07-14,Seattle,students,120,23.17,0,0
+2025-07-14,Seattle,young professionals,356,23.17,0,0
+2025-07-14,Seattle,families,284,23.17,0,0
+2025-07-14,Seattle,retirees,94,23.17,0,0
+2025-07-21,Seattle,students,401,18.53,1,0
+2025-07-21,Seattle,young professionals,655,18.53,1,0
+2025-07-21,Seattle,families,369,18.53,1,0
+2025-07-21,Seattle,retirees,129,18.53,1,0
+2025-07-28,Seattle,students,235,18.53,1,0
+2025-07-28,Seattle,young professionals,828,18.53,1,0
+2025-07-28,Seattle,families,372,18.53,1,0
+2025-07-28,Seattle,retirees,83,18.53,1,0
+2025-08-04,Seattle,students,273,18.53,1,0
+2025-08-04,Seattle,young professionals,644,18.53,1,0
+2025-08-04,Seattle,families,277,18.53,1,0
+2025-08-04,Seattle,retirees,78,18.53,1,0
+2025-08-11,Seattle,students,101,23.17,0,0
+2025-08-11,Seattle,young professionals,424,23.17,0,0
+2025-08-11,Seattle,families,271,23.17,0,0
+2025-08-11,Seattle,retirees,80,23.17,0,0
+2025-08-18,Seattle,students,127,23.17,0,0
+2025-08-18,Seattle,young professionals,307,23.17,0,0
+2025-08-18,Seattle,families,151,23.17,0,0
+2025-08-18,Seattle,retirees,80,23.17,0,0
+2025-08-25,Seattle,students,172,23.17,0,0
+2025-08-25,Seattle,young professionals,409,23.17,0,0
+2025-08-25,Seattle,families,154,23.17,0,0
+2025-08-25,Seattle,retirees,107,23.17,0,0
+2025-09-01,Seattle,students,121,23.17,0,0
+2025-09-01,Seattle,young professionals,341,23.17,0,0
+2025-09-01,Seattle,families,174,23.17,0,0
+2025-09-01,Seattle,retirees,93,23.17,0,0
+2025-09-08,Seattle,students,198,23.17,0,1
+2025-09-08,Seattle,young professionals,346,23.17,0,1
+2025-09-08,Seattle,families,208,23.17,0,1
+2025-09-08,Seattle,retirees,102,23.17,0,1
+2025-09-15,Seattle,students,107,23.17,0,1
+2025-09-15,Seattle,young professionals,399,23.17,0,1
+2025-09-15,Seattle,families,140,23.17,0,1
+2025-09-15,Seattle,retirees,85,23.17,0,1
+2025-09-22,Seattle,students,607,16.22,1,1
+2025-09-22,Seattle,young professionals,317,23.17,0,1
+2025-09-22,Seattle,families,320,23.17,0,1
+2025-09-22,Seattle,retirees,53,23.17,0,1
+2025-09-29,Seattle,students,277,16.22,1,0
+2025-09-29,Seattle,young professionals,344,23.17,0,0
+2025-09-29,Seattle,families,184,23.17,0,0
+2025-09-29,Seattle,retirees,110,23.17,0,0
+2025-10-06,Seattle,students,363,16.22,1,0
+2025-10-06,Seattle,young professionals,245,23.17,0,0
+2025-10-06,Seattle,families,216,23.17,0,0
+2025-10-06,Seattle,retirees,53,23.17,0,0
+2025-10-13,Seattle,students,288,16.22,1,0
+2025-10-13,Seattle,young professionals,226,23.17,0,0
+2025-10-13,Seattle,families,128,23.17,0,0
+2025-10-13,Seattle,retirees,58,23.17,0,0
+2025-10-20,Seattle,students,71,23.17,0,0
+2025-10-20,Seattle,young professionals,328,23.17,0,0
+2025-10-20,Seattle,families,159,23.17,0,0
+2025-10-20,Seattle,retirees,100,23.17,0,0
+2025-10-27,Seattle,students,135,23.17,0,1
+2025-10-27,Seattle,young professionals,335,23.17,0,1
+2025-10-27,Seattle,families,160,23.17,0,1
+2025-10-27,Seattle,retirees,93,23.17,0,1
+2025-11-03,Seattle,students,134,23.17,0,1
+2025-11-03,Seattle,young professionals,382,23.17,0,1
+2025-11-03,Seattle,families,155,23.17,0,1
+2025-11-03,Seattle,retirees,74,23.17,0,1
+2025-11-10,Seattle,students,149,23.17,0,1
+2025-11-10,Seattle,young professionals,329,23.17,0,1
+2025-11-10,Seattle,families,153,23.17,0,1
+2025-11-10,Seattle,retirees,66,23.17,0,1
+2025-11-17,Seattle,students,114,23.17,0,0
+2025-11-17,Seattle,young professionals,252,23.17,0,0
+2025-11-17,Seattle,families,222,23.17,0,0
+2025-11-17,Seattle,retirees,71,23.17,0,0
+2025-11-24,Seattle,students,568,16.22,1,0
+2025-11-24,Seattle,young professionals,1040,16.22,1,0
+2025-11-24,Seattle,families,373,16.22,1,0
+2025-11-24,Seattle,retirees,91,16.22,1,0
+2025-12-01,Seattle,students,349,16.22,1,0
+2025-12-01,Seattle,young professionals,595,16.22,1,0
+2025-12-01,Seattle,families,201,16.22,1,0
+2025-12-01,Seattle,retirees,123,16.22,1,0
+2025-12-08,Seattle,students,265,16.22,1,0
+2025-12-08,Seattle,young professionals,598,16.22,1,0
+2025-12-08,Seattle,families,287,16.22,1,0
+2025-12-08,Seattle,retirees,99,16.22,1,0
+2025-12-15,Seattle,students,97,23.17,0,0
+2025-12-15,Seattle,young professionals,299,23.17,0,0
+2025-12-15,Seattle,families,148,23.17,0,0
+2025-12-15,Seattle,retirees,49,23.17,0,0
+2025-12-22,Seattle,students,124,23.17,0,0
+2025-12-22,Seattle,young professionals,339,23.17,0,0
+2025-12-22,Seattle,families,211,23.17,0,0
+2025-12-22,Seattle,retirees,112,23.17,0,0
+2024-01-01,Atlanta,students,74,23.44,0,0
+2024-01-01,Atlanta,young professionals,114,23.44,0,0
+2024-01-01,Atlanta,families,133,23.44,0,0
+2024-01-01,Atlanta,retirees,46,23.44,0,0
+2024-01-08,Atlanta,students,79,23.44,0,0
+2024-01-08,Atlanta,young professionals,217,23.44,0,0
+2024-01-08,Atlanta,families,153,23.44,0,0
+2024-01-08,Atlanta,retirees,59,23.44,0,0
+2024-01-15,Atlanta,students,57,23.44,0,0
+2024-01-15,Atlanta,young professionals,215,23.44,0,0
+2024-01-15,Atlanta,families,146,23.44,0,0
+2024-01-15,Atlanta,retirees,50,23.44,0,0
+2024-01-22,Atlanta,students,173,18.75,1,1
+2024-01-22,Atlanta,young professionals,468,18.75,1,1
+2024-01-22,Atlanta,families,229,18.75,1,1
+2024-01-22,Atlanta,retirees,86,18.75,1,1
+2024-01-29,Atlanta,students,85,23.44,0,0
+2024-01-29,Atlanta,young professionals,158,23.44,0,0
+2024-01-29,Atlanta,families,113,23.44,0,0
+2024-01-29,Atlanta,retirees,29,23.44,0,0
+2024-02-05,Atlanta,students,61,23.44,0,0
+2024-02-05,Atlanta,young professionals,251,23.44,0,0
+2024-02-05,Atlanta,families,120,23.44,0,0
+2024-02-05,Atlanta,retirees,66,23.44,0,0
+2024-02-12,Atlanta,students,54,23.44,0,0
+2024-02-12,Atlanta,young professionals,165,23.44,0,0
+2024-02-12,Atlanta,families,205,23.44,0,0
+2024-02-12,Atlanta,retirees,98,18.75,1,0
+2024-02-19,Atlanta,students,73,23.44,0,0
+2024-02-19,Atlanta,young professionals,130,23.44,0,0
+2024-02-19,Atlanta,families,156,23.44,0,0
+2024-02-19,Atlanta,retirees,71,18.75,1,0
+2024-02-26,Atlanta,students,85,23.44,0,0
+2024-02-26,Atlanta,young professionals,192,23.44,0,0
+2024-02-26,Atlanta,families,115,23.44,0,0
+2024-02-26,Atlanta,retirees,63,18.75,1,0
+2024-03-04,Atlanta,students,102,23.44,0,1
+2024-03-04,Atlanta,young professionals,234,23.44,0,1
+2024-03-04,Atlanta,families,177,23.44,0,1
+2024-03-04,Atlanta,retirees,49,23.44,0,1
+2024-03-11,Atlanta,students,77,23.44,0,1
+2024-03-11,Atlanta,young professionals,233,23.44,0,1
+2024-03-11,Atlanta,families,221,23.44,0,1
+2024-03-11,Atlanta,retirees,56,23.44,0,1
+2024-03-18,Atlanta,students,74,23.44,0,0
+2024-03-18,Atlanta,young professionals,246,23.44,0,0
+2024-03-18,Atlanta,families,198,23.44,0,0
+2024-03-18,Atlanta,retirees,45,23.44,0,0
+2024-03-25,Atlanta,students,126,23.44,0,0
+2024-03-25,Atlanta,young professionals,185,23.44,0,0
+2024-03-25,Atlanta,families,148,23.44,0,0
+2024-03-25,Atlanta,retirees,57,23.44,0,0
+2024-04-01,Atlanta,students,104,23.44,0,0
+2024-04-01,Atlanta,young professionals,127,23.44,0,0
+2024-04-01,Atlanta,families,172,23.44,0,0
+2024-04-01,Atlanta,retirees,53,23.44,0,0
+2024-04-08,Atlanta,students,299,16.41,1,0
+2024-04-08,Atlanta,young professionals,390,16.41,1,0
+2024-04-08,Atlanta,families,283,16.41,1,0
+2024-04-08,Atlanta,retirees,88,16.41,1,0
+2024-04-15,Atlanta,students,215,16.41,1,0
+2024-04-15,Atlanta,young professionals,407,16.41,1,0
+2024-04-15,Atlanta,families,230,16.41,1,0
+2024-04-15,Atlanta,retirees,69,16.41,1,0
+2024-04-22,Atlanta,students,61,23.44,0,0
+2024-04-22,Atlanta,young professionals,191,23.44,0,0
+2024-04-22,Atlanta,families,111,23.44,0,0
+2024-04-22,Atlanta,retirees,68,23.44,0,0
+2024-04-29,Atlanta,students,80,23.44,0,0
+2024-04-29,Atlanta,young professionals,265,23.44,0,0
+2024-04-29,Atlanta,families,156,23.44,0,0
+2024-04-29,Atlanta,retirees,59,23.44,0,0
+2024-05-06,Atlanta,students,67,23.44,0,0
+2024-05-06,Atlanta,young professionals,91,23.44,0,0
+2024-05-06,Atlanta,families,147,23.44,0,0
+2024-05-06,Atlanta,retirees,61,23.44,0,0
+2024-05-13,Atlanta,students,90,23.44,0,0
+2024-05-13,Atlanta,young professionals,178,23.44,0,0
+2024-05-13,Atlanta,families,143,23.44,0,0
+2024-05-13,Atlanta,retirees,51,23.44,0,0
+2024-05-20,Atlanta,students,79,23.44,0,0
+2024-05-20,Atlanta,young professionals,183,23.44,0,0
+2024-05-20,Atlanta,families,133,23.44,0,0
+2024-05-20,Atlanta,retirees,80,23.44,0,0
+2024-05-27,Atlanta,students,84,23.44,0,1
+2024-05-27,Atlanta,young professionals,206,23.44,0,1
+2024-05-27,Atlanta,families,163,23.44,0,1
+2024-05-27,Atlanta,retirees,92,23.44,0,1
+2024-06-03,Atlanta,students,137,23.44,0,0
+2024-06-03,Atlanta,young professionals,181,23.44,0,0
+2024-06-03,Atlanta,families,81,23.44,0,0
+2024-06-03,Atlanta,retirees,58,23.44,0,0
+2024-06-10,Atlanta,students,75,23.44,0,0
+2024-06-10,Atlanta,young professionals,195,23.44,0,0
+2024-06-10,Atlanta,families,149,23.44,0,0
+2024-06-10,Atlanta,retirees,62,23.44,0,0
+2024-06-17,Atlanta,students,93,23.44,0,0
+2024-06-17,Atlanta,young professionals,178,23.44,0,0
+2024-06-17,Atlanta,families,185,23.44,0,0
+2024-06-17,Atlanta,retirees,59,23.44,0,0
+2024-06-24,Atlanta,students,355,16.41,1,0
+2024-06-24,Atlanta,young professionals,439,16.41,1,0
+2024-06-24,Atlanta,families,257,16.41,1,0
+2024-06-24,Atlanta,retirees,102,16.41,1,0
+2024-07-01,Atlanta,students,182,16.41,1,0
+2024-07-01,Atlanta,young professionals,422,16.41,1,0
+2024-07-01,Atlanta,families,380,16.41,1,0
+2024-07-01,Atlanta,retirees,90,16.41,1,0
+2024-07-08,Atlanta,students,214,16.41,1,1
+2024-07-08,Atlanta,young professionals,384,16.41,1,1
+2024-07-08,Atlanta,families,248,16.41,1,1
+2024-07-08,Atlanta,retirees,74,16.41,1,1
+2024-07-15,Atlanta,students,59,23.44,0,0
+2024-07-15,Atlanta,young professionals,186,23.44,0,0
+2024-07-15,Atlanta,families,115,23.44,0,0
+2024-07-15,Atlanta,retirees,36,23.44,0,0
+2024-07-22,Atlanta,students,105,23.44,0,0
+2024-07-22,Atlanta,young professionals,204,23.44,0,0
+2024-07-22,Atlanta,families,180,23.44,0,0
+2024-07-22,Atlanta,retirees,54,23.44,0,0
+2024-07-29,Atlanta,students,67,23.44,0,0
+2024-07-29,Atlanta,young professionals,174,23.44,0,0
+2024-07-29,Atlanta,families,136,23.44,0,0
+2024-07-29,Atlanta,retirees,40,23.44,0,0
+2024-08-05,Atlanta,students,58,23.44,0,1
+2024-08-05,Atlanta,young professionals,203,23.44,0,1
+2024-08-05,Atlanta,families,91,23.44,0,1
+2024-08-05,Atlanta,retirees,67,23.44,0,1
+2024-08-12,Atlanta,students,42,23.44,0,0
+2024-08-12,Atlanta,young professionals,128,23.44,0,0
+2024-08-12,Atlanta,families,173,23.44,0,0
+2024-08-12,Atlanta,retirees,26,23.44,0,0
+2024-08-19,Atlanta,students,60,23.44,0,0
+2024-08-19,Atlanta,young professionals,154,23.44,0,0
+2024-08-19,Atlanta,families,117,23.44,0,0
+2024-08-19,Atlanta,retirees,46,23.44,0,0
+2024-08-26,Atlanta,students,65,23.44,0,0
+2024-08-26,Atlanta,young professionals,174,23.44,0,0
+2024-08-26,Atlanta,families,136,23.44,0,0
+2024-08-26,Atlanta,retirees,89,23.44,0,0
+2024-09-02,Atlanta,students,72,23.44,0,0
+2024-09-02,Atlanta,young professionals,95,23.44,0,0
+2024-09-02,Atlanta,families,166,23.44,0,0
+2024-09-02,Atlanta,retirees,50,23.44,0,0
+2024-09-09,Atlanta,students,67,23.44,0,0
+2024-09-09,Atlanta,young professionals,121,23.44,0,0
+2024-09-09,Atlanta,families,92,23.44,0,0
+2024-09-09,Atlanta,retirees,41,23.44,0,0
+2024-09-16,Atlanta,students,56,23.44,0,0
+2024-09-16,Atlanta,young professionals,131,23.44,0,0
+2024-09-16,Atlanta,families,160,23.44,0,0
+2024-09-16,Atlanta,retirees,45,23.44,0,0
+2024-09-23,Atlanta,students,74,23.44,0,0
+2024-09-23,Atlanta,young professionals,170,23.44,0,0
+2024-09-23,Atlanta,families,111,23.44,0,0
+2024-09-23,Atlanta,retirees,46,23.44,0,0
+2024-09-30,Atlanta,students,56,23.44,0,0
+2024-09-30,Atlanta,young professionals,140,23.44,0,0
+2024-09-30,Atlanta,families,137,23.44,0,0
+2024-09-30,Atlanta,retirees,65,23.44,0,0
+2024-10-07,Atlanta,students,88,23.44,0,1
+2024-10-07,Atlanta,young professionals,217,23.44,0,1
+2024-10-07,Atlanta,families,110,23.44,0,1
+2024-10-07,Atlanta,retirees,49,23.44,0,1
+2024-10-14,Atlanta,students,63,23.44,0,1
+2024-10-14,Atlanta,young professionals,165,23.44,0,1
+2024-10-14,Atlanta,families,150,23.44,0,1
+2024-10-14,Atlanta,retirees,42,23.44,0,1
+2024-10-21,Atlanta,students,52,23.44,0,1
+2024-10-21,Atlanta,young professionals,176,23.44,0,1
+2024-10-21,Atlanta,families,128,23.44,0,1
+2024-10-21,Atlanta,retirees,60,23.44,0,1
+2024-10-28,Atlanta,students,44,23.44,0,0
+2024-10-28,Atlanta,young professionals,108,23.44,0,0
+2024-10-28,Atlanta,families,116,23.44,0,0
+2024-10-28,Atlanta,retirees,50,23.44,0,0
+2024-11-04,Atlanta,students,74,23.44,0,0
+2024-11-04,Atlanta,young professionals,138,23.44,0,0
+2024-11-04,Atlanta,families,132,23.44,0,0
+2024-11-04,Atlanta,retirees,27,23.44,0,0
+2024-11-11,Atlanta,students,208,16.41,1,1
+2024-11-11,Atlanta,young professionals,416,16.41,1,1
+2024-11-11,Atlanta,families,331,16.41,1,1
+2024-11-11,Atlanta,retirees,108,16.41,1,1
+2024-11-18,Atlanta,students,48,23.44,0,1
+2024-11-18,Atlanta,young professionals,100,23.44,0,1
+2024-11-18,Atlanta,families,92,23.44,0,1
+2024-11-18,Atlanta,retirees,32,23.44,0,1
+2024-11-25,Atlanta,students,55,23.44,0,0
+2024-11-25,Atlanta,young professionals,149,23.44,0,0
+2024-11-25,Atlanta,families,115,23.44,0,0
+2024-11-25,Atlanta,retirees,61,23.44,0,0
+2024-12-02,Atlanta,students,42,23.44,0,0
+2024-12-02,Atlanta,young professionals,89,23.44,0,0
+2024-12-02,Atlanta,families,96,23.44,0,0
+2024-12-02,Atlanta,retirees,66,23.44,0,0
+2024-12-09,Atlanta,students,91,23.44,0,0
+2024-12-09,Atlanta,young professionals,187,23.44,0,0
+2024-12-09,Atlanta,families,107,23.44,0,0
+2024-12-09,Atlanta,retirees,43,23.44,0,0
+2024-12-16,Atlanta,students,52,23.44,0,0
+2024-12-16,Atlanta,young professionals,203,23.44,0,0
+2024-12-16,Atlanta,families,110,23.44,0,0
+2024-12-16,Atlanta,retirees,55,23.44,0,0
+2024-12-23,Atlanta,students,225,16.41,1,0
+2024-12-23,Atlanta,young professionals,274,16.41,1,0
+2024-12-23,Atlanta,families,264,16.41,1,0
+2024-12-23,Atlanta,retirees,81,16.41,1,0
+2024-12-30,Atlanta,students,170,16.41,1,0
+2024-12-30,Atlanta,young professionals,245,16.41,1,0
+2024-12-30,Atlanta,families,214,16.41,1,0
+2024-12-30,Atlanta,retirees,59,16.41,1,0
+2025-01-06,Atlanta,students,173,16.41,1,1
+2025-01-06,Atlanta,young professionals,355,16.41,1,1
+2025-01-06,Atlanta,families,227,16.41,1,1
+2025-01-06,Atlanta,retirees,57,16.41,1,1
+2025-01-13,Atlanta,students,169,16.41,1,0
+2025-01-13,Atlanta,young professionals,145,16.41,1,0
+2025-01-13,Atlanta,families,185,16.41,1,0
+2025-01-13,Atlanta,retirees,28,16.41,1,0
+2025-01-20,Atlanta,students,38,23.44,0,0
+2025-01-20,Atlanta,young professionals,101,23.44,0,0
+2025-01-20,Atlanta,families,164,23.44,0,0
+2025-01-20,Atlanta,retirees,43,23.44,0,0
+2025-01-27,Atlanta,students,89,23.44,0,0
+2025-01-27,Atlanta,young professionals,212,23.44,0,0
+2025-01-27,Atlanta,families,130,23.44,0,0
+2025-01-27,Atlanta,retirees,46,23.44,0,0
+2025-02-03,Atlanta,students,88,23.44,0,0
+2025-02-03,Atlanta,young professionals,187,23.44,0,0
+2025-02-03,Atlanta,families,166,23.44,0,0
+2025-02-03,Atlanta,retirees,55,23.44,0,0
+2025-02-10,Atlanta,students,84,23.44,0,0
+2025-02-10,Atlanta,young professionals,207,23.44,0,0
+2025-02-10,Atlanta,families,167,23.44,0,0
+2025-02-10,Atlanta,retirees,85,23.44,0,0
+2025-02-17,Atlanta,students,97,23.44,0,0
+2025-02-17,Atlanta,young professionals,260,23.44,0,0
+2025-02-17,Atlanta,families,152,23.44,0,0
+2025-02-17,Atlanta,retirees,61,23.44,0,0
+2025-02-24,Atlanta,students,95,23.44,0,0
+2025-02-24,Atlanta,young professionals,177,23.44,0,0
+2025-02-24,Atlanta,families,86,23.44,0,0
+2025-02-24,Atlanta,retirees,59,23.44,0,0
+2025-03-03,Atlanta,students,60,23.44,0,0
+2025-03-03,Atlanta,young professionals,188,23.44,0,0
+2025-03-03,Atlanta,families,320,18.75,1,0
+2025-03-03,Atlanta,retirees,90,23.44,0,0
+2025-03-10,Atlanta,students,62,23.44,0,0
+2025-03-10,Atlanta,young professionals,164,23.44,0,0
+2025-03-10,Atlanta,families,205,18.75,1,0
+2025-03-10,Atlanta,retirees,62,23.44,0,0
+2025-03-17,Atlanta,students,74,23.44,0,0
+2025-03-17,Atlanta,young professionals,192,23.44,0,0
+2025-03-17,Atlanta,families,204,18.75,1,0
+2025-03-17,Atlanta,retirees,54,23.44,0,0
+2025-03-24,Atlanta,students,95,23.44,0,0
+2025-03-24,Atlanta,young professionals,315,23.44,0,0
+2025-03-24,Atlanta,families,157,18.75,1,0
+2025-03-24,Atlanta,retirees,53,23.44,0,0
+2025-03-31,Atlanta,students,144,23.44,0,0
+2025-03-31,Atlanta,young professionals,188,23.44,0,0
+2025-03-31,Atlanta,families,85,23.44,0,0
+2025-03-31,Atlanta,retirees,42,23.44,0,0
+2025-04-07,Atlanta,students,90,23.44,0,0
+2025-04-07,Atlanta,young professionals,191,23.44,0,0
+2025-04-07,Atlanta,families,125,23.44,0,0
+2025-04-07,Atlanta,retirees,83,23.44,0,0
+2025-04-14,Atlanta,students,181,21.1,1,1
+2025-04-14,Atlanta,young professionals,211,21.1,1,1
+2025-04-14,Atlanta,families,184,21.1,1,1
+2025-04-14,Atlanta,retirees,68,21.1,1,1
+2025-04-21,Atlanta,students,77,23.44,0,1
+2025-04-21,Atlanta,young professionals,228,23.44,0,1
+2025-04-21,Atlanta,families,142,23.44,0,1
+2025-04-21,Atlanta,retirees,74,23.44,0,1
+2025-04-28,Atlanta,students,49,23.44,0,0
+2025-04-28,Atlanta,young professionals,219,23.44,0,0
+2025-04-28,Atlanta,families,151,23.44,0,0
+2025-04-28,Atlanta,retirees,60,23.44,0,0
+2025-05-05,Atlanta,students,74,23.44,0,0
+2025-05-05,Atlanta,young professionals,213,23.44,0,0
+2025-05-05,Atlanta,families,109,23.44,0,0
+2025-05-05,Atlanta,retirees,57,23.44,0,0
+2025-05-12,Atlanta,students,82,23.44,0,0
+2025-05-12,Atlanta,young professionals,260,23.44,0,0
+2025-05-12,Atlanta,families,371,16.41,1,0
+2025-05-12,Atlanta,retirees,45,23.44,0,0
+2025-05-19,Atlanta,students,81,23.44,0,0
+2025-05-19,Atlanta,young professionals,174,23.44,0,0
+2025-05-19,Atlanta,families,127,23.44,0,0
+2025-05-19,Atlanta,retirees,50,23.44,0,0
+2025-05-26,Atlanta,students,68,23.44,0,0
+2025-05-26,Atlanta,young professionals,105,23.44,0,0
+2025-05-26,Atlanta,families,201,23.44,0,0
+2025-05-26,Atlanta,retirees,62,23.44,0,0
+2025-06-02,Atlanta,students,60,23.44,0,0
+2025-06-02,Atlanta,young professionals,139,23.44,0,0
+2025-06-02,Atlanta,families,189,23.44,0,0
+2025-06-02,Atlanta,retirees,62,23.44,0,0
+2025-06-09,Atlanta,students,85,23.44,0,1
+2025-06-09,Atlanta,young professionals,258,23.44,0,1
+2025-06-09,Atlanta,families,192,23.44,0,1
+2025-06-09,Atlanta,retirees,68,23.44,0,1
+2025-06-16,Atlanta,students,88,23.44,0,1
+2025-06-16,Atlanta,young professionals,390,23.44,0,1
+2025-06-16,Atlanta,families,202,23.44,0,1
+2025-06-16,Atlanta,retirees,69,23.44,0,1
+2025-06-23,Atlanta,students,116,23.44,0,0
+2025-06-23,Atlanta,young professionals,262,23.44,0,0
+2025-06-23,Atlanta,families,159,23.44,0,0
+2025-06-23,Atlanta,retirees,53,23.44,0,0
+2025-06-30,Atlanta,students,113,23.44,0,0
+2025-06-30,Atlanta,young professionals,272,23.44,0,0
+2025-06-30,Atlanta,families,120,23.44,0,0
+2025-06-30,Atlanta,retirees,109,16.41,1,0
+2025-07-07,Atlanta,students,92,23.44,0,0
+2025-07-07,Atlanta,young professionals,151,23.44,0,0
+2025-07-07,Atlanta,families,120,23.44,0,0
+2025-07-07,Atlanta,retirees,63,23.44,0,0
+2025-07-14,Atlanta,students,64,23.44,0,0
+2025-07-14,Atlanta,young professionals,188,23.44,0,0
+2025-07-14,Atlanta,families,163,23.44,0,0
+2025-07-14,Atlanta,retirees,54,23.44,0,0
+2025-07-21,Atlanta,students,87,23.44,0,0
+2025-07-21,Atlanta,young professionals,225,23.44,0,0
+2025-07-21,Atlanta,families,106,23.44,0,0
+2025-07-21,Atlanta,retirees,82,23.44,0,0
+2025-07-28,Atlanta,students,71,23.44,0,0
+2025-07-28,Atlanta,young professionals,264,23.44,0,0
+2025-07-28,Atlanta,families,95,23.44,0,0
+2025-07-28,Atlanta,retirees,44,23.44,0,0
+2025-08-04,Atlanta,students,64,23.44,0,0
+2025-08-04,Atlanta,young professionals,166,23.44,0,0
+2025-08-04,Atlanta,families,110,23.44,0,0
+2025-08-04,Atlanta,retirees,56,23.44,0,0
+2025-08-11,Atlanta,students,67,23.44,0,1
+2025-08-11,Atlanta,young professionals,145,23.44,0,1
+2025-08-11,Atlanta,families,135,23.44,0,1
+2025-08-11,Atlanta,retirees,75,23.44,0,1
+2025-08-18,Atlanta,students,68,23.44,0,1
+2025-08-18,Atlanta,young professionals,126,23.44,0,1
+2025-08-18,Atlanta,families,213,23.44,0,1
+2025-08-18,Atlanta,retirees,62,23.44,0,1
+2025-08-25,Atlanta,students,60,23.44,0,0
+2025-08-25,Atlanta,young professionals,207,23.44,0,0
+2025-08-25,Atlanta,families,148,23.44,0,0
+2025-08-25,Atlanta,retirees,70,23.44,0,0
+2025-09-01,Atlanta,students,96,23.44,0,0
+2025-09-01,Atlanta,young professionals,170,23.44,0,0
+2025-09-01,Atlanta,families,140,23.44,0,0
+2025-09-01,Atlanta,retirees,31,23.44,0,0
+2025-09-08,Atlanta,students,56,23.44,0,0
+2025-09-08,Atlanta,young professionals,159,23.44,0,0
+2025-09-08,Atlanta,families,116,23.44,0,0
+2025-09-08,Atlanta,retirees,34,23.44,0,0
+2025-09-15,Atlanta,students,37,23.44,0,0
+2025-09-15,Atlanta,young professionals,120,23.44,0,0
+2025-09-15,Atlanta,families,124,23.44,0,0
+2025-09-15,Atlanta,retirees,48,23.44,0,0
+2025-09-22,Atlanta,students,46,23.44,0,0
+2025-09-22,Atlanta,young professionals,169,23.44,0,0
+2025-09-22,Atlanta,families,87,23.44,0,0
+2025-09-22,Atlanta,retirees,75,23.44,0,0
+2025-09-29,Atlanta,students,57,23.44,0,0
+2025-09-29,Atlanta,young professionals,154,23.44,0,0
+2025-09-29,Atlanta,families,119,23.44,0,0
+2025-09-29,Atlanta,retirees,59,23.44,0,0
+2025-10-06,Atlanta,students,61,23.44,0,0
+2025-10-06,Atlanta,young professionals,182,23.44,0,0
+2025-10-06,Atlanta,families,101,23.44,0,0
+2025-10-06,Atlanta,retirees,51,23.44,0,0
+2025-10-13,Atlanta,students,37,23.44,0,0
+2025-10-13,Atlanta,young professionals,174,23.44,0,0
+2025-10-13,Atlanta,families,125,23.44,0,0
+2025-10-13,Atlanta,retirees,48,23.44,0,0
+2025-10-20,Atlanta,students,125,18.75,1,0
+2025-10-20,Atlanta,young professionals,116,23.44,0,0
+2025-10-20,Atlanta,families,145,23.44,0,0
+2025-10-20,Atlanta,retirees,79,23.44,0,0
+2025-10-27,Atlanta,students,126,18.75,1,0
+2025-10-27,Atlanta,young professionals,188,23.44,0,0
+2025-10-27,Atlanta,families,129,23.44,0,0
+2025-10-27,Atlanta,retirees,69,23.44,0,0
+2025-11-03,Atlanta,students,39,23.44,0,0
+2025-11-03,Atlanta,young professionals,164,23.44,0,0
+2025-11-03,Atlanta,families,152,23.44,0,0
+2025-11-03,Atlanta,retirees,52,23.44,0,0
+2025-11-10,Atlanta,students,51,23.44,0,0
+2025-11-10,Atlanta,young professionals,115,23.44,0,0
+2025-11-10,Atlanta,families,73,23.44,0,0
+2025-11-10,Atlanta,retirees,32,23.44,0,0
+2025-11-17,Atlanta,students,53,23.44,0,0
+2025-11-17,Atlanta,young professionals,187,23.44,0,0
+2025-11-17,Atlanta,families,98,23.44,0,0
+2025-11-17,Atlanta,retirees,62,23.44,0,0
+2025-11-24,Atlanta,students,78,23.44,0,0
+2025-11-24,Atlanta,young professionals,134,23.44,0,0
+2025-11-24,Atlanta,families,123,23.44,0,0
+2025-11-24,Atlanta,retirees,64,23.44,0,0
+2025-12-01,Atlanta,students,57,23.44,0,0
+2025-12-01,Atlanta,young professionals,140,23.44,0,0
+2025-12-01,Atlanta,families,142,23.44,0,0
+2025-12-01,Atlanta,retirees,53,23.44,0,0
+2025-12-08,Atlanta,students,46,23.44,0,0
+2025-12-08,Atlanta,young professionals,156,23.44,0,0
+2025-12-08,Atlanta,families,119,23.44,0,0
+2025-12-08,Atlanta,retirees,45,23.44,0,0
+2025-12-15,Atlanta,students,75,23.44,0,0
+2025-12-15,Atlanta,young professionals,153,23.44,0,0
+2025-12-15,Atlanta,families,147,23.44,0,0
+2025-12-15,Atlanta,retirees,64,23.44,0,0
+2025-12-22,Atlanta,students,95,23.44,0,0
+2025-12-22,Atlanta,young professionals,118,23.44,0,0
+2025-12-22,Atlanta,families,143,23.44,0,0
+2025-12-22,Atlanta,retirees,52,23.44,0,0
+2024-01-01,Denver,students,167,19.52,1,0
+2024-01-01,Denver,young professionals,337,19.52,1,0
+2024-01-01,Denver,families,234,19.52,1,0
+2024-01-01,Denver,retirees,52,19.52,1,0
+2024-01-08,Denver,students,57,24.4,0,0
+2024-01-08,Denver,young professionals,175,24.4,0,0
+2024-01-08,Denver,families,118,24.4,0,0
+2024-01-08,Denver,retirees,42,24.4,0,0
+2024-01-15,Denver,students,113,24.4,0,0
+2024-01-15,Denver,young professionals,85,24.4,0,0
+2024-01-15,Denver,families,136,24.4,0,0
+2024-01-15,Denver,retirees,73,24.4,0,0
+2024-01-22,Denver,students,47,24.4,0,0
+2024-01-22,Denver,young professionals,139,24.4,0,0
+2024-01-22,Denver,families,90,24.4,0,0
+2024-01-22,Denver,retirees,52,24.4,0,0
+2024-01-29,Denver,students,57,24.4,0,0
+2024-01-29,Denver,young professionals,208,24.4,0,0
+2024-01-29,Denver,families,138,24.4,0,0
+2024-01-29,Denver,retirees,45,24.4,0,0
+2024-02-05,Denver,students,232,19.52,1,0
+2024-02-05,Denver,young professionals,449,19.52,1,0
+2024-02-05,Denver,families,232,19.52,1,0
+2024-02-05,Denver,retirees,86,19.52,1,0
+2024-02-12,Denver,students,146,19.52,1,0
+2024-02-12,Denver,young professionals,318,19.52,1,0
+2024-02-12,Denver,families,292,19.52,1,0
+2024-02-12,Denver,retirees,67,19.52,1,0
+2024-02-19,Denver,students,146,19.52,1,0
+2024-02-19,Denver,young professionals,196,19.52,1,0
+2024-02-19,Denver,families,168,19.52,1,0
+2024-02-19,Denver,retirees,56,19.52,1,0
+2024-02-26,Denver,students,73,19.52,1,0
+2024-02-26,Denver,young professionals,425,19.52,1,0
+2024-02-26,Denver,families,203,19.52,1,0
+2024-02-26,Denver,retirees,71,19.52,1,0
+2024-03-04,Denver,students,61,24.4,0,0
+2024-03-04,Denver,young professionals,114,24.4,0,0
+2024-03-04,Denver,families,147,24.4,0,0
+2024-03-04,Denver,retirees,51,24.4,0,0
+2024-03-11,Denver,students,70,24.4,0,0
+2024-03-11,Denver,young professionals,250,24.4,0,0
+2024-03-11,Denver,families,207,24.4,0,0
+2024-03-11,Denver,retirees,66,24.4,0,0
+2024-03-18,Denver,students,92,24.4,0,0
+2024-03-18,Denver,young professionals,230,24.4,0,0
+2024-03-18,Denver,families,170,24.4,0,0
+2024-03-18,Denver,retirees,78,24.4,0,0
+2024-03-25,Denver,students,29,24.4,0,0
+2024-03-25,Denver,young professionals,242,24.4,0,0
+2024-03-25,Denver,families,148,24.4,0,0
+2024-03-25,Denver,retirees,54,24.4,0,0
+2024-04-01,Denver,students,75,24.4,0,0
+2024-04-01,Denver,young professionals,207,24.4,0,0
+2024-04-01,Denver,families,184,24.4,0,0
+2024-04-01,Denver,retirees,102,17.08,1,0
+2024-04-08,Denver,students,62,24.4,0,1
+2024-04-08,Denver,young professionals,182,24.4,0,1
+2024-04-08,Denver,families,172,24.4,0,1
+2024-04-08,Denver,retirees,89,17.08,1,1
+2024-04-15,Denver,students,56,24.4,0,1
+2024-04-15,Denver,young professionals,184,24.4,0,1
+2024-04-15,Denver,families,171,24.4,0,1
+2024-04-15,Denver,retirees,79,24.4,0,1
+2024-04-22,Denver,students,59,24.4,0,0
+2024-04-22,Denver,young professionals,188,24.4,0,0
+2024-04-22,Denver,families,158,24.4,0,0
+2024-04-22,Denver,retirees,84,24.4,0,0
+2024-04-29,Denver,students,69,24.4,0,0
+2024-04-29,Denver,young professionals,151,24.4,0,0
+2024-04-29,Denver,families,205,24.4,0,0
+2024-04-29,Denver,retirees,48,24.4,0,0
+2024-05-06,Denver,students,85,21.96,1,0
+2024-05-06,Denver,young professionals,278,21.96,1,0
+2024-05-06,Denver,families,206,21.96,1,0
+2024-05-06,Denver,retirees,66,21.96,1,0
+2024-05-13,Denver,students,153,21.96,1,0
+2024-05-13,Denver,young professionals,234,21.96,1,0
+2024-05-13,Denver,families,215,21.96,1,0
+2024-05-13,Denver,retirees,66,21.96,1,0
+2024-05-20,Denver,students,90,21.96,1,0
+2024-05-20,Denver,young professionals,199,21.96,1,0
+2024-05-20,Denver,families,189,21.96,1,0
+2024-05-20,Denver,retirees,48,21.96,1,0
+2024-05-27,Denver,students,137,21.96,1,0
+2024-05-27,Denver,young professionals,334,21.96,1,0
+2024-05-27,Denver,families,258,21.96,1,0
+2024-05-27,Denver,retirees,72,21.96,1,0
+2024-06-03,Denver,students,56,24.4,0,0
+2024-06-03,Denver,young professionals,177,24.4,0,0
+2024-06-03,Denver,families,137,24.4,0,0
+2024-06-03,Denver,retirees,57,24.4,0,0
+2024-06-10,Denver,students,251,17.08,1,1
+2024-06-10,Denver,young professionals,758,17.08,1,1
+2024-06-10,Denver,families,291,17.08,1,1
+2024-06-10,Denver,retirees,85,17.08,1,1
+2024-06-17,Denver,students,104,17.08,1,1
+2024-06-17,Denver,young professionals,435,17.08,1,1
+2024-06-17,Denver,families,260,17.08,1,1
+2024-06-17,Denver,retirees,74,17.08,1,1
+2024-06-24,Denver,students,41,24.4,0,0
+2024-06-24,Denver,young professionals,173,24.4,0,0
+2024-06-24,Denver,families,124,24.4,0,0
+2024-06-24,Denver,retirees,46,24.4,0,0
+2024-07-01,Denver,students,51,24.4,0,0
+2024-07-01,Denver,young professionals,251,24.4,0,0
+2024-07-01,Denver,families,142,24.4,0,0
+2024-07-01,Denver,retirees,59,24.4,0,0
+2024-07-08,Denver,students,144,17.08,1,0
+2024-07-08,Denver,young professionals,403,17.08,1,0
+2024-07-08,Denver,families,256,17.08,1,0
+2024-07-08,Denver,retirees,73,17.08,1,0
+2024-07-15,Denver,students,169,17.08,1,0
+2024-07-15,Denver,young professionals,437,17.08,1,0
+2024-07-15,Denver,families,338,17.08,1,0
+2024-07-15,Denver,retirees,77,17.08,1,0
+2024-07-22,Denver,students,115,17.08,1,0
+2024-07-22,Denver,young professionals,280,17.08,1,0
+2024-07-22,Denver,families,287,17.08,1,0
+2024-07-22,Denver,retirees,77,17.08,1,0
+2024-07-29,Denver,students,70,24.4,0,1
+2024-07-29,Denver,young professionals,126,24.4,0,1
+2024-07-29,Denver,families,99,24.4,0,1
+2024-07-29,Denver,retirees,49,24.4,0,1
+2024-08-05,Denver,students,69,24.4,0,1
+2024-08-05,Denver,young professionals,179,24.4,0,1
+2024-08-05,Denver,families,141,24.4,0,1
+2024-08-05,Denver,retirees,38,24.4,0,1
+2024-08-12,Denver,students,46,24.4,0,0
+2024-08-12,Denver,young professionals,201,24.4,0,0
+2024-08-12,Denver,families,132,24.4,0,0
+2024-08-12,Denver,retirees,46,24.4,0,0
+2024-08-19,Denver,students,131,21.96,1,0
+2024-08-19,Denver,young professionals,226,21.96,1,0
+2024-08-19,Denver,families,195,21.96,1,0
+2024-08-19,Denver,retirees,55,21.96,1,0
+2024-08-26,Denver,students,99,21.96,1,0
+2024-08-26,Denver,young professionals,262,21.96,1,0
+2024-08-26,Denver,families,132,21.96,1,0
+2024-08-26,Denver,retirees,65,21.96,1,0
+2024-09-02,Denver,students,125,21.96,1,1
+2024-09-02,Denver,young professionals,229,21.96,1,1
+2024-09-02,Denver,families,146,21.96,1,1
+2024-09-02,Denver,retirees,90,21.96,1,1
+2024-09-09,Denver,students,38,24.4,0,1
+2024-09-09,Denver,young professionals,200,24.4,0,1
+2024-09-09,Denver,families,117,24.4,0,1
+2024-09-09,Denver,retirees,53,24.4,0,1
+2024-09-16,Denver,students,40,24.4,0,1
+2024-09-16,Denver,young professionals,190,24.4,0,1
+2024-09-16,Denver,families,175,24.4,0,1
+2024-09-16,Denver,retirees,73,24.4,0,1
+2024-09-23,Denver,students,60,24.4,0,0
+2024-09-23,Denver,young professionals,175,24.4,0,0
+2024-09-23,Denver,families,96,24.4,0,0
+2024-09-23,Denver,retirees,52,24.4,0,0
+2024-09-30,Denver,students,53,24.4,0,0
+2024-09-30,Denver,young professionals,155,24.4,0,0
+2024-09-30,Denver,families,123,24.4,0,0
+2024-09-30,Denver,retirees,65,24.4,0,0
+2024-10-07,Denver,students,56,24.4,0,1
+2024-10-07,Denver,young professionals,115,24.4,0,1
+2024-10-07,Denver,families,163,24.4,0,1
+2024-10-07,Denver,retirees,61,24.4,0,1
+2024-10-14,Denver,students,60,24.4,0,1
+2024-10-14,Denver,young professionals,178,24.4,0,1
+2024-10-14,Denver,families,166,24.4,0,1
+2024-10-14,Denver,retirees,57,24.4,0,1
+2024-10-21,Denver,students,65,24.4,0,0
+2024-10-21,Denver,young professionals,143,24.4,0,0
+2024-10-21,Denver,families,131,24.4,0,0
+2024-10-21,Denver,retirees,42,24.4,0,0
+2024-10-28,Denver,students,60,24.4,0,0
+2024-10-28,Denver,young professionals,188,24.4,0,0
+2024-10-28,Denver,families,101,24.4,0,0
+2024-10-28,Denver,retirees,34,24.4,0,0
+2024-11-04,Denver,students,57,24.4,0,0
+2024-11-04,Denver,young professionals,163,24.4,0,0
+2024-11-04,Denver,families,100,24.4,0,0
+2024-11-04,Denver,retirees,54,24.4,0,0
+2024-11-11,Denver,students,70,24.4,0,1
+2024-11-11,Denver,young professionals,159,24.4,0,1
+2024-11-11,Denver,families,119,24.4,0,1
+2024-11-11,Denver,retirees,42,24.4,0,1
+2024-11-18,Denver,students,215,17.08,1,1
+2024-11-18,Denver,young professionals,431,17.08,1,1
+2024-11-18,Denver,families,245,17.08,1,1
+2024-11-18,Denver,retirees,96,17.08,1,1
+2024-11-25,Denver,students,159,17.08,1,1
+2024-11-25,Denver,young professionals,411,17.08,1,1
+2024-11-25,Denver,families,146,17.08,1,1
+2024-11-25,Denver,retirees,42,17.08,1,1
+2024-12-02,Denver,students,47,24.4,0,0
+2024-12-02,Denver,young professionals,146,24.4,0,0
+2024-12-02,Denver,families,93,24.4,0,0
+2024-12-02,Denver,retirees,32,24.4,0,0
+2024-12-09,Denver,students,45,24.4,0,0
+2024-12-09,Denver,young professionals,103,24.4,0,0
+2024-12-09,Denver,families,87,24.4,0,0
+2024-12-09,Denver,retirees,66,24.4,0,0
+2024-12-16,Denver,students,49,24.4,0,0
+2024-12-16,Denver,young professionals,250,24.4,0,0
+2024-12-16,Denver,families,117,24.4,0,0
+2024-12-16,Denver,retirees,59,24.4,0,0
+2024-12-23,Denver,students,72,24.4,0,0
+2024-12-23,Denver,young professionals,155,24.4,0,0
+2024-12-23,Denver,families,120,24.4,0,0
+2024-12-23,Denver,retirees,53,24.4,0,0
+2024-12-30,Denver,students,85,24.4,0,0
+2024-12-30,Denver,young professionals,194,24.4,0,0
+2024-12-30,Denver,families,106,24.4,0,0
+2024-12-30,Denver,retirees,50,24.4,0,0
+2025-01-06,Denver,students,70,24.4,0,0
+2025-01-06,Denver,young professionals,109,24.4,0,0
+2025-01-06,Denver,families,157,24.4,0,0
+2025-01-06,Denver,retirees,71,24.4,0,0
+2025-01-13,Denver,students,72,24.4,0,1
+2025-01-13,Denver,young professionals,318,21.96,1,1
+2025-01-13,Denver,families,104,24.4,0,1
+2025-01-13,Denver,retirees,50,24.4,0,1
+2025-01-20,Denver,students,61,24.4,0,0
+2025-01-20,Denver,young professionals,228,21.96,1,0
+2025-01-20,Denver,families,127,24.4,0,0
+2025-01-20,Denver,retirees,86,24.4,0,0
+2025-01-27,Denver,students,43,24.4,0,0
+2025-01-27,Denver,young professionals,204,21.96,1,0
+2025-01-27,Denver,families,165,24.4,0,0
+2025-01-27,Denver,retirees,42,24.4,0,0
+2025-02-03,Denver,students,51,24.4,0,1
+2025-02-03,Denver,young professionals,150,24.4,0,1
+2025-02-03,Denver,families,162,24.4,0,1
+2025-02-03,Denver,retirees,63,24.4,0,1
+2025-02-10,Denver,students,76,24.4,0,0
+2025-02-10,Denver,young professionals,212,24.4,0,0
+2025-02-10,Denver,families,132,24.4,0,0
+2025-02-10,Denver,retirees,83,24.4,0,0
+2025-02-17,Denver,students,75,24.4,0,0
+2025-02-17,Denver,young professionals,223,24.4,0,0
+2025-02-17,Denver,families,175,24.4,0,0
+2025-02-17,Denver,retirees,60,24.4,0,0
+2025-02-24,Denver,students,50,24.4,0,0
+2025-02-24,Denver,young professionals,260,24.4,0,0
+2025-02-24,Denver,families,178,24.4,0,0
+2025-02-24,Denver,retirees,69,24.4,0,0
+2025-03-03,Denver,students,147,21.96,1,0
+2025-03-03,Denver,young professionals,326,21.96,1,0
+2025-03-03,Denver,families,271,21.96,1,0
+2025-03-03,Denver,retirees,81,21.96,1,0
+2025-03-10,Denver,students,116,21.96,1,1
+2025-03-10,Denver,young professionals,235,21.96,1,1
+2025-03-10,Denver,families,206,21.96,1,1
+2025-03-10,Denver,retirees,57,21.96,1,1
+2025-03-17,Denver,students,64,24.4,0,0
+2025-03-17,Denver,young professionals,204,24.4,0,0
+2025-03-17,Denver,families,109,24.4,0,0
+2025-03-17,Denver,retirees,43,24.4,0,0
+2025-03-24,Denver,students,65,24.4,0,0
+2025-03-24,Denver,young professionals,234,24.4,0,0
+2025-03-24,Denver,families,227,24.4,0,0
+2025-03-24,Denver,retirees,86,24.4,0,0
+2025-03-31,Denver,students,219,17.08,1,0
+2025-03-31,Denver,young professionals,564,17.08,1,0
+2025-03-31,Denver,families,404,17.08,1,0
+2025-03-31,Denver,retirees,83,17.08,1,0
+2025-04-07,Denver,students,75,24.4,0,0
+2025-04-07,Denver,young professionals,185,24.4,0,0
+2025-04-07,Denver,families,87,24.4,0,0
+2025-04-07,Denver,retirees,69,24.4,0,0
+2025-04-14,Denver,students,67,24.4,0,1
+2025-04-14,Denver,young professionals,225,24.4,0,1
+2025-04-14,Denver,families,178,24.4,0,1
+2025-04-14,Denver,retirees,60,24.4,0,1
+2025-04-21,Denver,students,71,24.4,0,0
+2025-04-21,Denver,young professionals,177,24.4,0,0
+2025-04-21,Denver,families,133,24.4,0,0
+2025-04-21,Denver,retirees,60,24.4,0,0
+2025-04-28,Denver,students,62,24.4,0,0
+2025-04-28,Denver,young professionals,193,24.4,0,0
+2025-04-28,Denver,families,126,24.4,0,0
+2025-04-28,Denver,retirees,105,17.08,1,0
+2025-05-05,Denver,students,82,24.4,0,1
+2025-05-05,Denver,young professionals,212,24.4,0,1
+2025-05-05,Denver,families,88,24.4,0,1
+2025-05-05,Denver,retirees,63,17.08,1,1
+2025-05-12,Denver,students,65,24.4,0,0
+2025-05-12,Denver,young professionals,218,24.4,0,0
+2025-05-12,Denver,families,133,24.4,0,0
+2025-05-12,Denver,retirees,139,17.08,1,0
+2025-05-19,Denver,students,78,24.4,0,0
+2025-05-19,Denver,young professionals,240,24.4,0,0
+2025-05-19,Denver,families,113,24.4,0,0
+2025-05-19,Denver,retirees,56,24.4,0,0
+2025-05-26,Denver,students,59,24.4,0,0
+2025-05-26,Denver,young professionals,211,24.4,0,0
+2025-05-26,Denver,families,123,24.4,0,0
+2025-05-26,Denver,retirees,95,24.4,0,0
+2025-06-02,Denver,students,49,24.4,0,0
+2025-06-02,Denver,young professionals,167,24.4,0,0
+2025-06-02,Denver,families,138,24.4,0,0
+2025-06-02,Denver,retirees,92,24.4,0,0
+2025-06-09,Denver,students,71,24.4,0,0
+2025-06-09,Denver,young professionals,198,24.4,0,0
+2025-06-09,Denver,families,237,24.4,0,0
+2025-06-09,Denver,retirees,81,24.4,0,0
+2025-06-16,Denver,students,78,24.4,0,0
+2025-06-16,Denver,young professionals,162,24.4,0,0
+2025-06-16,Denver,families,189,24.4,0,0
+2025-06-16,Denver,retirees,73,24.4,0,0
+2025-06-23,Denver,students,45,24.4,0,0
+2025-06-23,Denver,young professionals,120,24.4,0,0
+2025-06-23,Denver,families,212,24.4,0,0
+2025-06-23,Denver,retirees,85,24.4,0,0
+2025-06-30,Denver,students,60,24.4,0,0
+2025-06-30,Denver,young professionals,246,24.4,0,0
+2025-06-30,Denver,families,169,24.4,0,0
+2025-06-30,Denver,retirees,62,24.4,0,0
+2025-07-07,Denver,students,79,24.4,0,0
+2025-07-07,Denver,young professionals,248,24.4,0,0
+2025-07-07,Denver,families,185,24.4,0,0
+2025-07-07,Denver,retirees,50,24.4,0,0
+2025-07-14,Denver,students,92,24.4,0,0
+2025-07-14,Denver,young professionals,155,24.4,0,0
+2025-07-14,Denver,families,153,24.4,0,0
+2025-07-14,Denver,retirees,68,24.4,0,0
+2025-07-21,Denver,students,64,24.4,0,0
+2025-07-21,Denver,young professionals,188,24.4,0,0
+2025-07-21,Denver,families,134,24.4,0,0
+2025-07-21,Denver,retirees,74,24.4,0,0
+2025-07-28,Denver,students,55,24.4,0,0
+2025-07-28,Denver,young professionals,151,24.4,0,0
+2025-07-28,Denver,families,211,24.4,0,0
+2025-07-28,Denver,retirees,45,24.4,0,0
+2025-08-04,Denver,students,65,24.4,0,0
+2025-08-04,Denver,young professionals,227,24.4,0,0
+2025-08-04,Denver,families,130,24.4,0,0
+2025-08-04,Denver,retirees,66,24.4,0,0
+2025-08-11,Denver,students,79,24.4,0,0
+2025-08-11,Denver,young professionals,220,24.4,0,0
+2025-08-11,Denver,families,159,24.4,0,0
+2025-08-11,Denver,retirees,72,24.4,0,0
+2025-08-18,Denver,students,44,24.4,0,1
+2025-08-18,Denver,young professionals,239,24.4,0,1
+2025-08-18,Denver,families,183,24.4,0,1
+2025-08-18,Denver,retirees,81,24.4,0,1
+2025-08-25,Denver,students,205,17.08,1,1
+2025-08-25,Denver,young professionals,395,17.08,1,1
+2025-08-25,Denver,families,240,17.08,1,1
+2025-08-25,Denver,retirees,92,17.08,1,1
+2025-09-01,Denver,students,198,17.08,1,1
+2025-09-01,Denver,young professionals,296,17.08,1,1
+2025-09-01,Denver,families,301,17.08,1,1
+2025-09-01,Denver,retirees,79,17.08,1,1
+2025-09-08,Denver,students,51,24.4,0,0
+2025-09-08,Denver,young professionals,118,24.4,0,0
+2025-09-08,Denver,families,81,24.4,0,0
+2025-09-08,Denver,retirees,33,24.4,0,0
+2025-09-15,Denver,students,46,24.4,0,0
+2025-09-15,Denver,young professionals,210,24.4,0,0
+2025-09-15,Denver,families,146,24.4,0,0
+2025-09-15,Denver,retirees,54,24.4,0,0
+2025-09-22,Denver,students,58,24.4,0,0
+2025-09-22,Denver,young professionals,115,24.4,0,0
+2025-09-22,Denver,families,206,24.4,0,0
+2025-09-22,Denver,retirees,60,24.4,0,0
+2025-09-29,Denver,students,187,17.08,1,0
+2025-09-29,Denver,young professionals,643,17.08,1,0
+2025-09-29,Denver,families,239,17.08,1,0
+2025-09-29,Denver,retirees,73,17.08,1,0
+2025-10-06,Denver,students,142,17.08,1,0
+2025-10-06,Denver,young professionals,341,17.08,1,0
+2025-10-06,Denver,families,176,17.08,1,0
+2025-10-06,Denver,retirees,71,17.08,1,0
+2025-10-13,Denver,students,196,17.08,1,0
+2025-10-13,Denver,young professionals,392,17.08,1,0
+2025-10-13,Denver,families,197,17.08,1,0
+2025-10-13,Denver,retirees,71,17.08,1,0
+2025-10-20,Denver,students,141,17.08,1,0
+2025-10-20,Denver,young professionals,455,17.08,1,0
+2025-10-20,Denver,families,144,17.08,1,0
+2025-10-20,Denver,retirees,49,17.08,1,0
+2025-10-27,Denver,students,52,24.4,0,0
+2025-10-27,Denver,young professionals,76,24.4,0,0
+2025-10-27,Denver,families,98,24.4,0,0
+2025-10-27,Denver,retirees,44,24.4,0,0
+2025-11-03,Denver,students,46,24.4,0,0
+2025-11-03,Denver,young professionals,133,24.4,0,0
+2025-11-03,Denver,families,179,24.4,0,0
+2025-11-03,Denver,retirees,43,24.4,0,0
+2025-11-10,Denver,students,45,24.4,0,0
+2025-11-10,Denver,young professionals,177,24.4,0,0
+2025-11-10,Denver,families,105,24.4,0,0
+2025-11-10,Denver,retirees,69,24.4,0,0
+2025-11-17,Denver,students,43,24.4,0,0
+2025-11-17,Denver,young professionals,172,24.4,0,0
+2025-11-17,Denver,families,116,24.4,0,0
+2025-11-17,Denver,retirees,53,24.4,0,0
+2025-11-24,Denver,students,55,24.4,0,0
+2025-11-24,Denver,young professionals,113,24.4,0,0
+2025-11-24,Denver,families,144,24.4,0,0
+2025-11-24,Denver,retirees,49,24.4,0,0
+2025-12-01,Denver,students,54,24.4,0,0
+2025-12-01,Denver,young professionals,142,24.4,0,0
+2025-12-01,Denver,families,106,24.4,0,0
+2025-12-01,Denver,retirees,61,24.4,0,0
+2025-12-08,Denver,students,57,24.4,0,0
+2025-12-08,Denver,young professionals,184,24.4,0,0
+2025-12-08,Denver,families,142,24.4,0,0
+2025-12-08,Denver,retirees,64,24.4,0,0
+2025-12-15,Denver,students,67,24.4,0,0
+2025-12-15,Denver,young professionals,152,24.4,0,0
+2025-12-15,Denver,families,133,24.4,0,0
+2025-12-15,Denver,retirees,61,24.4,0,0
+2025-12-22,Denver,students,62,24.4,0,0
+2025-12-22,Denver,young professionals,109,24.4,0,0
+2025-12-22,Denver,families,161,24.4,0,0
+2025-12-22,Denver,retirees,81,24.4,0,0

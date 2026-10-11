@@ -9,7 +9,9 @@
 - Two parallel sessions. **Session A** owns `contract/`, `model/`, `api/`. **Session B** owns `web/`. Do not edit the other session's folders. If you need a change there, write it in `HANDOFF.md`.
 - Session A writes `contract/` first (schemas + fixture). Session B builds against the fixture.
 - Follow the time table in `RIPPLE_SPEC.md` Section 12. **`MILESTONES.md` is the authority on checkpoints and cuts.** When the user pastes a cut prompt from it, do that cut immediately, record it in `DECISIONS.md`, and continue. Never cut items on the "never cut" list.
-- If you are stuck on one error for more than 8 minutes, stop, write it in `HANDOFF.md`, and take the simplest workaround or skip the part.
+- **Approval rule (highest priority):** never cut, skip, simplify, or replace a feature, a check, or a test without Reza's explicit approval in this chat. A cut prompt that Reza pastes from `MILESTONES.md` is approval for that cut only.
+- If you are late or stuck on one error for more than 8 minutes, **stop and ask Reza.** Write the problem in `HANDOFF.md`, then print: `APPROVAL NEEDED: <problem> | options: (1) … (2) … | my recommendation: …`. Wait for his answer. Do not continue with a cut on your own.
+- A small fix that keeps the same feature (for example a different library call or a bug fix) does not need approval.
 - At the end of each step, print one status line: `[T+mm] done: … | next: … | risk: …`.
 - `timer.sh`, `timer.log`, and `MILESTONES.md` are the user's tools. Do not edit them. Add `timer.log` to `.gitignore`.
 - Commit after each step with a clear message. Push often.

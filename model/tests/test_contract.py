@@ -38,7 +38,9 @@ def test_schema_is_a_valid_schema(name: str) -> None:
 
 
 def test_fixture_matches_posterior_schema() -> None:
-    jsonschema.validate(load(CONTRACT / "posterior.fixture.json"), load(CONTRACT / "posterior.schema.json"))
+    jsonschema.validate(
+        load(CONTRACT / "posterior.fixture.json"), load(CONTRACT / "posterior.schema.json")
+    )
 
 
 def test_fixture_shapes_are_self_consistent() -> None:
@@ -48,12 +50,13 @@ def test_fixture_shapes_are_self_consistent() -> None:
     P, K = len(m["trait_names"]), 2 * m["n_fourier"]
 
     for key in d:
-        assert len(d[key]) == D, f"draws.{key} has {len(d[key])} rows, expected n_draws={D}"
-    for key, width in [("g", P), ("a_city", C), ("a_seg", S), ("e", S), ("b_promo", S), ("season", K)]:
-        assert all(len(row) == width for row in d[key]), f"draws.{key} rows must be length {width}"
+        assert len(d[key]) == D, f"draws.{key} has {len(d[key])} rows, want n_draws={D}"
+    widths = [("g", P), ("a_city", C), ("a_seg", S), ("e", S), ("b_promo", S), ("season", K)]
+    for key, width in widths:
+        assert all(len(r) == width for r in d[key]), f"draws.{key} rows must be length {width}"
 
     assert len(m["shares"]) == C and all(len(r) == S for r in m["shares"])
-    assert all(abs(sum(r) - 1.0) < 1e-9 for r in m["shares"]), "each city's segment shares must sum to 1"
+    assert all(abs(sum(r) - 1.0) < 1e-9 for r in m["shares"]), "segment shares must sum to 1"
     for key in ("trait_mean", "trait_std", "trait_min", "trait_max"):
         assert len(m[key]) == P, f"meta.{key} must have one entry per trait"
 
@@ -73,14 +76,14 @@ def test_fixture_shapes_are_self_consistent() -> None:
             if cand["traits_z"][i] < m["trait_min"][i] - 1e-9
             or cand["traits_z"][i] > m["trait_max"][i] + 1e-9
         ]
-        assert cand["extrapolation"] is bool(out), f"{cand['name']}: extrapolation flag disagrees with traits"
+        assert cand["extrapolation"] is bool(out), f"{cand['name']}: extrapolation flag is wrong"
         assert cand["out_of_range_traits"] == out
 
 
 def test_fixture_exercises_the_interesting_paths() -> None:
     """Session B builds the UI on this file, so it has to contain the edge cases."""
     f = load(CONTRACT / "posterior.fixture.json")
-    assert any(c["extrapolation"] for c in f["candidates"]), "need one out-of-range candidate for the banner"
+    assert any(c["extrapolation"] for c in f["candidates"]), "need an out-of-range candidate"
     assert any(c for c in f["candidates"] if not c["extrapolation"]), "need one in-range candidate"
     assert any(p > 0 for p in f["history"]["promo"]), "need promo weeks so the dip is visible"
     assert any(p > 0 for p in f["history"]["promo_last_week"])

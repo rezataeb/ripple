@@ -16,6 +16,13 @@ Things worth knowing before you write `simulate.ts`:
 
 **The real export** will appear at `web/public/model/posterior.json` + `trust.json` with identical shapes. Load from `/model/posterior.json` and fall back to the fixture, so nothing breaks before the fit lands.
 
+**[T+0:35] Demo data is generated.** `model/data/` now has `brightside_weekly.csv` (2496 rows, 6 cities x 4 segments x 104 weeks, price $16.17–$25.79, 21% promo cells), `brightside_cities.csv`, `truth.json` (planted parameters), and `launches.json` (3 launches, 8 observed weeks each, truth known). `launches.json` already validates against `contract/launch.schema.json`, so you can build `/launch` against it now — copy it to `web/public/model/launches.json` or wait for the export step, which will put it there.
+
+The three launches, and what the slider should show:
+- `austin-launch` (new city, unknown `z_new_city`) — true z is high, so the band should move **up** as weeks reveal. Fixed cost $60k; it does pay. `city_idx` is `-1` for the new city.
+- `student-coupon` (offer, unknown `b_promo[students]`) — the real coupon is stronger than history taught the model, so the band moves up. No fixed cost.
+- `gift-boxes` (feature, unknown `theta`, skeptical prior N(0, 0.15)) — truth +11.6%. This one **has a random holdout** (`holdout` column, 0/1), so its causal badge is "Experiment", not "Model-based estimate". Its prior scale is `editable_sigma: true` — that's the slider the spec asks for.
+
 ## B → A
 
 (nothing yet)

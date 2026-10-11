@@ -1,7 +1,7 @@
 # Ripple — 3-Hour Hackathon Build Spec (v4)
 ### "What happens to sales if…?" · Bayesian what-if simulator + launch tracker that learns from real data + market-aware AI agent + bring your own data
 
-> **For the coding agent (Claude Code):** Read all of this file before you write code. Total time: **3 hours.** The work runs in **two parallel Claude Code sessions** (Section 12): Session A owns `model/` and `api/`; Session B owns `web/`. They share one contract (Section 7). Commit after each step. When this spec does not decide something, choose the simplest option and write one line in `DECISIONS.md`. **Do not invent API calls:** check the installed versions and official docs of PyMC, nutpie, FastAPI, Next.js, `@google/genai`, and Nimble first. Write all code new. Use the cut list when late.
+> **For the coding agent (Claude Code):** Read all of this file before you write code. Total time: **3 hours.** The work runs in **two parallel Claude Code sessions** (Section 12): Session A owns `model/` and `api/`; Session B owns `web/`. They share one contract (Section 7). Commit after each step. When this spec does not decide something, choose the simplest option and write one line in `DECISIONS.md`. **Do not invent API calls:** check the installed versions and official docs of PyMC, nutpie, FastAPI, Next.js, `@google/genai`, and Nimble first. Write all code new. **Never cut or skip anything without Reza's approval** (see CLAUDE.md, "Approval rule").
 
 ---
 
