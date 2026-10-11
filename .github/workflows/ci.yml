@@ -64,6 +64,12 @@ jobs:
         working-directory: web
         run: npm ci
 
+      - name: Generate Next.js route types
+        # app/layout.tsx uses LayoutProps, which Next generates into .next/types.
+        # It exists locally after `next dev`, so tsc only fails on a clean checkout.
+        working-directory: web
+        run: npx next typegen
+
       - name: Types
         working-directory: web
         run: npx tsc --noEmit
