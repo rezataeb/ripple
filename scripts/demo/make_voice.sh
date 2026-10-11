@@ -17,13 +17,14 @@ set -euo pipefail
 cd "$(dirname "$0")"
 VOICE="${VOICE:-}"                 # e.g. VOICE=Samantha; empty = the system voice
 RATE="${RATE:-}"                   # e.g. RATE=180 words per minute
-PAD="${PAD:-0.6}"                  # seconds of silence after each line
+PAD="${PAD:-0.8}"                  # seconds of silence between scenes
+SENTENCE_PAUSE_MS="${SENTENCE_PAUSE_MS:-400}"   # pause between sentences within a line
 
 say_args=()
 [[ -n "$VOICE" ]] && say_args+=(-v "$VOICE")
 [[ -n "$RATE" ]] && say_args+=(-r "$RATE")
 
-rm -rf voice voice.aiff narration.spoken.txt
+rm -rf voice voice.aiff narration.spoken.txt narration.say.txt
 mkdir -p voice
 
 # one source of truth: the parser strips cues and comments
@@ -31,8 +32,16 @@ node narration.ts --spoken > narration.spoken.txt
 n=$(grep -c . narration.spoken.txt)
 echo "narration: $n spoken lines"
 
+# `say` honours [[slnc N]] inline. They are inserted here rather than written
+# into narration.txt, because narration.txt is also the subtitle source and the
+# markers would appear on screen.
+pause_sentences() {
+  sed -E "s/([.!?]) +/\1 [[slnc ${SENTENCE_PAUSE_MS}]] /g"
+}
+
 # the whole track, for listening to
-say "${say_args[@]}" -o voice.aiff -f narration.spoken.txt
+pause_sentences < narration.spoken.txt > narration.say.txt
+say "${say_args[@]}" -o voice.aiff -f narration.say.txt
 echo "wrote voice.aiff ($(afinfo voice.aiff | awk '/estimated duration/{printf "%.1fs", $3}'))"
 
 # per line, measured
@@ -41,7 +50,8 @@ secs=()
 while IFS= read -r line; do
   [[ -z "$line" ]] && continue
   f=$(printf "voice/%02d.aiff" "$i")
-  say "${say_args[@]}" -o "$f" "$line"
+  spoken=$(printf '%s' "$line" | pause_sentences)
+  say "${say_args[@]}" -o "$f" "$spoken"
   d=$(afinfo "$f" | awk '/estimated duration/{print $3}')
   secs+=("$d")
   printf "  %02d  %6.2fs  %s\n" "$i" "$d" "$(echo "$line" | cut -c1-58)"
@@ -50,7 +60,8 @@ done < narration.spoken.txt
 
 # timings.json drives the waits in record.ts
 {
-  printf '{\n "pad": %s,\n "voice": "%s",\n "seconds": [' "$PAD" "${VOICE:-system}"
+  printf '{\n "pad": %s,\n "voice": "%s",\n "rate": "%s",\n "sentence_pause_ms": %s,\n "seconds": [' \
+    "$PAD" "${VOICE:-system}" "${RATE:-default}" "$SENTENCE_PAUSE_MS"
   for j in "${!secs[@]}"; do
     [[ $j -gt 0 ]] && printf ", "
     printf "%s" "${secs[$j]}"

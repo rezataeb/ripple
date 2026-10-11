@@ -24,8 +24,11 @@ export const TIMINGS = join(DEMO_DIR, "timings.json");
 
 /** Fallback when the voice track has not been measured: macOS `say` runs ~2.6 words/sec. */
 const WORDS_PER_SECOND = 2.6;
-/** A beat of silence after each line, so the video does not cut on the last syllable. */
-export const TAIL_PAD_SECONDS = 0.6;
+/** Silence between scenes, so the video does not cut on the last syllable. */
+export const TAIL_PAD_SECONDS = 0.8;
+
+/** No subtitle should flash past before it can be read. */
+export const MIN_SCENE_SECONDS = 2.5;
 
 export function parseNarration(path: string = NARRATION): Scene[] {
   const lines = readFileSync(path, "utf8").split("\n");
@@ -69,7 +72,10 @@ export function scenesWithTimings(path: string = NARRATION): Scene[] {
       return scenes;
     }
     const pad = measured.pad ?? TAIL_PAD_SECONDS;
-    return scenes.map((s, i) => ({ ...s, seconds: measured.seconds[i] + pad }));
+    return scenes.map((s, i) => ({
+      ...s,
+      seconds: Math.max(measured.seconds[i] + pad, MIN_SCENE_SECONDS),
+    }));
   } catch {
     return scenes; // no voice track yet
   }

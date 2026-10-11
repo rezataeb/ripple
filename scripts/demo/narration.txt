@@ -1,49 +1,51 @@
 # Demo narration — AI Engineer Hackathon NYC, 2026-10-11
 # Conversational register: short sentences, contractions, no lists.
-# Every number here was checked against https://ripple-opal.vercel.app.
-# One line per scene; [bracketed] cues are for record.ts and are never spoken.
+# Every number was checked against https://ripple-opal.vercel.app.
+# Kept deliberately short so it can be spoken slowly and still fit under 2:00.
+# make_voice.sh inserts a 0.4s pause between sentences and 0.8s between scenes;
+# do NOT write [[slnc]] here, it would show up in the subtitles.
 
 [home]
 Hi, I'm Reza, and this is Ripple, my project for the AI Engineer Hackathon NYC.
 
 [home — verdict + fan chart visible]
-Most pricing decisions come down to a single number that nobody really believes. Ripple gives you the whole range instead.
+Most pricing calls come down to one number nobody believes. Ripple gives you the whole range.
 
 [home — preset "Student coupon in Boston"]
-Here's a twenty percent student coupon in Boston. It adds about eight thousand four hundred dollars, and it's very likely to pay off.
+Here's a twenty percent student coupon in Boston. It adds about eight thousand dollars.
 
 [home — drag discount 10% to 30%]
-I can drag the discount and everything moves right away. The model's already in the browser, so there's no waiting.
+I drag the discount, and everything moves at once.
 
 [home — point at the dip after the promo weeks]
-Look at what happens after the promo ends. Demand dips, because a discount borrows sales from next week. If you ignore that, every promotion looks better than it really was.
+After the promo ends, demand dips. A discount borrows sales from next week.
 
 [/launch — Austin launch, slider at 0]
-Now the hard part. We've just opened in Austin, and we don't know yet if it was a good idea.
+Now the hard part. We've just opened in Austin.
 
 [/launch — drag the week slider 0 to 8]
-Before any data, Ripple gives it a twenty-five percent chance of paying off. So, probably not. But then the real weeks start coming in.
+Before any data, Ripple gives it a twenty-five percent chance of paying off.
 
 [/launch — truth toggle on]
-By week four it's up to ninety-four percent. By week eight it's basically certain. The forecast was wrong, and the data fixed it.
+By week four, ninety-four percent. By week eight, a hundred. The forecast was wrong, and the data fixed it.
 
 [/launch — gate badge]
-And when a launch is too strange for the quick update, Ripple says so instead of guessing. That's what this badge is for.
+When a launch is too strange to update quickly, Ripple says so.
 
 [cmd-K — "Is Miami a good next city?"]
-I can also just ask. It builds the scenario, runs the model, and checks what competitors are charging.
+I can also just ask. It builds the scenario and runs the model.
 
 [Ask panel — extrapolation warning + market sources]
-Miami sits outside anything we've seen, and it tells me that up front. Every number here came from a tool, not from the language model.
+Miami sits outside anything we've seen, and it says so. Every number came from a tool.
 
 [/data — bring your own data]
-Your own spreadsheet goes through exactly the same path. Ripple maps the columns, checks them, and fits the same model.
+Your own spreadsheet takes the same path.
 
 [/method — recovery + calibration charts]
-I built the demo data myself, so I know the true answers. The model found all thirty of them.
+I built the demo data, so I know the true answers. The model found all thirty. Six of six checks pass.
 
 [/method — stress arm on the calibration chart]
-And I ran two hundred fake launches to see if the intervals hold up. They do. There's one case where they don't, and I put that on the page too.
+I ran two hundred fake launches. The intervals hold. The one case where they don't is on the page too.
 
 [end]
-The model makes the numbers. The agent explains them. The web gives context. Thanks for watching.
+The model makes the numbers. The agent explains them. Thanks for watching.
