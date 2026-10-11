@@ -10,17 +10,35 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
-if ! command -v ffmpeg >/dev/null; then
+# FFMPEG can point at any full build. The static binary from the imageio-ffmpeg
+# wheel works and needs no brew:
+#   FFMPEG=$(uv run --with imageio-ffmpeg python -c \
+#     "import imageio_ffmpeg; print(imageio_ffmpeg.get_ffmpeg_exe())")
+FFMPEG="${FFMPEG:-$(command -v ffmpeg || true)}"
+if [[ -z "$FFMPEG" ]] || ! "$FFMPEG" -hide_banner -encoders 2>/dev/null | grep -q " libx264 "; then
   cat >&2 <<'MSG'
-ffmpeg is not installed.
+No usable ffmpeg (needs libx264, aac and the gif encoder).
 
   brew install ffmpeg
+or, with no brew:
+  FFMPEG=$(uv run --with imageio-ffmpeg python -c \
+    "import imageio_ffmpeg; print(imageio_ffmpeg.get_ffmpeg_exe())") \
+    ./scripts/demo/make_video.sh
 
-Playwright ships an ffmpeg binary, but it is built with --disable-everything and
-has no libx264, aac, gif encoder, drawtext or concat filter, so it cannot do this.
+Playwright's bundled ffmpeg cannot stand in: it is built --disable-everything,
+with no libx264, aac, gif encoder, drawtext or concat filter.
 MSG
   exit 1
 fi
+echo "ffmpeg: $FFMPEG"
+
+# The static build ships no ffprobe, so read the duration out of ffmpeg itself.
+duration_of() {
+  # `ffmpeg -i X` with no output file always exits 1, which under `pipefail`
+  # would kill the script, so swallow the status and read the banner.
+  { "$FFMPEG" -hide_banner -i "$1" 2>&1 || true; } \
+    | awk -F'[ ,]' '/Duration:/ {split($4,t,":"); print t[1]*3600 + t[2]*60 + t[3]; exit}'
+}
 
 PAD="${PAD:-0.6}"
 TITLE_SECONDS="${TITLE_SECONDS:-2}"
@@ -51,13 +69,13 @@ for f in "${LINES[@]}"; do
 done
 for ((i = 0; i < n; i++)); do filter+="[a${i}]"; done
 filter+="concat=n=${n}:v=0:a=1[voice]"
-ffmpeg -y -v error "${args[@]}" -filter_complex "$filter" -map "[voice]" -ac 2 -ar 48000 voice.wav
-VOICE_SECS=$(ffprobe -v error -show_entries format=duration -of csv=p=0 voice.wav)
+"$FFMPEG" -y -v error "${args[@]}" -filter_complex "$filter" -map "[voice]" -ac 2 -ar 48000 voice.wav
+VOICE_SECS=$(duration_of voice.wav)
 echo "voice.wav: ${VOICE_SECS}s"
 
 # ---- 2. title card + recording, with the voice delayed past the card -------
 # The card is silent, so the narration starts when the product appears.
-ffmpeg -y -v error \
+"$FFMPEG" -y -v error \
   -loop 1 -t "$TITLE_SECONDS" -i title.png \
   -i "$RECORDING" \
   -i voice.wav \
@@ -71,7 +89,7 @@ ffmpeg -y -v error \
   -c:a aac -b:a 160k \
   "$ASSETS/demo.mp4"
 
-DUR=$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$ASSETS/demo.mp4")
+DUR=$(duration_of "$ASSETS/demo.mp4")
 printf "assets/demo.mp4  %.1fs  %s\n" "$DUR" "$(du -h "$ASSETS/demo.mp4" | cut -f1)"
 awk -v d="$DUR" 'BEGIN{ if (d >= 120) { print "ERROR: over the 2-minute limit"; exit 1 } }'
 
@@ -79,7 +97,7 @@ awk -v d="$DUR" 'BEGIN{ if (d >= 120) { print "ERROR: over the 2-minute limit"; 
 GIF_START=$(awk -v s="$(node narration.ts --start 'week slider')" -v t="$TITLE_SECONDS" \
   'BEGIN{ printf "%.2f", s + t - 1 }')
 echo "gif window: ${GIF_START}s +${GIF_SECONDS}s (the launch week slider)"
-ffmpeg -y -v error -ss "$GIF_START" -t "$GIF_SECONDS" -i "$ASSETS/demo.mp4" \
+"$FFMPEG" -y -v error -ss "$GIF_START" -t "$GIF_SECONDS" -i "$ASSETS/demo.mp4" \
   -filter_complex "fps=12,scale=900:-1:flags=lanczos,split[s0][s1];\
                    [s0]palettegen=max_colors=160[p];[s1][p]paletteuse=dither=bayer:bayer_scale=3" \
   "$ASSETS/demo.gif"

@@ -11,8 +11,8 @@ learns from real data, and a market-aware AI agent.
 
 | | |
 |---|---|
-| **Live demo** | _link added at submission — runs in demo mode with no API key_ |
-| **Video** (< 2 min) | `assets/demo.mp4` — _recorded at submission_ |
+| **Live demo** | **https://ripple-opal.vercel.app** — runs in demo mode, no API key needed |
+| **Video** (< 2 min) | [`assets/demo.mp4`](assets/demo.mp4) · [GIF](assets/demo.gif) |
 | **Method write-up** | [`docs/method/`](docs/method/) — [model card](docs/method/model-card.md) · [checks](docs/method/checks.md) · [limits](docs/method/limits.md) |
 
 > Built in 3 hours at the **AI Engineer Hackathon NYC**, 2026-10-11.
