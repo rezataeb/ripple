@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/rezataeb/ripple/contract/posterior.schema.json",
+  "title": "Ripple posterior export",
+  "description": "Everything the browser needs to simulate scenarios without a server. Written by model/ripple_model/export.py, read by web/lib/simulate.ts. Array shapes use D=n_draws, C=n_cities, S=n_segments, P=n_traits, K=2*n_fourier, W=n_history_rows.",
+  "type": "object",
+  "required": ["meta", "draws", "history", "candidates"],
+  "additionalProperties": false,
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": [
+        "cities", "segments", "weeks", "n_draws", "base_price", "unit_cost",
+        "shares", "trait_names", "trait_mean", "trait_std", "trait_min", "trait_max",
+        "has_promo", "has_feature", "has_traits", "has_segments",
+        "season_period", "n_fourier", "method", "seed"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "dataset_name": { "type": "string", "description": "Human label, e.g. 'Demo · Brightside Coffee'." },
+        "cities": { "type": "array", "items": { "type": "string" }, "minItems": 1, "description": "Training city names, index order = C." },
+        "segments": { "type": "array", "items": { "type": "string" }, "minItems": 1, "description": "Segment names, index order = S. ['All'] when the CSV has no segment column." },
+        "weeks": { "type": "integer", "minimum": 1, "description": "Number of distinct training weeks. Future week index t starts at this value." },
+        "n_draws": { "type": "integer", "minimum": 1, "description": "D — posterior draws kept in this export." },
+        "base_price": { "type": "number", "exclusiveMinimum": 0, "description": "Reference price in the log-log elasticity term." },
+        "unit_cost": { "type": "number", "minimum": 0, "description": "Default variable cost per unit; a scenario may override it." },
+        "shares": {
+          "type": "array",
+          "description": "shares[c][s] — segment share of city c, rows sum to 1. Enters log mu as the offset log(share).",
+          "items": { "type": "array", "items": { "type": "number", "minimum": 0, "maximum": 1 } }
+        },
+        "trait_names": { "type": "array", "items": { "type": "string" }, "description": "P city-trait names, e.g. ['log_population','median_income_k','share_age_18_34']. Empty when has_traits is false." },
+        "trait_mean": { "type": "array", "items": { "type": "number" }, "description": "Training mean per trait, raw units — used to standardize a new city." },
+        "trait_std": { "type": "array", "items": { "type": "number", "exclusiveMinimum": 0 }, "description": "Training sd per trait, raw units." },
+        "trait_min": { "type": "array", "items": { "type": "number" }, "description": "Minimum of each STANDARDIZED trait across training cities. A new city outside [min,max] raises the extrapolation flag." },
+        "trait_max": { "type": "array", "items": { "type": "number" }, "description": "Maximum of each STANDARDIZED trait across training cities." },
+        "has_promo": { "type": "boolean", "description": "False when the CSV had no promo column: b_promo and b_dip are all zeros and promo scenarios are disabled." },
+        "has_feature": { "type": "boolean", "description": "False when the CSV had no feature column: b_feature is all zeros." },
+        "has_traits": { "type": "boolean", "description": "False disables new-city scenarios; the UI must say why." },
+        "has_segments": { "type": "boolean", "description": "False means a single pseudo-segment 'All'; the UI hides segment bars." },
+        "season_period": { "type": "number", "exclusiveMinimum": 0, "description": "Weeks per seasonal cycle, 52 for weekly data." },
+        "n_fourier": { "type": "integer", "minimum": 0, "description": "Number of Fourier PAIRS. The season design row for week t is [sin(2*pi*1*t/period), cos(2*pi*1*t/period), ..., sin(2*pi*n*t/period), cos(2*pi*n*t/period)], length K = 2*n_fourier." },
+        "method": { "type": "string", "description": "Sampler and settings actually used, e.g. 'nutpie NUTS, 4 chains x 1000 draws' or 'Pathfinder (fast approximation)'." },
+        "fast_approximation": { "type": "boolean", "description": "True when the fit fell back to Pathfinder/ADVI under the BYOD time limit; the UI labels the run." },
+        "seed": { "type": "integer", "description": "Random seed of the fit." },
+        "fitted_at": { "type": "string", "description": "ISO-8601 timestamp of the fit." }
+      }
+    },
+    "draws": {
+      "type": "object",
+      "description": "Posterior draws, draw index first. Terms that do not apply are present and filled with zeros, so the simulator never branches on missing keys.",
+      "required": ["g0", "g", "tau_city", "a_city", "a_seg", "e", "b_promo", "b_feature", "b_dip", "season", "phi"],
+      "additionalProperties": false,
+      "properties": {
+        "g0": { "type": "array", "items": { "type": "number" }, "description": "[D] intercept of the city-effect regression." },
+        "g": { "type": "array", "items": { "type": "array", "items": { "type": "number" } }, "description": "[D][P] trait coefficients: a_city_hat = g0 + X_z . g." },
+        "tau_city": { "type": "array", "items": { "type": "number", "minimum": 0 }, "description": "[D] sd of the city effect around its trait prediction; the new-city uncertainty." },
+        "a_city": { "type": "array", "items": { "type": "array", "items": { "type": "number" } }, "description": "[D][C] fitted city effects (training cities)." },
+        "a_seg": { "type": "array", "items": { "type": "array", "items": { "type": "number" } }, "description": "[D][S] segment intercepts." },
+        "e": { "type": "array", "items": { "type": "array", "items": { "type": "number" } }, "description": "[D][S] price elasticity per segment, multiplies log(price/base_price). Negative means demand falls when price rises." },
+        "b_promo": { "type": "array", "items": { "type": "array", "items": { "type": "number" } }, "description": "[D][S] deal-signal lift per segment, multiplies the 0/1 promo flag." },
+        "b_feature": { "type": "array", "items": { "type": "number" }, "description": "[D] lift of the feature flag (shared across segments)." },
+        "b_dip": { "type": "array", "items": { "type": "number" }, "description": "[D] post-promo pull-forward effect, multiplies promo_last_week. Expected to be negative." },
+        "season": { "type": "array", "items": { "type": "array", "items": { "type": "number" } }, "description": "[D][K] Fourier coefficients; season(t) = dot(season_row(t), season[d])." },
+        "phi": { "type": "array", "items": { "type": "number", "exclusiveMinimum": 0 }, "description": "[D] Negative Binomial dispersion; var = mu + mu^2/phi." }
+      }
+    },
+    "history": {
+      "type": "object",
+      "description": "Observed training rows in columnar form (smaller JSON than row objects). All arrays have the same length W.",
+      "required": ["week_start", "t", "city_idx", "segment_idx", "units", "price", "promo", "promo_last_week", "feature"],
+      "additionalProperties": false,
+      "properties": {
+        "week_start": { "type": "array", "items": { "type": "string" }, "description": "ISO date of the Monday of each row's week." },
+        "t": { "type": "array", "items": { "type": "integer", "minimum": 0 }, "description": "Week index 0..weeks-1, used by season()." },
+        "city_idx": { "type": "array", "items": { "type": "integer", "minimum": 0 } },
+        "segment_idx": { "type": "array", "items": { "type": "integer", "minimum": 0 } },
+        "units": { "type": "array", "items": { "type": "number", "minimum": 0 } },
+        "price": { "type": "array", "items": { "type": "number", "exclusiveMinimum": 0 } },
+        "promo": { "type": "array", "items": { "type": "number" } },
+        "promo_last_week": { "type": "array", "items": { "type": "number" } },
+        "feature": { "type": "array", "items": { "type": "number" } }
+      }
+    },
+    "candidates": {
+      "type": "array",
+      "description": "Cities the user can launch in. Empty when has_traits is false.",
+      "items": {
+        "type": "object",
+        "required": ["name", "traits", "traits_z", "shares", "extrapolation", "out_of_range_traits"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string" },
+          "traits": { "type": "array", "items": { "type": "number" }, "description": "[P] raw trait values." },
+          "traits_z": { "type": "array", "items": { "type": "number" }, "description": "[P] standardized with meta.trait_mean / trait_std." },
+          "shares": { "type": "array", "items": { "type": "number", "minimum": 0, "maximum": 1 }, "description": "[S] expected segment mix of the new city." },
+          "extrapolation": { "type": "boolean", "description": "True when any standardized trait is outside [trait_min, trait_max]." },
+          "out_of_range_traits": { "type": "array", "items": { "type": "string" }, "description": "Names of the traits that are out of range; drives the UI banner text." },
+          "note": { "type": "string" }
+        }
+      }
+    }
+  }
+}

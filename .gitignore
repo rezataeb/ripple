@@ -1,0 +1,28 @@
+# secrets
+.env
+.env.local
+
+# user tools
+timer.log
+
+# os
+.DS_Store
+
+# node
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+
+# python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# build / artifacts
+dist/
+build/
+*.egg-info/

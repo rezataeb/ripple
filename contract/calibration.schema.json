@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/rezataeb/ripple/contract/calibration.schema.json",
+  "title": "Ripple calibration study",
+  "description": "Output of model/ripple_model/calibration.py → web/public/model/calibration.json. Simulation-based calibration of the launch update: N synthetic launches with known truth, the update run after each revealed week. This is the evidence that the intervals are honest, and the stress test is the evidence that we know where they are not.",
+  "type": "object",
+  "required": ["generated_at", "seed", "n_launches", "target_coverage", "arms"],
+  "additionalProperties": false,
+  "properties": {
+    "generated_at": { "type": "string" },
+    "seed": { "type": "integer" },
+    "n_launches": { "type": "integer", "minimum": 1, "description": "Synthetic launches per arm, e.g. 200." },
+    "target_coverage": { "type": "number", "minimum": 0, "maximum": 1, "description": "0.9 — what a 90% interval should achieve." },
+    "arms": {
+      "type": "array",
+      "description": "One arm per condition. The 'stress' arms deliberately break an assumption and are expected to miss the target.",
+      "items": {
+        "type": "object",
+        "required": ["id", "label", "kind", "assumptions_hold", "by_week"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "description": "e.g. 'new_city', 'feature', 'feature_rampup'." },
+          "label": { "type": "string" },
+          "kind": { "type": "string", "enum": ["new_city", "offer", "feature"] },
+          "assumptions_hold": { "type": "boolean", "description": "False marks a stress arm; the chart draws it dashed and says what was broken." },
+          "broken_assumption": { "type": "string", "description": "Set on a stress arm, e.g. 'the launch ramps up over 4 weeks, which the model does not have'." },
+          "by_week": {
+            "type": "array",
+            "description": "One entry per revealed week, 1..8.",
+            "items": {
+              "type": "object",
+              "required": ["week", "coverage_total", "coverage_unknown", "mean_width_total", "bias_total", "refit_rate", "n"],
+              "additionalProperties": false,
+              "properties": {
+                "week": { "type": "integer", "minimum": 1 },
+                "coverage_total": { "type": "number", "minimum": 0, "maximum": 1, "description": "Share of runs where the TRUE horizon total fell inside the 90% interval. The headline chart." },
+                "coverage_total_mcse": { "type": "number", "minimum": 0, "description": "Monte-Carlo standard error of that share, so the chart can show its own uncertainty." },
+                "coverage_unknown": { "type": "number", "minimum": 0, "maximum": 1, "description": "Same, for the true value of the unknown (the lift)." },
+                "mean_width_total": { "type": "number", "minimum": 0, "description": "Average 90% interval width for the horizon total — this is what should shrink week by week." },
+                "median_width_total": { "type": "number", "minimum": 0 },
+                "bias_total": { "type": "number", "description": "Mean of (posterior mean − truth) for the horizon total. Near 0 is good." },
+                "rmse_total": { "type": "number", "minimum": 0 },
+                "refit_rate": { "type": "number", "minimum": 0, "maximum": 1, "description": "Share of runs that hit the validity gate and were told to refit." },
+                "mean_ess": { "type": "number", "minimum": 0 },
+                "mean_pareto_k": { "type": "number" },
+                "n": { "type": "integer", "minimum": 1, "description": "Runs summarized at this week." }
+              }
+            }
+          },
+          "verdict": { "type": "string", "description": "One sentence for under the chart, e.g. 'Coverage stays within 2 points of 90% from week 2 on.'" }
+        }
+      }
+    },
+    "headline": { "type": "string", "description": "One sentence for the README and /method." },
+    "runtime_seconds": { "type": "number" }
+  }
+}

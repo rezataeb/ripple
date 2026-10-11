@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/rezataeb/ripple/contract/scenario.schema.json",
+  "title": "Ripple scenario",
+  "description": "The question. Built by the UI controls or by the agent tool build_scenario(); validated with zod in the browser and with pydantic in the API. Fields that do not apply to the chosen type are ignored.",
+  "type": "object",
+  "required": ["type", "horizon"],
+  "additionalProperties": false,
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": ["promo", "price", "new_city"],
+      "description": "promo = discount for some weeks; price = permanent price change; new_city = launch in a city with no history."
+    },
+    "label": { "type": "string", "description": "Optional human title, e.g. '20% student coupon in Boston'." },
+    "cities": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Training city names the change applies to. Empty or omitted = all training cities. Ignored when type is new_city."
+    },
+    "segments": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Segment names the change applies to. Empty or omitted = all segments. Cells outside the selection stay at baseline."
+    },
+    "discount": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 0.9,
+      "description": "promo only: fraction off, e.g. 0.2 for 20% off. net_price = base_price * (1 - discount)."
+    },
+    "weeks": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 52,
+      "description": "promo only: how many weeks the discount runs, starting at week 1 of the horizon."
+    },
+    "price_change": {
+      "type": "number",
+      "minimum": -0.9,
+      "maximum": 2,
+      "description": "price only: fraction change for the whole horizon, e.g. 0.08 for +8%."
+    },
+    "feature": {
+      "type": "boolean",
+      "description": "Turn the feature flag on for the selected cells over the horizon."
+    },
+    "candidate": {
+      "type": "string",
+      "description": "new_city only: a name from posterior.candidates. Takes precedence over traits."
+    },
+    "traits": {
+      "type": "array",
+      "items": { "type": "number" },
+      "description": "new_city only: raw trait values in posterior.meta.trait_names order, used when candidate is not given."
+    },
+    "new_city_shares": {
+      "type": "array",
+      "items": { "type": "number", "minimum": 0, "maximum": 1 },
+      "description": "new_city only: expected segment mix. Defaults to the candidate's shares, else the training average."
+    },
+    "new_city_price": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "description": "new_city only: launch price. Defaults to base_price."
+    },
+    "market_size": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "description": "new_city only: multiplier on expected volume when the new city's addressable base differs from the training average. Defaults to 1."
+    },
+    "unit_cost": { "type": "number", "minimum": 0, "description": "Variable cost per unit. Defaults to posterior.meta.unit_cost." },
+    "fixed_cost": { "type": "number", "minimum": 0, "description": "One-off cost of the change over the whole horizon (campaign spend, launch cost). Defaults to 0." },
+    "horizon": { "type": "integer", "minimum": 1, "maximum": 104, "description": "Weeks simulated, for both baseline and scenario." },
+    "seed": { "type": "integer", "description": "Seed for the new-city z draws, so the same scenario always gives the same numbers. Defaults to 7." }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "type": { "const": "promo" } }, "required": ["type"] },
+      "then": { "required": ["discount", "weeks"] }
+    },
+    {
+      "if": { "properties": { "type": { "const": "price" } }, "required": ["type"] },
+      "then": { "required": ["price_change"] }
+    },
+    {
+      "if": { "properties": { "type": { "const": "new_city" } }, "required": ["type"] },
+      "then": { "anyOf": [{ "required": ["candidate"] }, { "required": ["traits"] }] }
+    }
+  ]
+}

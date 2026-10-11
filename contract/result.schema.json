@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/rezataeb/ripple/contract/result.schema.json",
+  "title": "Ripple scenario result",
+  "description": "The answer. Produced by web/lib/simulate.ts in the browser and by model/ripple_model/simulate.py as the reference; the parity test asserts both agree. Every quantity a user sees is an interval, never a bare point.",
+  "type": "object",
+  "required": ["scenario", "horizon", "incremental", "p_profit_positive", "weekly", "flags", "meta"],
+  "additionalProperties": false,
+  "$defs": {
+    "interval": {
+      "type": "object",
+      "description": "Posterior summary of one quantity. p05/p95 are the 90% interval the UI must always show next to the mean.",
+      "required": ["mean", "p05", "p50", "p95"],
+      "additionalProperties": false,
+      "properties": {
+        "mean": { "type": "number" },
+        "p05": { "type": "number" },
+        "p50": { "type": "number" },
+        "p95": { "type": "number" }
+      }
+    },
+    "band": {
+      "type": "object",
+      "description": "One week of a fan chart: median line plus the 50% and 90% bands.",
+      "required": ["p05", "p25", "p50", "p75", "p95"],
+      "additionalProperties": false,
+      "properties": {
+        "p05": { "type": "number" },
+        "p25": { "type": "number" },
+        "p50": { "type": "number" },
+        "p75": { "type": "number" },
+        "p95": { "type": "number" }
+      }
+    },
+    "money": {
+      "type": "object",
+      "description": "Units, revenue and profit for the same object.",
+      "required": ["units", "revenue", "profit"],
+      "additionalProperties": false,
+      "properties": {
+        "units": { "$ref": "#/$defs/interval" },
+        "revenue": { "$ref": "#/$defs/interval" },
+        "profit": { "$ref": "#/$defs/interval" }
+      }
+    }
+  },
+  "properties": {
+    "scenario": { "description": "Echo of the scenario that produced this result (contract/scenario.schema.json).", "type": "object" },
+    "horizon": { "type": "integer", "minimum": 1, "description": "Weeks simulated." },
+    "baseline": { "$ref": "#/$defs/money", "description": "Totals over the horizon with no change." },
+    "with_change": { "$ref": "#/$defs/money", "description": "Totals over the horizon with the change." },
+    "incremental": {
+      "$ref": "#/$defs/money",
+      "description": "with_change minus baseline, differenced WITHIN each posterior draw before summarizing — this is the headline, and the only honest way to get the interval."
+    },
+    "p_profit_positive": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Share of draws where incremental profit > 0. The 'chance it pays' number."
+    },
+    "break_even": {
+      "type": "object",
+      "description": "Optional: where the change stops paying, for the UI hint line.",
+      "additionalProperties": false,
+      "properties": {
+        "metric": { "type": "string", "enum": ["discount", "price_change", "fixed_cost"] },
+        "value": { "type": ["number", "null"], "description": "Largest discount / price change / fixed cost that still keeps P(profit > 0) >= 0.5. null when it pays nowhere in range." }
+      }
+    },
+    "weekly": {
+      "type": "array",
+      "description": "Fan chart data, one entry per horizon week, in order.",
+      "items": {
+        "type": "object",
+        "required": ["week", "baseline_units", "scenario_units", "promo_active"],
+        "additionalProperties": false,
+        "properties": {
+          "week": { "type": "integer", "minimum": 0, "description": "0-based offset from the start of the horizon." },
+          "t": { "type": "integer", "description": "Absolute week index used by season(), i.e. meta.weeks + week." },
+          "week_start": { "type": "string", "description": "ISO date, when the caller knows the calendar." },
+          "baseline_units": { "$ref": "#/$defs/band" },
+          "scenario_units": { "$ref": "#/$defs/band" },
+          "incremental_units": { "$ref": "#/$defs/band" },
+          "promo_active": { "type": "boolean", "description": "Shades the promo weeks on the chart." },
+          "dip_active": { "type": "boolean", "description": "True on the week right after a promo week, where b_dip bites." }
+        }
+      }
+    },
+    "segments": {
+      "type": "array",
+      "description": "Incremental effect per segment, for the segment bars. Empty when meta.has_segments is false.",
+      "items": {
+        "type": "object",
+        "required": ["segment", "incremental"],
+        "additionalProperties": false,
+        "properties": {
+          "segment": { "type": "string" },
+          "incremental": { "$ref": "#/$defs/money" },
+          "share_of_total": { "type": "number", "description": "Share of total incremental units; may be negative if the segment loses." }
+        }
+      }
+    },
+    "cities": {
+      "type": "array",
+      "description": "Incremental effect per city. For new_city there is a single entry with the candidate's name.",
+      "items": {
+        "type": "object",
+        "required": ["city", "incremental"],
+        "additionalProperties": false,
+        "properties": {
+          "city": { "type": "string" },
+          "incremental": { "$ref": "#/$defs/money" }
+        }
+      }
+    },
+    "flags": {
+      "type": "object",
+      "required": ["extrapolation"],
+      "additionalProperties": false,
+      "properties": {
+        "extrapolation": { "type": "boolean", "description": "new_city with a standardized trait outside the training range." },
+        "out_of_range_traits": { "type": "array", "items": { "type": "string" } },
+        "no_price_variation": { "type": "boolean", "description": "The fitted data never varied price, so elasticity is prior-driven. The UI must say so." },
+        "promo_disabled": { "type": "boolean", "description": "posterior.meta.has_promo is false." },
+        "warnings": { "type": "array", "items": { "type": "string" }, "description": "Short sentences to show above the chart." }
+      }
+    },
+    "meta": {
+      "type": "object",
+      "required": ["n_draws", "seed"],
+      "additionalProperties": false,
+      "properties": {
+        "n_draws": { "type": "integer", "minimum": 1 },
+        "seed": { "type": "integer" },
+        "source": { "type": "string", "enum": ["browser", "python"], "description": "Which implementation produced it — used by the parity test report." },
+        "computed_ms": { "type": "number" },
+        "unit_cost": { "type": "number" },
+        "fixed_cost": { "type": "number" },
+        "net_price": { "type": "number", "description": "Price actually charged under the change (promo/price types)." }
+      }
+    }
+  }
+}

@@ -1,0 +1,41 @@
+[project]
+name = "ripple"
+version = "0.1.0"
+description = "Ripple — Bayesian what-if simulator, launch tracker, and market-aware agent"
+requires-python = ">=3.11,<3.13"
+dependencies = [
+    "numpy>=1.26",
+    "pandas>=2.2",
+    "scipy>=1.13",
+    "pymc>=5.16",
+    "arviz>=0.19",
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "python-multipart>=0.0.9",
+    "pydantic>=2.8",
+]
+
+[project.optional-dependencies]
+fast = ["nutpie>=0.13"]
+
+[dependency-groups]
+dev = ["pytest>=8.3", "ruff>=0.6", "httpx>=0.27", "jsonschema>=4.23"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["model/ripple_model", "api/app"]
+
+[tool.pytest.ini_options]
+testpaths = ["model/tests", "api/tests"]
+pythonpath = ["model", "api"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]

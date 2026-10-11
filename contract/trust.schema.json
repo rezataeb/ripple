@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/rezataeb/ripple/contract/trust.schema.json",
+  "title": "Ripple trust report",
+  "description": "Output of model/ripple_model/checks.py. Rendered as trust cards on / and /method, and returned by the agent tool model_facts().",
+  "type": "object",
+  "required": ["generated_at", "method", "checks", "summary"],
+  "additionalProperties": false,
+  "properties": {
+    "generated_at": { "type": "string" },
+    "method": { "type": "string", "description": "Sampler and settings, copied from posterior.meta.method." },
+    "dataset_name": { "type": "string" },
+    "summary": {
+      "type": "object",
+      "required": ["passed", "total"],
+      "additionalProperties": false,
+      "properties": {
+        "passed": { "type": "integer", "minimum": 0 },
+        "total": { "type": "integer", "minimum": 0 },
+        "headline": { "type": "string", "description": "One sentence for the card header, e.g. '6 of 6 checks passed'." }
+      }
+    },
+    "checks": {
+      "type": "array",
+      "description": "One entry per check. Every check carries plain_english so the UI never has to invent wording.",
+      "items": {
+        "type": "object",
+        "required": ["name", "passed", "value", "threshold", "plain_english"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string", "description": "e.g. 'R-hat', 'ESS', 'Divergences', 'Posterior predictive coverage', 'Parameter recovery', 'Time holdout'." },
+          "group": { "type": "string", "enum": ["convergence", "fit", "recovery", "holdout"], "description": "Groups the cards." },
+          "passed": { "type": "boolean" },
+          "value": { "type": ["number", "null"], "description": "Observed value. null when the check could not run." },
+          "threshold": { "type": ["number", "string", "null"], "description": "The bar it had to clear, e.g. 1.01 or '>= 400'." },
+          "comparison": { "type": "string", "enum": ["lte", "gte", "eq"], "description": "How value is compared with threshold." },
+          "plain_english": { "type": "string", "description": "One sentence a non-statistician understands." },
+          "detail": { "type": "string", "description": "Optional extra line, e.g. the worst parameter." },
+          "skipped_reason": { "type": "string", "description": "Set when passed is false only because the check could not run (e.g. recovery on BYOD, where there is no truth)." }
+        }
+      }
+    },
+    "recovery": {
+      "type": "array",
+      "description": "Demo only: planted truth vs. the 94% HDI. Drives the recovery chart on /method.",
+      "items": {
+        "type": "object",
+        "required": ["param", "truth", "hdi_low", "hdi_high", "inside"],
+        "additionalProperties": false,
+        "properties": {
+          "param": { "type": "string", "description": "e.g. 'e[students]', 'b_dip', 'g[log_population]'." },
+          "label": { "type": "string", "description": "Readable label for the chart axis." },
+          "truth": { "type": "number" },
+          "posterior_mean": { "type": "number" },
+          "hdi_low": { "type": "number" },
+          "hdi_high": { "type": "number" },
+          "inside": { "type": "boolean" }
+        }
+      }
+    },
+    "holdout": {
+      "type": "object",
+      "description": "Last N weeks held out of the fit and then predicted.",
+      "additionalProperties": false,
+      "properties": {
+        "weeks_held_out": { "type": "integer", "minimum": 1 },
+        "coverage_90": { "type": "number", "minimum": 0, "maximum": 1, "description": "Share of held-out cells inside the 90% predictive interval. Target ~0.90." },
+        "mape_model": { "type": "number", "minimum": 0 },
+        "mape_naive": { "type": "number", "minimum": 0, "description": "Naive seasonal baseline (same week last year, else last observed week)." },
+        "beats_naive": { "type": "boolean" }
+      }
+    },
+    "convergence": {
+      "type": "object",
+      "description": "Raw sampler diagnostics, for the method page.",
+      "additionalProperties": false,
+      "properties": {
+        "max_rhat": { "type": "number" },
+        "min_ess": { "type": "number" },
+        "divergences": { "type": "integer", "minimum": 0 },
+        "worst_param": { "type": "string" },
+        "n_chains": { "type": "integer" },
+        "n_draws_per_chain": { "type": "integer" },
+        "sampling_seconds": { "type": "number" }
+      }
+    },
+    "model_facts": {
+      "type": "object",
+      "description": "Pre-summarized effects with intervals, so the agent's model_facts() tool never computes a number itself.",
+      "additionalProperties": false,
+      "properties": {
+        "elasticity_by_segment": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["segment", "mean", "p05", "p95"],
+            "additionalProperties": false,
+            "properties": {
+              "segment": { "type": "string" },
+              "mean": { "type": "number" },
+              "p05": { "type": "number" },
+              "p95": { "type": "number" }
+            }
+          }
+        },
+        "promo_lift_by_segment": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["segment", "mean", "p05", "p95"],
+            "additionalProperties": false,
+            "properties": {
+              "segment": { "type": "string" },
+              "mean": { "type": "number" },
+              "p05": { "type": "number" },
+              "p95": { "type": "number" }
+            }
+          }
+        },
+        "post_promo_dip": {
+          "type": "object",
+          "required": ["mean", "p05", "p95"],
+          "additionalProperties": false,
+          "properties": {
+            "mean": { "type": "number" },
+            "p05": { "type": "number" },
+            "p95": { "type": "number" }
+          }
+        },
+        "feature_lift": {
+          "type": "object",
+          "required": ["mean", "p05", "p95"],
+          "additionalProperties": false,
+          "properties": {
+            "mean": { "type": "number" },
+            "p05": { "type": "number" },
+            "p95": { "type": "number" }
+          }
+        }
+      }
+    },
+    "limits": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Short honest statements shown under the trust cards."
+    }
+  }
+}

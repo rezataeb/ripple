@@ -1,0 +1,165 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/rezataeb/ripple/contract/update.schema.json",
+  "title": "Ripple launch-update result",
+  "description": "Output of the Bayesian update: prior = the fitted posterior, likelihood = the observed launch weeks, result = importance-weighted posterior. Produced by web/lib/update.ts (browser, ESS gate) and model/ripple_model/update.py (reference, PSIS gate); the parity test asserts both agree on the weighted summaries.",
+  "type": "object",
+  "required": ["launch_id", "weeks_used", "gate", "unknown", "forecast", "prior_forecast", "causal", "meta"],
+  "additionalProperties": false,
+  "$defs": {
+    "interval": {
+      "type": "object",
+      "required": ["mean", "p05", "p50", "p95"],
+      "additionalProperties": false,
+      "properties": {
+        "mean": { "type": "number" },
+        "p05": { "type": "number" },
+        "p50": { "type": "number" },
+        "p95": { "type": "number" }
+      }
+    },
+    "band": {
+      "type": "object",
+      "required": ["p05", "p50", "p95"],
+      "additionalProperties": false,
+      "properties": {
+        "p05": { "type": "number" },
+        "p25": { "type": "number" },
+        "p50": { "type": "number" },
+        "p75": { "type": "number" },
+        "p95": { "type": "number" }
+      }
+    }
+  },
+  "properties": {
+    "launch_id": { "type": "string" },
+    "weeks_used": { "type": "integer", "minimum": 0, "description": "Position of the week slider. 0 = no real data yet, so the result equals the prior forecast." },
+    "gate": {
+      "type": "object",
+      "description": "Validity of the fast update. When ok is false the UI shows 'Refit needed' and the API refits the full model.",
+      "required": ["ok", "criterion", "value", "threshold", "message"],
+      "additionalProperties": false,
+      "properties": {
+        "ok": { "type": "boolean" },
+        "criterion": { "type": "string", "enum": ["ess", "pareto_k"], "description": "'ess' in the browser (weight effective sample size, needs >= 300); 'pareto_k' in Python (PSIS k-hat, needs <= 0.7)." },
+        "value": { "type": "number" },
+        "threshold": { "type": "number" },
+        "ess": { "type": "number", "description": "Effective sample size of the importance weights, always reported." },
+        "pareto_k": { "type": ["number", "null"], "description": "PSIS k-hat; null in the browser, which does not smooth the weights." },
+        "smoothed": { "type": "boolean", "description": "True when the weights were Pareto-smoothed (Python only)." },
+        "message": { "type": "string", "description": "Plain-English badge text, e.g. 'Fast update reliable (ESS 1,840 of 20,000)'." }
+      }
+    },
+    "unknown": {
+      "type": "object",
+      "description": "What the launch taught us about the one unknown. Drives the prior-vs-posterior density plot.",
+      "required": ["name", "label", "display", "prior", "posterior"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "label": { "type": "string" },
+        "display": { "type": "string", "enum": ["log_lift", "percent_lift", "raw"] },
+        "prior": { "$ref": "#/$defs/interval" },
+        "posterior": { "$ref": "#/$defs/interval" },
+        "prior_percent": { "$ref": "#/$defs/interval", "description": "Same prior as a percent lift, when display is percent_lift — so the UI never converts a number itself." },
+        "posterior_percent": { "$ref": "#/$defs/interval" },
+        "truth": { "type": ["number", "null"], "description": "Demo only; the 'Show truth' line." },
+        "density": {
+          "type": "object",
+          "description": "Shared grid for the small prior-vs-posterior plot.",
+          "required": ["x", "prior", "posterior"],
+          "additionalProperties": false,
+          "properties": {
+            "x": { "type": "array", "items": { "type": "number" } },
+            "prior": { "type": "array", "items": { "type": "number" } },
+            "posterior": { "type": "array", "items": { "type": "number" } }
+          }
+        }
+      }
+    },
+    "forecast": {
+      "type": "object",
+      "description": "Updated forecast over the launch horizon, using the importance-weighted draws.",
+      "required": ["horizon", "total_units", "total_profit", "p_profit_positive", "weekly"],
+      "additionalProperties": false,
+      "properties": {
+        "horizon": { "type": "integer", "minimum": 1 },
+        "total_units": { "$ref": "#/$defs/interval" },
+        "total_revenue": { "$ref": "#/$defs/interval" },
+        "total_profit": { "$ref": "#/$defs/interval" },
+        "p_profit_positive": { "type": "number", "minimum": 0, "maximum": 1 },
+        "weekly": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["week", "units"],
+            "additionalProperties": false,
+            "properties": {
+              "week": { "type": "integer", "minimum": 1 },
+              "t": { "type": "integer" },
+              "week_start": { "type": "string" },
+              "units": { "$ref": "#/$defs/band", "description": "Updated predictive band for this week." },
+              "observed_units": { "type": ["number", "null"], "description": "The real point, when this week is inside weeks_used; null for future weeks." },
+              "counterfactual_units": { "$ref": "#/$defs/band", "description": "What the model expects with NO change — the baseline the lift is measured against." }
+            }
+          }
+        }
+      }
+    },
+    "prior_forecast": {
+      "type": "object",
+      "description": "The same forecast before any launch data, so the UI can show 'Chance it pays: 61% → 78%'.",
+      "required": ["total_units", "total_profit", "p_profit_positive"],
+      "additionalProperties": false,
+      "properties": {
+        "total_units": { "$ref": "#/$defs/interval" },
+        "total_revenue": { "$ref": "#/$defs/interval" },
+        "total_profit": { "$ref": "#/$defs/interval" },
+        "p_profit_positive": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+    "causal": {
+      "type": "object",
+      "description": "How to read the lift.",
+      "required": ["mode", "assumptions"],
+      "additionalProperties": false,
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": ["experiment", "model_based"],
+          "description": "'experiment' when the data has a randomized holdout column; otherwise 'model_based' (observed vs. the model's counterfactual)."
+        },
+        "label": { "type": "string", "description": "Badge text, e.g. 'Model-based estimate' or 'Experiment (random holdout)'." },
+        "assumptions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "text"],
+            "additionalProperties": false,
+            "properties": {
+              "id": { "type": "string" },
+              "text": { "type": "string" },
+              "holds": { "type": ["boolean", "null"] }
+            }
+          }
+        },
+        "recommendation": { "type": "string", "description": "e.g. 'Keep a random 10% holdout next time — then this is an experiment, not an estimate.'" }
+      }
+    },
+    "meta": {
+      "type": "object",
+      "required": ["n_prior_draws", "k_per_draw", "n_samples", "source"],
+      "additionalProperties": false,
+      "properties": {
+        "n_prior_draws": { "type": "integer", "minimum": 1, "description": "D posterior draws reused as the prior, e.g. 1000." },
+        "k_per_draw": { "type": "integer", "minimum": 1, "description": "K values of the unknown drawn per posterior draw, e.g. 20." },
+        "n_samples": { "type": "integer", "minimum": 1, "description": "D * K joint prior samples, e.g. 20000." },
+        "n_obs_cells": { "type": "integer", "minimum": 0, "description": "Observed rows that entered the likelihood." },
+        "seed": { "type": "integer" },
+        "source": { "type": "string", "enum": ["browser", "python"] },
+        "computed_ms": { "type": "number" },
+        "prior_sigma": { "type": "number", "description": "Scale actually used for a skeptical feature prior." }
+      }
+    }
+  }
+}

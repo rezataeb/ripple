@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/rezataeb/ripple/contract/launch.schema.json",
+  "title": "Ripple launch set",
+  "description": "The real weekly data that arrives after a launch. Written by model/ripple_model/synth.py to web/public/model/launches.json; read by the /launch page and by the agent tool update_with_launch(). Three demo launches ship with known truth.",
+  "type": "object",
+  "required": ["generated_at", "seed", "launches"],
+  "additionalProperties": false,
+  "properties": {
+    "generated_at": { "type": "string" },
+    "seed": { "type": "integer" },
+    "launches": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "label", "type", "unknown", "weeks_observed", "horizon", "observations", "unit_cost", "fixed_cost"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "description": "Stable slug, e.g. 'austin-launch', 'student-coupon', 'gift-boxes'." },
+          "label": { "type": "string", "description": "e.g. 'Austin launch'." },
+          "type": {
+            "type": "string",
+            "enum": ["new_city", "offer", "feature"],
+            "description": "Which unknown is being learned: a city effect, an offer's lift/elasticity, or a never-seen feature."
+          },
+          "description": { "type": "string", "description": "One sentence shown under the launch picker." },
+          "unknown": {
+            "type": "object",
+            "description": "The single quantity the update learns. Its prior comes from the fitted model, except for a new feature, where it is deliberately skeptical.",
+            "required": ["name", "label", "kind", "prior"],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "type": "string", "description": "e.g. 'z_new_city', 'b_promo[students]', 'theta'." },
+              "label": { "type": "string", "description": "Readable, e.g. 'Austin city effect' or 'Lift from gift boxes'." },
+              "kind": {
+                "type": "string",
+                "enum": ["z_new_city", "b_promo", "elasticity", "theta"],
+                "description": "Tells the update engine how the unknown enters log mu."
+              },
+              "segment": { "type": "string", "description": "Set when the unknown is per segment (b_promo, elasticity)." },
+              "prior": {
+                "type": "object",
+                "required": ["dist"],
+                "additionalProperties": false,
+                "properties": {
+                  "dist": { "type": "string", "enum": ["normal", "posterior"], "description": "'normal' = parametric prior drawn fresh (z_new_city, theta); 'posterior' = reuse the fitted draws." },
+                  "mu": { "type": "number" },
+                  "sigma": { "type": "number", "exclusiveMinimum": 0, "description": "For a new feature this is the skeptical scale, default 0.15; the UI lets the user change it." },
+                  "editable_sigma": { "type": "boolean", "description": "True when the UI should expose a prior-scale slider." }
+                }
+              },
+              "display": { "type": "string", "enum": ["log_lift", "percent_lift", "raw"], "description": "How to format the unknown's posterior in the UI." }
+            }
+          },
+          "weeks_observed": { "type": "integer", "minimum": 1, "description": "How many weeks of real data exist — the max of the week slider." },
+          "horizon": { "type": "integer", "minimum": 1, "description": "Weeks the forecast covers, e.g. 12." },
+          "t0": { "type": "integer", "minimum": 0, "description": "Absolute week index of launch week 1, so season(t) lines up with the fitted model." },
+          "cities": { "type": "array", "items": { "type": "string" }, "description": "Cities touched by the launch. For new_city, the one new name." },
+          "segments": { "type": "array", "items": { "type": "string" }, "description": "Segments touched by the launch." },
+          "new_city": {
+            "type": "object",
+            "description": "Set when type is new_city.",
+            "required": ["name", "traits", "traits_z", "shares"],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "type": "string" },
+              "traits": { "type": "array", "items": { "type": "number" } },
+              "traits_z": { "type": "array", "items": { "type": "number" } },
+              "shares": { "type": "array", "items": { "type": "number" } },
+              "extrapolation": { "type": "boolean" },
+              "out_of_range_traits": { "type": "array", "items": { "type": "string" } }
+            }
+          },
+          "observations": {
+            "type": "object",
+            "description": "Observed launch weeks, columnar. One row per week x city x segment (x holdout arm when present). All arrays share one length.",
+            "required": ["week", "t", "city_idx", "segment_idx", "units", "price", "promo", "promo_last_week", "feature", "treated"],
+            "additionalProperties": false,
+            "properties": {
+              "week": { "type": "array", "items": { "type": "integer", "minimum": 1 }, "description": "1-based launch week." },
+              "week_start": { "type": "array", "items": { "type": "string" } },
+              "t": { "type": "array", "items": { "type": "integer" }, "description": "Absolute week index for season()." },
+              "city_idx": { "type": "array", "items": { "type": "integer" }, "description": "Index into posterior.meta.cities, or -1 for the new city." },
+              "segment_idx": { "type": "array", "items": { "type": "integer" } },
+              "units": { "type": "array", "items": { "type": "number", "minimum": 0 } },
+              "price": { "type": "array", "items": { "type": "number", "exclusiveMinimum": 0 } },
+              "promo": { "type": "array", "items": { "type": "number" } },
+              "promo_last_week": { "type": "array", "items": { "type": "number" } },
+              "feature": { "type": "array", "items": { "type": "number" } },
+              "treated": { "type": "array", "items": { "type": "number" }, "description": "1 = the unknown applies to this cell; 0 = control. Always 1 unless there is a holdout." },
+              "holdout": { "type": "array", "items": { "type": "number" }, "description": "Present only when the data has a randomized control arm; then the result is labelled 'experiment'." }
+            }
+          },
+          "has_holdout": { "type": "boolean", "description": "True ⇒ a random control group exists ⇒ label the lift 'experiment', not 'model-based estimate'." },
+          "unit_cost": { "type": "number", "minimum": 0 },
+          "fixed_cost": { "type": "number", "minimum": 0, "description": "Launch or campaign cost over the horizon." },
+          "net_price": { "type": "number", "exclusiveMinimum": 0, "description": "Price charged during the launch, for the revenue and profit lines." },
+          "truth": {
+            "type": "object",
+            "description": "Demo launches only — the planted answer, revealed by the 'Show truth' toggle. Absent for uploaded launch data.",
+            "additionalProperties": false,
+            "properties": {
+              "unknown_value": { "type": "number", "description": "True value of the unknown, in the same units as its posterior." },
+              "unknown_percent": { "type": "number", "description": "Same thing as a percent lift, when display is percent_lift." },
+              "total_units": { "type": "number", "description": "True total units over the full horizon." },
+              "total_profit": { "type": "number" },
+              "pays": { "type": "boolean" }
+            }
+          },
+          "causal_assumptions": {
+            "type": "array",
+            "description": "The 3 conditions under which the lift is causal, shown as a checklist.",
+            "items": {
+              "type": "object",
+              "required": ["id", "text"],
+              "additionalProperties": false,
+              "properties": {
+                "id": { "type": "string" },
+                "text": { "type": "string" },
+                "holds": { "type": ["boolean", "null"], "description": "null = the user has to judge it." }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
