@@ -1,0 +1,15 @@
+# Local BYOD: `make up` then open http://localhost:8000/docs
+services:
+  api:
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    image: ripple-api
+    ports:
+      - "8000:8000"
+    environment:
+      DEMO_MODE: "1"
+      RIPPLE_CORS_ORIGINS: "http://localhost:3000"
+    # uploaded rows live in the container's temp storage for the session only,
+    # so there is deliberately no volume mount for customer data
+    restart: unless-stopped

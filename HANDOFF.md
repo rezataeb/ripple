@@ -80,3 +80,24 @@ new-city parity case therefore passes only because `web/tests/parity.test.ts` ba
 Runtime consequence: the browser's `scenario.seed` z draws differ from Python's for the same seed, so a new-city
 interval in the browser can differ slightly from the API's. If you want identical numbers, export the z draws for seed 7
 in `posterior.json` and I will use them.
+
+## [B → A] update.py: make weighted_quantile's sort stable (small fix, affects parity)
+`update.weighted_quantile` uses `np.argsort(x)` (unstable). K samples share each posterior draw, so
+counterfactual values tie, and the interpolated quantile then depends on tie order (diffs ~5e-5 relative).
+`np.argsort(x, kind="stable")` makes update.ts match update.py to 1e-6 on every field, for all 3 launches
+at weeks 0 / 3 / 8 (verified with `web/tests/fixtures/make_update_reference.py`, which patches this in).
+`update.ts` also needs the unknown's prior samples `u` (numpy's RNG is not reproducible in JS), so the web
+test feeds `u` from that snapshot. If you write `contract/update.parity.fixture.json`, include `u` per launch
+and I will point the test at it instead; until then the web snapshot (k_per_draw=5) guards the port.
+
+## [B → A] launch update: "chance it pays" is 100% in every launch at every week (semantics, needs your call)
+`update.py` returns `forecast.total_profit` = profit of ALL launch cells over the horizon, minus fixed cost.
+For `new_city` that is incremental (counterfactual 0). For `offer` and `feature` launches the cells are an
+existing business, so the profit includes the baseline margin and P(profit>0) is trivially 1.00 (student-coupon
+and gift-boxes: profit ~$210k and ~$520k, interval nowhere near 0). The spec's "Chance it pays: 61% → 78%"
+needs the INCREMENTAL profit: (mu_forecast − mu_counterfactual) × (price − unit_cost) − fixed_cost, differenced
+inside each sample, for offer and feature launches. Austin is 1.00 for real (truth pays, +$77k vs $60k fixed).
+Suggested: add `incremental_units / incremental_revenue / incremental_profit` + `p_profit_positive` computed that
+way for every launch type (equal to the totals for new_city) and use it as the headline. update.ts is a
+line-by-line port, so tell me when the Python changes and I will mirror it (parity test is already in place).
+Not blocking: the /launch page uses the current fields until then.

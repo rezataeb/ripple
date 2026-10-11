@@ -35,8 +35,13 @@ HOLDOUT_WEEKS = 12
 
 
 def _flat(x: np.ndarray) -> np.ndarray:
-    """(chain, draw, ...) -> (chain*draw, ...)."""
-    return x.reshape(-1, *x.shape[2:])
+    """(chain, draw, ...) -> (chain*draw, ...).
+
+    The first dimension is computed rather than passed as -1: a switched-off term
+    like `g` on an upload with no city traits has shape (chain, draw, 0), and
+    numpy cannot resolve -1 against another zero-length axis.
+    """
+    return x.reshape(x.shape[0] * x.shape[1], *x.shape[2:])
 
 
 def _summ(x: np.ndarray) -> dict[str, float]:
@@ -52,8 +57,16 @@ def convergence(arrays: dict[str, np.ndarray], result: FitResult) -> tuple[list[
     for name, v in arrays.items():
         if v.ndim < 2 or v.shape[0] < 2:
             continue  # ADVI output has a single chain; R-hat is undefined
-        rhats[name] = float(np.max(az.rhat(v, chain_axis=0, draw_axis=1)))
-        esss[name] = float(np.min(az.ess(v, chain_axis=0, draw_axis=1)))
+        if v.size == 0:
+            continue  # a switched-off term, e.g. `g` on an upload with no city traits
+        if np.all(v == v.flat[0]):
+            continue  # a zero-filled term is a constant: R-hat is NaN, not a failure
+        rhat = float(np.max(az.rhat(v, chain_axis=0, draw_axis=1)))
+        ess_v = float(np.min(az.ess(v, chain_axis=0, draw_axis=1)))
+        if not (np.isfinite(rhat) and np.isfinite(ess_v)):
+            continue
+        rhats[name] = rhat
+        esss[name] = ess_v
 
     if not rhats:
         checks = [

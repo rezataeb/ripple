@@ -231,7 +231,30 @@ disabled, and the UI says why. Validation warns about the things that silently r
 fit — above all **"price never changes → elasticity cannot be learned"**.
 
 **Privacy:** no customer rows go to the LLM by default. The mapping assistant gets column
-names only, unless you tick "share sample rows".
+names only, unless you tick "share sample rows". Uploaded rows live in the API's temp
+storage for the session, and `DELETE /datasets/{id}` removes them from disk — a test
+asserts the file is actually gone, not just unindexed.
+
+### The API
+
+```
+GET    /health                    status, and whether the model can be imported
+POST   /datasets                  upload CSV(s) -> dataset_id + preview + detected mapping
+POST   /datasets/{id}/validate    a column mapping -> validation report
+POST   /datasets/{id}/fit         start a background fit -> job_id
+GET    /jobs/{id}                 status, step, progress, then posterior + trust
+DELETE /datasets/{id}             the delete button
+```
+
+```bash
+make up            # docker compose, then http://localhost:8000/docs
+make api           # or run it locally with reload
+```
+
+It imports `ripple_model` directly, so a customer's fit, checks and export are the **same
+code** that produced the demo — there is no second implementation to drift. On an upload
+there is no planted truth and no holdout refit inside the 90-second budget, so those two
+cards are marked **skipped** rather than quietly passing.
 
 ---
 

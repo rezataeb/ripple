@@ -25,7 +25,8 @@ SEED = 20261011
 
 
 def _flat(x: np.ndarray) -> np.ndarray:
-    return x.reshape(-1, *x.shape[2:])
+    """(chain, draw, ...) -> (chain*draw, ...). See the note in export.py about -1."""
+    return x.reshape(x.shape[0] * x.shape[1], *x.shape[2:])
 
 
 def thin(arrays: dict[str, np.ndarray], n: int = EXPORT_DRAWS) -> dict[str, np.ndarray]:
