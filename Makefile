@@ -1,4 +1,5 @@
-.PHONY: help install test lint fmt data fit export calibrate pipeline api up down clean
+.PHONY: help install test lint fmt data fit export calibrate pipeline api up down clean \
+        demo-install voice record screenshots video demo probe
 
 help:
 	@grep -E '^[a-z-]+:.*?##' $(MAKEFILE_LIST) | sed 's/:.*##/\t/' | expand -t22
@@ -51,5 +52,33 @@ up:                 ## run the API in Docker
 down:
 	docker compose down
 
+# --- demo video (spec Section 14) -----------------------------------------
+# Record against a PRODUCTION build: in `next dev` the home page hangs on its
+# loading skeleton and never fetches the posterior.
+#   cd web && npx next build && npx next start -p 3100
+# then: make demo BASE=http://127.0.0.1:3100
+BASE ?= http://127.0.0.1:3000
+
+demo-install:       ## install playwright for the demo scripts (scoped, not web/)
+	cd scripts/demo && npm install
+
+probe:              ## print the selectors the live UI exposes (run after a UI change)
+	node scripts/demo/probe.ts $(BASE)
+
+voice:              ## macOS `say` -> per-line audio + timings.json (no API key)
+	VOICE=$${VOICE:-Samantha} ./scripts/demo/make_voice.sh
+
+record:             ## Playwright 1440x900 screen recording, scene timings from the voice
+	node scripts/demo/record.ts $(BASE)
+
+screenshots:        ## the 4 README screenshots -> assets/screenshots/
+	node scripts/demo/screenshots.ts $(BASE)
+
+video:              ## ffmpeg: title card + recording + voice -> assets/demo.mp4 + .gif
+	./scripts/demo/make_video.sh
+
+demo: voice record video   ## the whole video pipeline
+
 clean:
 	rm -rf .pytest_cache .ruff_cache model/data/*.npz
+	rm -rf scripts/demo/recording scripts/demo/voice scripts/demo/voice.wav

@@ -83,7 +83,19 @@ export function totalSeconds(scenes: Scene[]): number {
   return scenes.reduce((a, s) => a + s.seconds, 0);
 }
 
-if (process.argv[2] === "--spoken") {
+if (process.argv[2] === "--start") {
+  // print the start time of the first scene whose cue matches, for the GIF window
+  const needle = (process.argv[3] ?? "").toLowerCase();
+  const scenes = scenesWithTimings();
+  let t = 0;
+  for (const s of scenes) {
+    if (s.cue.toLowerCase().includes(needle)) break;
+    t += s.seconds;
+  }
+  process.stdout.write(t.toFixed(2) + "\n");
+} else if (process.argv[2] === "--total") {
+  process.stdout.write(totalSeconds(scenesWithTimings()).toFixed(2) + "\n");
+} else if (process.argv[2] === "--spoken") {
   // used by `make voice` to feed `say` only the words, never the cues or comments
   process.stdout.write(spokenText(parseNarration()) + "\n");
 } else if (process.argv[2] === "--plan") {

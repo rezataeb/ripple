@@ -44,6 +44,14 @@ Three layers, and the division of labour is the whole design:
 
 ## The screens
 
+<p align="center">
+  <img src="assets/screenshots/simulator.png" alt="Ripple simulator: a 20% student coupon in Boston, with the verdict, the 90% interval, the fan chart and the post-promo dip" width="100%">
+</p>
+<p align="center">
+  <img src="assets/screenshots/launch.png" alt="Launch tracker: the Austin launch at week 5 of 8, chance it pays 25% to 97%, with the PSIS gate badge and the causal checklist" width="49%">
+  <img src="assets/screenshots/ask.png" alt="Ask Ripple answering 'Is Miami a good next city?' with claim chips, the extrapolation warning and cited market sources" width="49%">
+</p>
+
 | Screen | What it does | The thing to look at |
 |---|---|---|
 | **`/` Simulator** | Promotion, price, or new-city controls on the left; verdict line, fan chart and segment bars on the right. | Drag the discount. The bands morph and the verdict recomputes in the browser — the whole posterior is already there, so there is no round trip. The **dip** after the promo weeks is visible in the chart. |

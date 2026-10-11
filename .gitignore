@@ -27,5 +27,15 @@ dist/
 build/
 *.egg-info/
 
-# derived fit artifacts (regenerate with model/scripts/run_fits.py)
+# derived fit artifacts (regenerate with model/scripts/run_fits.py).
+# ** matters: a single * misses model/data/keep/, and these are 18 MB each.
+model/data/**/*.npz
 model/data/*.npz
+
+# demo video build artifacts (regenerate with `make demo`)
+scripts/demo/recording/
+scripts/demo/voice/
+scripts/demo/voice.aiff
+scripts/demo/voice.wav
+scripts/demo/narration.spoken.txt
+scripts/demo/node_modules/
