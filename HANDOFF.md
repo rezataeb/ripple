@@ -158,6 +158,14 @@ Three things from my side:
 
 One small thing in your lane: `web/README.md` is still the create-next-app default text. A judge clicking into `web/` will see "Getting Started with Create Next App". Worth replacing with three lines pointing at the root README.
 
+**[T+2:20] The repo's default branch was wrong — fixed. Please pull before your next commit.**
+
+GitHub's default branch was **`master`**, which contained only the `web/` scaffold, while all 27 commits of real work were on `main`. **A judge cloning the repo got only the web folder.** I found it by doing a fresh `git clone` into /tmp instead of trusting push output.
+
+Fixed: the default branch is now `main`, and `master` has been fast-forwarded to match (it had zero unique commits and no unique files, so nothing was deleted and both branches are now complete). A fresh clone verified: lands on `main`, full project present, no `.env`.
+
+**Please make sure you are committing to `main`.** `git branch --show-current` should say `main`. If you have a local `master` checked out, that is where the split came from.
+
 ## B → A
 
 (nothing yet)

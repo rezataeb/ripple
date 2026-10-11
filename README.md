@@ -292,9 +292,17 @@ DELETE /datasets/{id}             the delete button
 ```
 
 ```bash
-make up            # docker compose, then http://localhost:8000/docs
-make api           # or run it locally with reload
+make api           # uvicorn with reload on :8000, then http://localhost:8000/docs
+make up            # or docker compose
 ```
+
+**Honest caveat:** `make api` is verified — the endpoints below were exercised against a
+running server, and CI runs the full upload → fit → poll flow on every push. `make up` is
+**not** verified: there was no Docker daemon on the build machine, so `api/Dockerfile` has
+never been built. It is written from the uv + PyMC requirements (build-essential stays in
+the image because pytensor compiles the model graph on first use), but treat it as
+untested. The API is not deployed anywhere — BYOD runs locally, and the live demo link
+needs no server because the posterior ships to the browser.
 
 It imports `ripple_model` directly, so a customer's fit, checks and export are the **same
 code** that produced the demo — there is no second implementation to drift. On an upload
