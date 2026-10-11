@@ -36,6 +36,32 @@ Three traps the fixture is built to catch:
 
 Headline numbers you should reproduce on the fixture: promo +$9,196 profit 90% [$4,626, $13,444] P(pays) 100%; price +$310 90% [−$2,464, +$3,652] P(pays) 50%; Miami +$2,353 90% [−$21,610, +$26,009] P(pays) 54% with `extrapolation: true`.
 
+**[T+2:30] The real model is exported. All four files are live in `web/public/model/`:**
+
+| file | what |
+|---|---|
+| `posterior.json` | 389 KB, 1000 draws, 6 cities x 4 segments x 104 weeks, 3 candidates |
+| `trust.json` | 11 KB, **6 of 6 checks pass** |
+| `launches.json` | 26 KB, the 3 launches |
+| `calibration.json` | 9 KB, 3 arms x 8 weeks — the `/method` coverage chart |
+
+Switch the simulator from the fixture to `/model/posterior.json`. The shapes are identical, so it should be a one-line change; keep the fixture as the fallback so nothing breaks offline.
+
+**Numbers you can quote in the UI and the README** (all from `trust.json`):
+- R-hat 1.0100, min ESS 612, **0 divergences**, posterior predictive coverage 91%.
+- **Parameter recovery 30/30** planted values inside the 94% HDI.
+- Time holdout: 92% coverage, MAPE **18.4% vs. 44.7%** for a same-week-last-year guess.
+- Method string: `nutpie NUTS, 4 chains x 1000 draws, target_accept 0.99`.
+
+**`calibration.json` for the `/method` chart.** Three arms, `by_week` has 8 entries each. Plot `coverage_total` against week with a reference line at `target_coverage` (0.9), and use `coverage_total_mcse` for the error bars — the chart should show its own uncertainty. The arm with `assumptions_hold: false` is the **stress arm**: draw it dashed and print its `broken_assumption` next to it. Headline numbers:
+- New city: 90% -> 94% coverage, interval narrows 56% over 8 weeks.
+- New feature: 88-92% coverage.
+- **Stress arm (a launch that ramps up): coverage falls to 6%.** This is deliberate and it is the most honest thing on the page — please do not hide it.
+
+`trust.json` also carries `model_facts` (elasticity and promo lift per segment with intervals, the dip, the feature lift) pre-summarized, so the agent's `model_facts()` tool returns them directly and never computes a number.
+
+`docs/method/{model-card,checks,limits}.md` are written — they are the RAG source for `explain_method` and the source for the README's model section.
+
 ## B → A
 
 (nothing yet)
@@ -43,3 +69,14 @@ Headline numbers you should reproduce on the fixture: promo +$9,196 profit 90% [
 ## Blocked / errors
 
 (nothing yet)
+
+## [B → A] parity fixture: new-city z draws (not blocking)
+`simulate.py` draws z with `numpy.random.default_rng(seed).standard_normal`, which the browser cannot reproduce. The
+new-city parity case therefore passes only because `web/tests/parity.test.ts` backs z out of `mu.scenario_flat`
+(week 0, first cell) and then compares every other field. Request: add `"z": [...]` (the 50 draws used) to the
+`new-city-miami` case in `contract/parity.fixture.json`. The test already uses `case.z` when present. All 3 cases
+(promo, price, new city) otherwise match at 1e-6: cell-level mu and every result field.
+
+Runtime consequence: the browser's `scenario.seed` z draws differ from Python's for the same seed, so a new-city
+interval in the browser can differ slightly from the API's. If you want identical numbers, export the z draws for seed 7
+in `posterior.json` and I will use them.
