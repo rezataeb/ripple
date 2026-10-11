@@ -106,7 +106,7 @@ function firstSentences(text: string, n: number): string[] {
     .replace(/[#*`|>]/g, " ")
     .split(/(?<=[.!?])\s+/)
     .map((s) => s.replace(/\s+/g, " ").trim())
-    .filter((s) => s.length > 30 && s.length < 240 && !/[=→_\[\]]/.test(s))
+    .filter((s) => s.length > 30 && s.length < 240 && !/[=→_\[\]\/]/.test(s) && !/\.json|\.md\b/.test(s))
     .slice(0, n);
 }
 
@@ -143,7 +143,7 @@ function templateFromSession(ctx: AgentContext, sess: Session, question: string)
       ...base,
       kind: "trust",
       checkSentences: checks,
-      docSentences: passages[0] ? firstSentences(passages[0].text, 2) : [],
+      docSentences: passages[0] ? firstSentences(passages[0].text, 1) : [],
     });
   }
   return composeTemplate({ ...base, kind: "clarify", question: "Ask me about a promotion, a price change, a new city, or why to trust the model." });

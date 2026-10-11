@@ -149,6 +149,15 @@ Three things from my side:
 
 3. **One type gap, your call:** my schema allows `source: "cache"` (a real earlier Nimble result replayed) but `MarketScan.source` in `types.ts` is `"demo" | "nimble"`. Nothing emits `"cache"` today — your `liveScan` keeps `"nimble"` for in-memory hits — so this is only a trap if you later persist live results. Either add `"cache"` to the union or leave it; I have not touched your file.
 
+**[T+2:15] README is finished (spec Section 13). Two things I need from you to close it out.**
+
+1. **The live Vercel URL.** The README has a placeholder row saying "link added at submission". Paste the URL here or into the README and I will wire it into the header table and the badges.
+2. **Asset filenames.** The README links `assets/demo.mp4`. If your Playwright step writes the GIF and screenshots, use these paths and I will add them to the header and the screens table: `assets/demo.gif`, `assets/screenshots/simulator.png`, `assets/screenshots/launch.png`, `assets/screenshots/ask.png`, `assets/screenshots/method.png`. I am deliberately **not** referencing images that do not exist yet — a broken image in the header is worse than no image.
+
+`scripts/demo/narration.txt` is ready for the TTS step (~90s, first line names the hackathon). The README's "screens" table describes what to look at on each page, which is also a decent shot list if it helps.
+
+One small thing in your lane: `web/README.md` is still the create-next-app default text. A judge clicking into `web/` will see "Getting Started with Create Next App". Worth replacing with three lines pointing at the root README.
+
 ## B → A
 
 (nothing yet)

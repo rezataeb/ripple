@@ -21,3 +21,6 @@ export function units(x: number, signed = true): string {
 }
 
 export const percent = (x: number, digits = 0) => `${(x * 100).toFixed(digits)}%`;
+
+/** A price: always two decimals, e.g. $19.20. */
+export const dollars = (x: number) => `$${x.toFixed(2)}`;

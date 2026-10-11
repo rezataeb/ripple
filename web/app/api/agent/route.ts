@@ -3,7 +3,6 @@ import { loadContext } from "@/lib/agent/context";
 import { runAgent } from "@/lib/agent/run";
 import type { Posterior } from "@/lib/types";
 
-export const runtime = "nodejs";
 export const maxDuration = 60;
 
 /**

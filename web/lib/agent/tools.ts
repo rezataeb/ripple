@@ -1,7 +1,7 @@
 // Agent tools. Every number the agent may say is returned here as a claim: the model makes the
 // numbers (simulate.ts / update.ts / trust.json), the web is labelled web, the docs are labelled docs.
 import { z } from "zod";
-import { money, percent, units } from "@/lib/format";
+import { dollars, money, percent, units } from "@/lib/format";
 import { simulate } from "@/lib/simulate";
 import { updateWithLaunch } from "@/lib/update";
 import { signedPercent } from "@/lib/launch";
@@ -105,7 +105,7 @@ export function runScenario(ctx: AgentContext, sc: Scenario): ToolOutput {
   }
   if (sc.type === "price") claims.push(claim("Price change", signedPercent(sc.price_change ?? 0)));
   if (sc.fixed_cost) claims.push(claim("Fixed cost", money(sc.fixed_cost, false)));
-  if (r.meta.net_price !== undefined) claims.push(claim("Price charged", money(r.meta.net_price, false)));
+  if (r.meta.net_price !== undefined) claims.push(claim("Price charged", dollars(r.meta.net_price)));
   for (const s of r.segments ?? []) {
     if (s.incremental.units.mean === 0 && s.incremental.profit.mean === 0) continue;
     claims.push(
@@ -127,7 +127,7 @@ export function runScenario(ctx: AgentContext, sc: Scenario): ToolOutput {
       })),
       extrapolation: r.flags.extrapolation,
       warnings: r.flags.warnings ?? [],
-      net_price: r.meta.net_price !== undefined ? money(r.meta.net_price, false) : null,
+      net_price: r.meta.net_price !== undefined ? dollars(r.meta.net_price) : null,
     },
     claims,
     scenario: sc,
@@ -234,8 +234,8 @@ function compare(scan: MarketScan, yourPrice: number): MarketScan {
       median_competitor_price: median,
       sentence:
         above === prices.length
-          ? `Your price ${money(yourPrice, false)} is above all ${prices.length} competitors${where}.`
-          : `Your price ${money(yourPrice, false)} is ${rel} ${prices.length} competitors${where}.`,
+          ? `Your price ${dollars(yourPrice)} is above all ${prices.length} competitors${where}.`
+          : `Your price ${dollars(yourPrice)} is ${rel} ${prices.length} competitors${where}.`,
     },
   };
 }
@@ -269,12 +269,12 @@ export async function marketScan(
   const withCmp = args.your_price ? compare(scan, args.your_price) : { ...scan, comparison: null };
   const claims: C[] = [];
   for (const c of withCmp.competitors) {
-    if (c.price !== null) claims.push(claim(`${c.competitor} price`, money(c.price, false), "web"));
+    if (c.price !== null) claims.push(claim(`${c.competitor} price`, dollars(c.price), "web"));
   }
   if (withCmp.comparison) {
     claims.push(
-      claim("Your price", money(withCmp.comparison.your_price, false), "web"),
-      claim("Competitors below your price", `${withCmp.comparison.above_count} of ${withCmp.comparison.total}`, "web"),
+      claim("Your price", dollars(withCmp.comparison.your_price), "web"),
+      claim("Competitors priced below you", `${withCmp.comparison.above_count} of ${withCmp.comparison.total}`, "web"),
     );
   }
   return {

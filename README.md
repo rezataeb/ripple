@@ -3,11 +3,19 @@
 **"What happens to sales if…?"** — a Bayesian what-if simulator, a launch tracker that
 learns from real data, and a market-aware AI agent.
 
-<!-- TODO(Reza): assets/demo.gif, live Vercel link, assets/demo.mp4 -->
+[![ci](https://github.com/rezataeb/ripple/actions/workflows/ci.yml/badge.svg)](https://github.com/rezataeb/ripple/actions/workflows/ci.yml)
+[![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+![python 3.12](https://img.shields.io/badge/python-3.12-blue)
+![PyMC 6](https://img.shields.io/badge/PyMC-6.3-informational)
+![Next.js 16](https://img.shields.io/badge/Next.js-16-black)
+
+| | |
+|---|---|
+| **Live demo** | _link added at submission — runs in demo mode with no API key_ |
+| **Video** (< 2 min) | [`assets/demo.mp4`](assets/demo.mp4) |
+| **Method write-up** | [`docs/method/`](docs/method/) — [model card](docs/method/model-card.md) · [checks](docs/method/checks.md) · [limits](docs/method/limits.md) |
 
 > Built in 3 hours at the **AI Engineer Hackathon NYC**, 2026-10-11.
-
----
 
 ## The problem
 
@@ -33,6 +41,16 @@ Three layers, and the division of labour is the whole design:
 | **Reality** | After a launch, each new week of real data updates the forecast with Bayes' rule. The interval narrows. A calibration study proves the intervals are honest. |
 
 ---
+
+## The screens
+
+| Screen | What it does | The thing to look at |
+|---|---|---|
+| **`/` Simulator** | Promotion, price, or new-city controls on the left; verdict line, fan chart and segment bars on the right. | Drag the discount. The bands morph and the verdict recomputes in the browser — the whole posterior is already there, so there is no round trip. The **dip** after the promo weeks is visible in the chart. |
+| **Ask Ripple** (⌘K) | A Gemini tool-calling agent: builds the scenario, runs the model, scans the market, explains the result. | Every number is a **claim chip** you can hover to see which tool returned it. Market sources are listed and labelled as web data. |
+| **`/launch` Launch tracker** | Pick a launch, then drag "real data so far: week 0 … 8". | The band narrows *and moves*, the prior-vs-posterior density of the unknown animates, and "chance it pays" updates. On Austin it goes **25% → 100%**. |
+| **`/data` Your data** | Drop a CSV → mapping table → validation checklist → fit progress → trust cards. | The validation warnings are the useful part, especially *"price never changes — elasticity cannot be learned"*. |
+| **`/method` How it works** | The equation, the why-each-part table, the trust cards, the recovery chart and the calibration chart. | The **stress arm** on the calibration chart, where coverage falls to 6%. It is published next to the arms that pass. |
 
 ## The model
 
@@ -357,6 +375,25 @@ carried over from earlier projects.
 - **Google Gemini** — the "Ask Ripple" agent (function calling), the CSV mapping
   assistant, and embeddings for the method RAG.
 - **Nimble** — live web search for competitor prices and current offers.
+
+## Roadmap
+
+In rough order of how much they would improve the answers:
+
+1. **Re-learn the other parameters from launch weeks.** Today the fast update learns one
+   unknown and the PSIS gate says when that is not enough. The refit path exists; wiring
+   it to run automatically when the gate trips would close the loop.
+2. **A ramp-up term.** The calibration study shows this is the model's worst failure mode
+   (coverage 6%), and it is a known, fixable shape — a saturating curve over the first
+   weeks of a launch.
+3. **Competitor price as a covariate**, for companies that actually have the history. It
+   would move the market scan from context to evidence, which needs care: scraped prices
+   are noisy and a bad covariate is worse than none.
+4. **Hierarchical priors across uploaded datasets**, so a company with 20 weeks of data
+   borrows strength from the shape of demand in general rather than from its own thin
+   history.
+5. **Holdout-aware power analysis** — "how many weeks until you can tell?" before the
+   launch rather than after.
 
 ## License
 

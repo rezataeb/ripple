@@ -15,6 +15,18 @@ import { loadPosterior } from "@/lib/posterior";
 import { simulate } from "@/lib/simulate";
 import type { Posterior, Scenario, ScenarioResult } from "@/lib/types";
 
+/** A scenario handed over by the Ask panel before navigating here ("Open this scenario"). */
+function takeHandedOverScenario(): Scenario | null {
+  try {
+    const raw = sessionStorage.getItem(SCENARIO_KEY);
+    if (!raw) return null;
+    sessionStorage.removeItem(SCENARIO_KEY);
+    return JSON.parse(raw) as Scenario;
+  } catch {
+    return null; // storage blocked: fall back to the default preset
+  }
+}
+
 export default function Simulator() {
   const [posterior, setPosterior] = useState<Posterior | null>(null);
   const [source, setSource] = useState("");
@@ -27,19 +39,6 @@ export default function Simulator() {
     window.addEventListener(SCENARIO_EVENT, onEvent);
     return () => window.removeEventListener(SCENARIO_EVENT, onEvent);
   }, []);
-  useEffect(() => {
-    if (!posterior) return;
-    try {
-      const raw = sessionStorage.getItem(SCENARIO_KEY);
-      if (raw) {
-        sessionStorage.removeItem(SCENARIO_KEY);
-        setScenario(JSON.parse(raw) as Scenario);
-      }
-    } catch {
-      /* storage blocked: keep the default preset */
-    }
-  }, [posterior]);
-
   // Deferred so slider thumbs stay responsive while 1000 draws are re-simulated.
   const deferred = useDeferredValue(scenario);
   const result: ScenarioResult | null = useMemo(
@@ -52,7 +51,7 @@ export default function Simulator() {
       .then(({ posterior, source }) => {
         setPosterior(posterior);
         setSource(source);
-        setScenario(presetsFor(posterior)[0]?.scenario ?? { type: "price", price_change: 0.08, horizon: 26 });
+        setScenario(takeHandedOverScenario() ?? presetsFor(posterior)[0]?.scenario ?? { type: "price", price_change: 0.08, horizon: 26 });
       })
       .catch((e: Error) => setError(e.message));
   }, []);
