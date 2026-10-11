@@ -23,7 +23,8 @@ export interface TemplateInput {
   segmentLines?: { segment: string }[];
 }
 
-function verdict(p: number): string {
+function verdict(p: number, cautious = false): string {
+  if (cautious && p >= 0.5) return "Possibly, with caution";
   if (p >= 0.8) return "Likely yes";
   if (p >= 0.5) return "Possibly";
   return "Probably not";
@@ -60,18 +61,19 @@ export function composeTemplate(i: TemplateInput): string {
   const pays = get(c, "Chance the change pays");
   const horizon = get(c, "Horizon");
   const p = i.pPays ?? 0;
+  const v = verdict(p, !!i.extrapolation);
   const lines: string[] = [];
   if (i.scenarioType === "promo") {
     lines.push(
-      `${verdict(p)}. A ${get(c, "Discount")} discount for ${get(c, "Promo length")} adds ${profit} of profit over ${horizon} (90% interval ${iv}), with a ${pays} chance it pays.`,
+      `${v}. A ${get(c, "Discount")} discount for ${get(c, "Promo length")} adds ${profit} of profit over ${horizon} (90% interval ${iv}), with a ${pays} chance it pays.`,
     );
   } else if (i.scenarioType === "price") {
     lines.push(
-      `${verdict(p)}. A price change of ${get(c, "Price change")} changes profit by ${profit} over ${horizon} (90% interval ${iv}), with a ${pays} chance it pays.`,
+      `${v}. A price change of ${get(c, "Price change")} changes profit by ${profit} over ${horizon} (90% interval ${iv}), with a ${pays} chance it pays.`,
     );
   } else {
     lines.push(
-      `${verdict(p)}. Launching in ${i.cityLabel} adds ${profit} of profit over ${horizon} (90% interval ${iv}), with a ${pays} chance it pays.`,
+      `${v}. Launching in ${i.cityLabel} adds ${profit} of profit over ${horizon} (90% interval ${iv}), with a ${pays} chance it pays.`,
     );
   }
   lines.push(`Incremental units: ${get(c, "Incremental units")} (90%: ${get(c, "Incremental units, 90% interval")}).`);

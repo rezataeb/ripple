@@ -40,7 +40,9 @@ export function FanChart({
   posterior: Posterior;
   result: ScenarioResult | null;
 }) {
-  const hist = historyPoints(posterior);
+  const newCity = result?.scenario.type === "new_city";
+  // a new city is reported on its own, so the existing business is not drawn next to it
+  const hist = newCity ? [] : historyPoints(posterior);
   const future: Point[] = (result?.weekly ?? []).map((w) => ({
     label: `+${w.week + 1}`,
     base: w.baseline_units.p50,
@@ -56,7 +58,9 @@ export function FanChart({
   return (
     <div className="rounded-xl border p-4">
       <div className="mb-2 flex items-baseline justify-between">
-        <h2 className="text-base font-medium">Weekly units, all cities and groups</h2>
+        <h2 className="text-base font-medium">
+          {newCity ? `Weekly units in ${result?.scenario.candidate ?? "the new city"}` : "Weekly units, all cities and groups"}
+        </h2>
         <p className="text-xs text-muted-foreground">
           {result ? "Grey: no change · Indigo: with change · bands are 90%" : "Observed history"}
         </p>
