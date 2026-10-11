@@ -4,6 +4,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import type { AgentAnswer, MarketScan, Step } from "@/lib/agent/types";
 import type { Scenario } from "@/lib/types";
+import { activeUserDataset } from "@/lib/posterior";
 import { AskPanel } from "./ask-panel";
 
 export interface Message {
@@ -35,6 +36,11 @@ export const useAsk = () => {
 
 export const SCENARIO_KEY = "ripple.scenario";
 export const SCENARIO_EVENT = "ripple:scenario";
+
+function pickUser(): { posterior?: unknown; trust?: unknown } {
+  const mine = activeUserDataset();
+  return mine ? { posterior: mine.posterior, trust: mine.trust } : {};
+}
 
 export function AskProvider({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
@@ -81,7 +87,8 @@ export function AskProvider({ children }: { children: React.ReactNode }) {
       const res = await fetch("/api/agent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question }),
+        // On your own data the agent runs against your fitted model, not the demo one.
+        body: JSON.stringify({ question, ...pickUser() }),
       });
       if (!res.ok || !res.body) throw new Error(`The agent is unavailable (HTTP ${res.status}).`);
       const reader = res.body.getReader();

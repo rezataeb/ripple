@@ -23,6 +23,7 @@ export interface LoadOptions {
   origin?: string;
   /** BYOD: use the user's fitted posterior instead of the demo one. */
   posterior?: Posterior;
+  trust?: TrustFile;
 }
 
 export async function loadContext(opts: LoadOptions = {}): Promise<AgentContext> {
@@ -44,6 +45,10 @@ export async function loadContext(opts: LoadOptions = {}): Promise<AgentContext>
   return {
     ...cached,
     posterior: opts.posterior ?? cached.posterior,
+    trust: opts.posterior ? (opts.trust ?? null) : cached.trust,
+    // the demo's launches and cached scans describe the demo company, not an upload
+    launches: opts.posterior ? [] : cached.launches,
+    scans: opts.posterior ? {} : cached.scans,
     live: {
       gemini: !demo && !!process.env.GEMINI_API_KEY,
       nimble: !demo && !!process.env.NIMBLE_API_KEY,

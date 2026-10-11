@@ -5,11 +5,10 @@ import katex from "katex";
 import { useEffect, useMemo, useState } from "react";
 import { CalibrationChart } from "@/components/method/calibration-chart";
 import { RecoveryChart } from "@/components/method/recovery-chart";
+import { TrustCards } from "@/components/method/trust-cards";
 import { Topbar } from "@/components/topbar";
-import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { loadMethodData, type CalibrationFile, type TrustReport } from "@/lib/method";
-import { cn } from "@/lib/utils";
 
 const EQUATIONS = [
   String.raw`y_{c,s,t} \sim \mathrm{NegBin}(\mu_{c,s,t},\, \phi)`,
@@ -20,7 +19,7 @@ const EQUATIONS = [
 
 const WHY: [string, string, string][] = [
   ["Negative Binomial", "Weekly unit counts are overdispersed: the variance is much larger than the mean.", "A Poisson model calls normal week-to-week variation a surprise, and every interval is far too narrow."],
-  ["Log-log price term", "e_s is the elasticity: a 1% price rise changes demand by e_s %.", "A linear price term means nothing at a different price level and can predict negative demand."],
+  ["Log-log price term", "The coefficient on log price is the elasticity: a 1% price rise changes demand by that many percent.", "A linear price term means nothing at a different price level and can predict negative demand."],
   ["Elasticity per segment, partially pooled", "Students and retirees do not respond to price alike. Pooling lets a thin segment borrow strength.", "Pooled: every offer looks the same for everyone. Unpooled: a small segment is driven by noise."],
   ["Promo deal-signal lift", "Being on promotion lifts demand beyond the price cut itself.", "The price term alone understates a promotion, then overstates the discount needed next time."],
   ["Post-promo dip", "A promotion pulls purchases forward from the following week.", "Promotions look better than they are, because borrowed sales are never paid back."],
@@ -45,11 +44,6 @@ function Section({ id, title, lead, children }: { id: string; title: string; lea
     </section>
   );
 }
-
-const fmtThreshold = (c: TrustReport["checks"][number]) => {
-  const op = c.comparison === "lte" ? "≤" : c.comparison === "gte" ? "≥" : "";
-  return `${op} ${c.threshold}`.trim();
-};
 
 export default function MethodPage() {
   const [data, setData] = useState<{ trust: TrustReport; calibration: CalibrationFile | null } | null>(null);
@@ -110,22 +104,7 @@ export default function MethodPage() {
           {!trust ? (
             <Skeleton className="h-32 w-full" />
           ) : (
-            <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {trust.checks.map((c) => (
-                <li key={c.name} className="space-y-2 rounded-xl border p-4">
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-sm font-medium">{c.name}</span>
-                    <Badge variant="outline" className={cn(c.passed ? "text-gain" : c.skipped_reason ? "text-muted-foreground" : "text-loss")}>
-                      {c.passed ? "passed" : c.skipped_reason ? "skipped" : "failed"}
-                    </Badge>
-                  </div>
-                  <p className="num text-2xl font-semibold">{c.value === null ? "n/a" : Number(c.value.toFixed(4))}</p>
-                  <p className="num text-xs text-muted-foreground">bar: {fmtThreshold(c)}</p>
-                  <p className="text-sm">{c.plain_english}</p>
-                  {c.detail && <p className="text-xs text-muted-foreground">{c.detail}</p>}
-                </li>
-              ))}
-            </ul>
+            <TrustCards checks={trust.checks} />
           )}
         </Section>
 

@@ -1,6 +1,7 @@
 import type { NextRequest } from "next/server";
 import { loadContext } from "@/lib/agent/context";
 import { runAgent } from "@/lib/agent/run";
+import type { TrustFile } from "@/lib/agent/types";
 import type { Posterior } from "@/lib/types";
 
 export const maxDuration = 60;
@@ -11,7 +12,7 @@ export const maxDuration = 60;
  * No key: rule-based planner + template answers + cached market scan (demo mode).
  */
 export async function POST(req: NextRequest) {
-  let body: { question?: unknown; posterior?: Posterior };
+  let body: { question?: unknown; posterior?: Posterior; trust?: TrustFile };
   try {
     body = await req.json();
   } catch {
@@ -25,7 +26,7 @@ export async function POST(req: NextRequest) {
     async start(controller) {
       const send = (o: unknown) => controller.enqueue(enc.encode(JSON.stringify(o) + "\n"));
       try {
-        const ctx = await loadContext({ origin: req.nextUrl.origin, posterior: body.posterior });
+        const ctx = await loadContext({ origin: req.nextUrl.origin, posterior: body.posterior, trust: body.trust });
         send({ type: "mode", live: ctx.live });
         const answer = await runAgent(ctx, question, (step) => send({ type: "step", step }));
         send({ type: "answer", answer });

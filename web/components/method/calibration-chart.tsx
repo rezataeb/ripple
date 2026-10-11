@@ -40,7 +40,7 @@ export function CalibrationChart({ arms, target }: { arms: CalibrationArm[]; tar
             <Line
               key={a.id}
               dataKey={a.id}
-              name={a.assumptions_hold ? a.label : `${a.label} (assumption broken)`}
+              name={a.label}
               stroke={COLORS[i % COLORS.length]}
               strokeWidth={2}
               strokeDasharray={a.assumptions_hold ? undefined : "5 4"}
