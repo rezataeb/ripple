@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { AskButton } from "@/components/ask/ask-button";
 
 export function Topbar({ datasetName, demo }: { datasetName: string; demo: boolean }) {
   return (
@@ -26,9 +26,7 @@ export function Topbar({ datasetName, demo }: { datasetName: string; demo: boole
           <Link className="rounded-lg px-3 py-1.5 text-muted-foreground hover:text-foreground" href="/data">
             Use your data
           </Link>
-          <Button variant="outline" size="sm" aria-label="Ask Ripple (command K)">
-            <span className="num text-xs">⌘K</span> Ask
-          </Button>
+          <AskButton />
         </nav>
       </div>
     </header>

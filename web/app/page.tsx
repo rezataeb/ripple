@@ -8,6 +8,8 @@ import { FanChart } from "@/components/fan-chart";
 import { IncrementalChart } from "@/components/incremental-chart";
 import { SegmentBars } from "@/components/segment-bars";
 import { Warnings } from "@/components/extrapolation-banner";
+import { SCENARIO_EVENT, SCENARIO_KEY } from "@/components/ask/ask-provider";
+import { MarketCard } from "@/components/ask/market-card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { loadPosterior } from "@/lib/posterior";
 import { simulate } from "@/lib/simulate";
@@ -18,6 +20,26 @@ export default function Simulator() {
   const [source, setSource] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [scenario, setScenario] = useState<Scenario | null>(null);
+  // "Open this scenario" from the Ask panel arrives as an event, or through sessionStorage after a navigation.
+  useEffect(() => {
+    const take = (s: Scenario) => setScenario(s);
+    const onEvent = (e: Event) => take((e as CustomEvent<Scenario>).detail);
+    window.addEventListener(SCENARIO_EVENT, onEvent);
+    return () => window.removeEventListener(SCENARIO_EVENT, onEvent);
+  }, []);
+  useEffect(() => {
+    if (!posterior) return;
+    try {
+      const raw = sessionStorage.getItem(SCENARIO_KEY);
+      if (raw) {
+        sessionStorage.removeItem(SCENARIO_KEY);
+        setScenario(JSON.parse(raw) as Scenario);
+      }
+    } catch {
+      /* storage blocked: keep the default preset */
+    }
+  }, [posterior]);
+
   // Deferred so slider thumbs stay responsive while 1000 draws are re-simulated.
   const deferred = useDeferredValue(scenario);
   const result: ScenarioResult | null = useMemo(
@@ -63,6 +85,7 @@ export default function Simulator() {
               <FanChart posterior={posterior} result={result} />
               <IncrementalChart result={result} />
               <SegmentBars result={result} />
+              <MarketCard />
               <p className="text-xs text-muted-foreground">
                 {posterior.meta.method} · {posterior.meta.n_draws} draws · seed {posterior.meta.seed}
               </p>

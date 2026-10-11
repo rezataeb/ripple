@@ -117,6 +117,65 @@
    }
   ]
  },
+ "coffee subscription portland": {
+  "query": "coffee subscription price Portland",
+  "product": "coffee subscription",
+  "city": "Portland",
+  "source": "demo",
+  "fetched_at": "2026-10-11T09:00:00Z",
+  "competitors": [
+   {
+    "competitor": "Stumptown Subscription Co.",
+    "price": 26.5,
+    "unit": "per bag, monthly subscription",
+    "offer": "Free grinder with 3 months",
+    "url": "https://example.com/stumptown-sub",
+    "seen_at": "2026-10-11T09:00:00Z",
+    "confidence": 0.9
+   },
+   {
+    "competitor": "Willamette Roasters",
+    "price": 25.0,
+    "unit": "per bag, monthly subscription",
+    "offer": null,
+    "url": "https://example.com/willamette-roasters",
+    "seen_at": "2026-10-11T09:00:00Z",
+    "confidence": 0.9
+   },
+   {
+    "competitor": "Rose City Coffee",
+    "price": 22.75,
+    "unit": "per bag, monthly subscription",
+    "offer": "10% off annual plans",
+    "url": "https://example.com/rose-city-coffee",
+    "seen_at": "2026-10-11T09:00:00Z",
+    "confidence": 0.9
+   }
+  ],
+  "comparison": {
+   "your_price": 24.0,
+   "above_count": 1,
+   "below_count": 2,
+   "total": 3,
+   "median_competitor_price": 25.0,
+   "sentence": "Your price $24.00 is above 1 of 3 competitors in Portland."
+  },
+  "note": "Illustrative sample data, not a live scan. Brightside Coffee is a fictional company, so these competitors are fictional too. Add NIMBLE_API_KEY to fetch real competitor prices and offers with real sources.",
+  "sources": [
+   {
+    "title": "Stumptown Subscription Co.",
+    "url": "https://example.com/stumptown-sub"
+   },
+   {
+    "title": "Willamette Roasters",
+    "url": "https://example.com/willamette-roasters"
+   },
+   {
+    "title": "Rose City Coffee",
+    "url": "https://example.com/rose-city-coffee"
+   }
+  ]
+ },
  "coffee subscription miami": {
   "query": "coffee subscription price Miami",
   "product": "coffee subscription",

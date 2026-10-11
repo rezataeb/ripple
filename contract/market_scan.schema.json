@@ -39,8 +39,8 @@
       "additionalProperties": false,
       "properties": {
         "your_price": { "type": "number" },
-        "above_count": { "type": "integer", "minimum": 0 },
-        "below_count": { "type": "integer", "minimum": 0 },
+        "above_count": { "type": "integer", "minimum": 0, "description": "How many competitors YOUR price is above — i.e. how many of them are CHEAPER than you. Reads backwards at a glance, so the UI should prefer `sentence`." },
+        "below_count": { "type": "integer", "minimum": 0, "description": "How many competitors your price is below — i.e. how many are MORE EXPENSIVE than you." },
         "total": { "type": "integer", "minimum": 0 },
         "median_competitor_price": { "type": ["number", "null"] },
         "sentence": { "type": "string", "description": "The exact line the UI shows, e.g. 'Your new price $25.92 is above 2 of 3 competitors in Austin.'" }

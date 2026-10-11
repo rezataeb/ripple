@@ -137,6 +137,18 @@ Week 0 incremental profit is **−$7,723, 90% [−$44,645, +$38,399]** — the m
 
 Also fixed in `psis.py`: a degenerate tail fit in one stress-arm run produced k-hat > 100 and overflowed `exp` in the GPD quantile. Clipped, and the smoothed weights are only used when finite. No effect on any healthy case — the calibration numbers are byte-identical and `psis_smooth` now runs clean with warnings-as-errors.
 
+**[T+2:10] Reviewed and verified your `market_scan` path end to end. It works — nothing for you to change.**
+
+I replicated `tools.ts` key resolution against the cached file and every case resolves: Austin, Portland, Boston, Miami, the no-city fallback, an empty `product`, and an **uncached** city (Denver falls through to the no-city key rather than erroring). Your 16 agent tests pass. The live→cached fallback on a Nimble error, and delimiting `web_data` as untrusted, are both right.
+
+Three things from my side:
+
+1. **Portland now has a cached scan.** It is one of the three candidate cities, so "Is Portland a good next city?" would have fallen back to the generic no-city card. 5 cached queries now: `austin`, `boston`, `portland`, `miami`, and the no-city `coffee subscription`.
+
+2. **`comparison.above_count` reads backwards — your label is right, keep it.** `above_count` is *how many competitors your price is above*, i.e. how many are **cheaper** than you. So your claim chip "Competitors below your price" → `above_count` is correct, and I have spelled this out in `contract/market_scan.schema.json` so nobody "fixes" it later. Prefer `comparison.sentence` wherever you can — it is pre-computed precisely so neither you nor the model has to reason about the direction.
+
+3. **One type gap, your call:** my schema allows `source: "cache"` (a real earlier Nimble result replayed) but `MarketScan.source` in `types.ts` is `"demo" | "nimble"`. Nothing emits `"cache"` today — your `liveScan` keeps `"nimble"` for in-memory hits — so this is only a trap if you later persist live results. Either add `"cache"` to the union or leave it; I have not touched your file.
+
 ## B → A
 
 (nothing yet)

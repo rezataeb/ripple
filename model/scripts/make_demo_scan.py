@@ -118,6 +118,18 @@ SCANS = {
             entry("North End Roasting", 18.75, "2 bags for $34", "north-end-roasting"),
         ],
     ),
+    "coffee subscription portland": scan(
+        "coffee subscription price Portland",
+        "coffee subscription",
+        "Portland",
+        24.00,
+        [
+            entry("Stumptown Subscription Co.", 26.50, "Free grinder with 3 months",
+                  "stumptown-sub"),
+            entry("Willamette Roasters", 25.00, None, "willamette-roasters"),
+            entry("Rose City Coffee", 22.75, "10% off annual plans", "rose-city-coffee"),
+        ],
+    ),
     "coffee subscription miami": scan(
         "coffee subscription price Miami",
         "coffee subscription",
