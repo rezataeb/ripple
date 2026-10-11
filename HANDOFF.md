@@ -62,6 +62,20 @@ Switch the simulator from the fixture to `/model/posterior.json`. The shapes are
 
 `docs/method/{model-card,checks,limits}.md` are written — they are the RAG source for `explain_method` and the source for the README's model section.
 
+**[T+1:25] Cached market scan + the API are ready.**
+
+`web/public/model/market_scan.demo.json` — the cached scan for demo mode, so the Ask panel works with no Nimble key. It is a map from a normalized query to one result: keys are `coffee subscription austin` / `boston` / `miami` and a no-city `coffee subscription`. Shape is `contract/market_scan.schema.json`.
+
+Two things to carry into the UI:
+- **`comparison.sentence` is pre-computed — print it verbatim.** The Austin one is exactly the spec's example: *"Your price $25.92 is above 2 of 3 competitors in Austin."* The counts and the median are in the same object, so the agent never does arithmetic on web numbers.
+- **Every entry is `source: "demo"` and carries a `note` saying the figures are illustrative and the competitors are fictional (example.com URLs).** Please surface that note on the card. Brightside is a fictional company, so inventing real-looking competitors with real-looking links would be presenting fabricated evidence as checkable — the honest label is the whole reason the card is trustworthy when it *is* live. There are tests in `model/tests/test_demo_scan.py` that fail if the label is dropped.
+
+When `NIMBLE_API_KEY` is set, fetch live results into this same shape with `source: "nimble"` and cache by the same normalized query.
+
+**The API is up** for the `/data` page: `POST /datasets` (returns a preview plus a `detected_mapping` of exact column-name matches, so you can pre-fill the mapping table before calling Gemini), `POST /datasets/{id}/validate` with `{mapping}`, `POST /datasets/{id}/fit` → `{job_id, poll}`, `GET /jobs/{id}` → `{status, step, progress, posterior, trust}`, `DELETE /datasets/{id}` for the delete button. `make api` runs it on :8000, `make up` runs it in Docker, and `/docs` has the live OpenAPI page. Poll `/jobs/{id}` and show `step` — it moves through reading the file → checking the data → fitting the model → running the trust checks → exporting.
+
+Note for the trust cards on a customer upload: **recovery and holdout come back with `skipped_reason` set**, not `passed: true`. There is no planted truth on real data and no time for a holdout refit inside the 90-second budget. Please render a skipped check as "not applicable" rather than as a failure.
+
 ## B → A
 
 (nothing yet)

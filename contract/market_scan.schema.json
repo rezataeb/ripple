@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/rezataeb/ripple/contract/market_scan.schema.json",
+  "title": "Ripple market scan",
+  "description": "Result of the agent tool market_scan(product, city?). Live results come from Nimble and are extracted by Gemini into this shape; demo mode reads a cached file with the same shape. This is WEB CONTEXT, never a model input — the UI must label it as such and show the sources.",
+  "type": "object",
+  "required": ["query", "source", "fetched_at", "competitors", "note"],
+  "additionalProperties": false,
+  "properties": {
+    "query": { "type": "string", "description": "The search that produced it, echoed back." },
+    "product": { "type": "string" },
+    "city": { "type": "string" },
+    "source": {
+      "type": "string",
+      "enum": ["nimble", "cache", "demo"],
+      "description": "'nimble' = fetched live. 'cache' = a real earlier Nimble result replayed. 'demo' = illustrative sample data shipped with the repo, NOT a real scan — the UI must say so."
+    },
+    "fetched_at": { "type": "string", "description": "ISO-8601 time the result was obtained." },
+    "competitors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["competitor", "price", "url", "seen_at"],
+        "additionalProperties": false,
+        "properties": {
+          "competitor": { "type": "string" },
+          "price": { "type": ["number", "null"], "description": "Price per unit in the same currency as the model. null when the page did not state one." },
+          "unit": { "type": "string", "description": "What the price is per, e.g. 'per bag, monthly subscription'." },
+          "offer": { "type": ["string", "null"], "description": "Any current promotion stated on the page." },
+          "url": { "type": "string" },
+          "seen_at": { "type": "string" },
+          "confidence": { "type": "number", "minimum": 0, "maximum": 1, "description": "Extraction confidence from the structured-output step." }
+        }
+      }
+    },
+    "comparison": {
+      "type": "object",
+      "description": "Pre-computed so the agent never does arithmetic on these numbers itself.",
+      "additionalProperties": false,
+      "properties": {
+        "your_price": { "type": "number" },
+        "above_count": { "type": "integer", "minimum": 0 },
+        "below_count": { "type": "integer", "minimum": 0 },
+        "total": { "type": "integer", "minimum": 0 },
+        "median_competitor_price": { "type": ["number", "null"] },
+        "sentence": { "type": "string", "description": "The exact line the UI shows, e.g. 'Your new price $25.92 is above 2 of 3 competitors in Austin.'" }
+      }
+    },
+    "note": {
+      "type": "string",
+      "description": "Shown with the card. For demo data this must state that the figures are illustrative."
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["title", "url"],
+        "additionalProperties": false,
+        "properties": {
+          "title": { "type": "string" },
+          "url": { "type": "string" }
+        }
+      }
+    }
+  }
+}

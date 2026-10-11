@@ -1,0 +1,238 @@
+{
+ "coffee subscription austin": {
+  "query": "coffee subscription price Austin",
+  "product": "coffee subscription",
+  "city": "Austin",
+  "source": "demo",
+  "fetched_at": "2026-10-11T09:00:00Z",
+  "competitors": [
+   {
+    "competitor": "Rolling Hills Roasters",
+    "price": 22.5,
+    "unit": "per bag, monthly subscription",
+    "offer": "Free shipping over $30",
+    "url": "https://example.com/rolling-hills",
+    "seen_at": "2026-10-11T09:00:00Z",
+    "confidence": 0.9
+   },
+   {
+    "competitor": "Cold Brew Collective",
+    "price": 24.0,
+    "unit": "per bag, monthly subscription",
+    "offer": null,
+    "url": "https://example.com/cold-brew-collective",
+    "seen_at": "2026-10-11T09:00:00Z",
+    "confidence": 0.9
+   },
+   {
+    "competitor": "Lone Star Coffee Club",
+    "price": 27.95,
+    "unit": "per bag, monthly subscription",
+    "offer": "First month 50% off",
+    "url": "https://example.com/lone-star-coffee",
+    "seen_at": "2026-10-11T09:00:00Z",
+    "confidence": 0.9
+   }
+  ],
+  "comparison": {
+   "your_price": 25.92,
+   "above_count": 2,
+   "below_count": 1,
+   "total": 3,
+   "median_competitor_price": 24.0,
+   "sentence": "Your price $25.92 is above 2 of 3 competitors in Austin."
+  },
+  "note": "Illustrative sample data, not a live scan. Brightside Coffee is a fictional company, so these competitors are fictional too. Add NIMBLE_API_KEY to fetch real competitor prices and offers with real sources.",
+  "sources": [
+   {
+    "title": "Rolling Hills Roasters",
+    "url": "https://example.com/rolling-hills"
+   },
+   {
+    "title": "Cold Brew Collective",
+    "url": "https://example.com/cold-brew-collective"
+   },
+   {
+    "title": "Lone Star Coffee Club",
+    "url": "https://example.com/lone-star-coffee"
+   }
+  ]
+ },
+ "coffee subscription boston": {
+  "query": "coffee subscription price Boston",
+  "product": "coffee subscription",
+  "city": "Boston",
+  "source": "demo",
+  "fetched_at": "2026-10-11T09:00:00Z",
+  "competitors": [
+   {
+    "competitor": "Harbor Bean Co.",
+    "price": 21.0,
+    "unit": "per bag, monthly subscription",
+    "offer": "Student discount 15%",
+    "url": "https://example.com/harbor-bean",
+    "seen_at": "2026-10-11T09:00:00Z",
+    "confidence": 0.9
+   },
+   {
+    "competitor": "Commonwealth Coffee",
+    "price": 23.5,
+    "unit": "per bag, monthly subscription",
+    "offer": null,
+    "url": "https://example.com/commonwealth-coffee",
+    "seen_at": "2026-10-11T09:00:00Z",
+    "confidence": 0.9
+   },
+   {
+    "competitor": "North End Roasting",
+    "price": 18.75,
+    "unit": "per bag, monthly subscription",
+    "offer": "2 bags for $34",
+    "url": "https://example.com/north-end-roasting",
+    "seen_at": "2026-10-11T09:00:00Z",
+    "confidence": 0.9
+   }
+  ],
+  "comparison": {
+   "your_price": 19.2,
+   "above_count": 1,
+   "below_count": 2,
+   "total": 3,
+   "median_competitor_price": 21.0,
+   "sentence": "Your price $19.20 is above 1 of 3 competitors in Boston."
+  },
+  "note": "Illustrative sample data, not a live scan. Brightside Coffee is a fictional company, so these competitors are fictional too. Add NIMBLE_API_KEY to fetch real competitor prices and offers with real sources.",
+  "sources": [
+   {
+    "title": "Harbor Bean Co.",
+    "url": "https://example.com/harbor-bean"
+   },
+   {
+    "title": "Commonwealth Coffee",
+    "url": "https://example.com/commonwealth-coffee"
+   },
+   {
+    "title": "North End Roasting",
+    "url": "https://example.com/north-end-roasting"
+   }
+  ]
+ },
+ "coffee subscription miami": {
+  "query": "coffee subscription price Miami",
+  "product": "coffee subscription",
+  "city": "Miami",
+  "source": "demo",
+  "fetched_at": "2026-10-11T09:00:00Z",
+  "competitors": [
+   {
+    "competitor": "Bayside Brew Club",
+    "price": 18.9,
+    "unit": "per bag, monthly subscription",
+    "offer": "Launch offer: first bag free",
+    "url": "https://example.com/bayside-brew",
+    "seen_at": "2026-10-11T09:00:00Z",
+    "confidence": 0.9
+   },
+   {
+    "competitor": "Calle Ocho Coffee",
+    "price": 20.25,
+    "unit": "per bag, monthly subscription",
+    "offer": null,
+    "url": "https://example.com/calle-ocho-coffee",
+    "seen_at": "2026-10-11T09:00:00Z",
+    "confidence": 0.9
+   }
+  ],
+  "comparison": {
+   "your_price": 24.0,
+   "above_count": 2,
+   "below_count": 0,
+   "total": 2,
+   "median_competitor_price": 19.575,
+   "sentence": "Your price $24.00 is above all 2 competitors in Miami."
+  },
+  "note": "Illustrative sample data, not a live scan. Brightside Coffee is a fictional company, so these competitors are fictional too. Add NIMBLE_API_KEY to fetch real competitor prices and offers with real sources.",
+  "sources": [
+   {
+    "title": "Bayside Brew Club",
+    "url": "https://example.com/bayside-brew"
+   },
+   {
+    "title": "Calle Ocho Coffee",
+    "url": "https://example.com/calle-ocho-coffee"
+   }
+  ]
+ },
+ "coffee subscription": {
+  "query": "coffee subscription price",
+  "product": "coffee subscription",
+  "city": "",
+  "source": "demo",
+  "fetched_at": "2026-10-11T09:00:00Z",
+  "competitors": [
+   {
+    "competitor": "Rolling Hills Roasters",
+    "price": 22.5,
+    "unit": "per bag, monthly subscription",
+    "offer": "Free shipping over $30",
+    "url": "https://example.com/rolling-hills",
+    "seen_at": "2026-10-11T09:00:00Z",
+    "confidence": 0.9
+   },
+   {
+    "competitor": "Cold Brew Collective",
+    "price": 24.0,
+    "unit": "per bag, monthly subscription",
+    "offer": null,
+    "url": "https://example.com/cold-brew-collective",
+    "seen_at": "2026-10-11T09:00:00Z",
+    "confidence": 0.9
+   },
+   {
+    "competitor": "Harbor Bean Co.",
+    "price": 21.0,
+    "unit": "per bag, monthly subscription",
+    "offer": "Student discount 15%",
+    "url": "https://example.com/harbor-bean",
+    "seen_at": "2026-10-11T09:00:00Z",
+    "confidence": 0.9
+   },
+   {
+    "competitor": "Lone Star Coffee Club",
+    "price": 27.95,
+    "unit": "per bag, monthly subscription",
+    "offer": "First month 50% off",
+    "url": "https://example.com/lone-star-coffee",
+    "seen_at": "2026-10-11T09:00:00Z",
+    "confidence": 0.9
+   }
+  ],
+  "comparison": {
+   "your_price": 24.0,
+   "above_count": 2,
+   "below_count": 1,
+   "total": 4,
+   "median_competitor_price": 23.25,
+   "sentence": "Your price $24.00 is above 2 of 4 competitors."
+  },
+  "note": "Illustrative sample data, not a live scan. Brightside Coffee is a fictional company, so these competitors are fictional too. Add NIMBLE_API_KEY to fetch real competitor prices and offers with real sources.",
+  "sources": [
+   {
+    "title": "Rolling Hills Roasters",
+    "url": "https://example.com/rolling-hills"
+   },
+   {
+    "title": "Cold Brew Collective",
+    "url": "https://example.com/cold-brew-collective"
+   },
+   {
+    "title": "Harbor Bean Co.",
+    "url": "https://example.com/harbor-bean"
+   },
+   {
+    "title": "Lone Star Coffee Club",
+    "url": "https://example.com/lone-star-coffee"
+   }
+  ]
+ }
+}
