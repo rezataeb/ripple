@@ -33,7 +33,7 @@ is synthetic rather than scraped.
 The last 12 weeks are removed, the model is **refitted** from scratch on the rest, and
 then asked to predict the hidden weeks.
 
-- **Coverage of the 90% interval:** 93%.
+- **Coverage of the 90% interval:** 92%.
 - **Error vs. a naive baseline:** 18.4% MAPE against 44.7% for a same-week-last-year
   guess.
 
