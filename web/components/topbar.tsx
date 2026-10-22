@@ -9,7 +9,7 @@ export function Topbar({ datasetName, demo }: { datasetName: string; demo: boole
     <header className="border-b bg-background">
       <div className="mx-auto flex min-h-14 w-full max-w-[1200px] flex-wrap items-center gap-x-4 gap-y-1 px-4 py-2 sm:px-6">
         <Link href="/" className="text-xl font-semibold tracking-tight">
-          ripple
+          Ripple
         </Link>
         <DatasetSwitcher datasetName={datasetName} />
         {demo && <Badge variant="outline">demo mode</Badge>}
