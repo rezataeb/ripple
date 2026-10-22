@@ -145,7 +145,7 @@ def test_synth_is_deterministic() -> None:
 
 
 def test_launch_promo_last_week_follows_the_training_convention() -> None:
-    """Regression guard, found by Session B.
+    """Regression guard, found while building the web app.
 
     data.py defines promo_last_week as last week's promo flag for the same cell.
     The student coupon runs every week, so from week 2 the treated cell carries

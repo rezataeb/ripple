@@ -1,6 +1,6 @@
 # contract/
 
-The one thing both sessions agree on. Session A (`model/`, `api/`) writes these files; Session B (`web/`) builds against them.
+The one thing the Python side and the web app agree on. `model/` and `api/` write these files; `web/` builds against them.
 
 | File | What it is |
 |---|---|
@@ -99,4 +99,4 @@ should assert the same things.
 - Terms that do not apply are present and zero-filled (`has_promo: false` ⇒ `b_promo` all zeros). The simulator never branches on a missing key.
 - A new city with a standardized trait outside `[trait_min, trait_max]` sets `flags.extrapolation` and names the traits.
 
-Changes to these files go in `HANDOFF.md` first.
+Change a schema here first, then the code on both sides; the contract tests fail if they drift.

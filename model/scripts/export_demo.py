@@ -4,8 +4,7 @@
   web/public/model/trust.json        the checks       (contract/trust.schema.json)
   web/public/model/launches.json     the 3 launches   (contract/launch.schema.json)
 
-web/ belongs to Session B, but spec Section 12 makes this directory the handoff
-point, so Session A writes data files here and no code.
+This script writes data files into web/public/model/ and no code.
 
 Run after model/scripts/run_fits.py:
     uv run python model/scripts/export_demo.py

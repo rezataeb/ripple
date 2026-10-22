@@ -29,7 +29,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <AskProvider>
           {children}
           <footer className="mx-auto w-full max-w-[1200px] px-6 py-6 text-xs text-muted-foreground">
-            Built at the AI Engineer Hackathon NYC · 2026-10-11 · synthetic demo data · MIT
+            Synthetic demo data · MIT ·{" "}
+            <a href="https://github.com/rezataeb/ripple" className="underline underline-offset-2 hover:text-foreground">
+              Source on GitHub
+            </a>
           </footer>
         </AskProvider>
       </body>

@@ -1,7 +1,7 @@
-# ripple
+# Ripple
 
-**"What happens to sales if…?"** — a Bayesian what-if simulator, a launch tracker that
-learns from real data, and a market-aware AI agent.
+**"What happens to sales if…?"** A Bayesian what-if simulator, a launch tracker that learns from
+real data, and a market-aware AI agent. Every answer is a distribution, never a single number.
 
 [![ci](https://github.com/rezataeb/ripple/actions/workflows/ci.yml/badge.svg)](https://github.com/rezataeb/ripple/actions/workflows/ci.yml)
 [![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
@@ -9,13 +9,34 @@ learns from real data, and a market-aware AI agent.
 ![PyMC 6](https://img.shields.io/badge/PyMC-6.3-informational)
 ![Next.js 16](https://img.shields.io/badge/Next.js-16-black)
 
+<p align="center">
+  <a href="https://ripple-opal.vercel.app"><img src="assets/demo.gif" alt="Ripple demo: dragging the launch-tracker week slider from 0 to 8; the forecast band narrows and the chance the launch pays moves from 25% to 100%" width="90%"></a>
+</p>
+
 | | |
 |---|---|
-| **Live demo** | **https://ripple-opal.vercel.app** — runs in demo mode, no API key needed |
-| **Video** (< 2 min) | [YouTube: main video](https://youtu.be/LMKgfNnvCCE) · [YouTube: subtitled version](https://youtu.be/KGPMhySJh_o) · [narrated file](assets/demo-voice.mp4) · [subtitled, no sound](assets/demo-subtitles.mp4) · [GIF](assets/demo.gif) |
-| **Method write-up** | [`docs/method/`](docs/method/) — [model card](docs/method/model-card.md) · [checks](docs/method/checks.md) · [limits](docs/method/limits.md) |
+| **Live demo** | **https://ripple-opal.vercel.app**. Runs in demo mode, no API key needed. |
+| **Video** (< 2 min) | [Watch on YouTube](https://youtu.be/LMKgfNnvCCE) · [subtitled version](https://youtu.be/KGPMhySJh_o) |
+| **Method write-up** | [`docs/method/`](docs/method/): [model card](docs/method/model-card.md) · [checks](docs/method/checks.md) · [limits](docs/method/limits.md) · design in [`docs/spec.md`](docs/spec.md) |
 
-> Built in 3 hours at the **AI Engineer Hackathon NYC**, 2026-10-11.
+**What this project shows:** a hierarchical Bayesian model (PyMC, nutpie) whose posterior runs in the
+browser; Bayesian updating with a Pareto-smoothed importance-sampling gate; a calibration study that
+publishes the case where the model fails; an LLM agent that is structurally unable to invent a number;
+and a Python↔TypeScript parity test suite that keeps two implementations of the same math honest.
+
+Started as a 3-hour build at the AI Engineer Hackathon NYC (2026-10-11).
+
+## Run it
+
+```bash
+uv sync                          # Python: model + API
+make test                        # 101 tests (make test-all adds the slow end-to-end fit)
+cd web && npm install && npm run dev      # http://localhost:3000, with the posterior already exported
+```
+
+No API key is needed. Without keys the agent answers from templates and a cached market scan. To turn on
+live Gemini and Nimble, copy `.env.example` to `.env` and fill it in (see [Services and keys](#services-and-keys)).
+The Python side is only needed to refit the model or run the bring-your-own-data API.
 
 ## The problem
 
@@ -39,6 +60,28 @@ Three layers, and the division of labour is the whole design:
 | **Agent** | "Ask Ripple" — a Gemini tool-calling agent that turns plain English into a scenario, runs it, and explains the result. **It never writes a number a tool did not return.** |
 | **Web** | Nimble searches live competitor prices and current offers, cited, as *context* — never as a model input. |
 | **Reality** | After a launch, each new week of real data updates the forecast with Bayes' rule. The interval narrows. A calibration study proves the intervals are honest. |
+
+```mermaid
+flowchart LR
+  subgraph py [Python]
+    S[synth.py<br/>demo company] --> M[PyMC model<br/>nutpie NUTS]
+    M --> C[checks + calibration]
+    M --> E[export]
+  end
+  E -->|posterior.json<br/>trust.json| W
+  CT[(contract/<br/>schemas + fixtures)] -.parity tests.- py
+  CT -. parity tests .- W
+  subgraph W [Browser: Next.js]
+    SIM[simulate.ts<br/>what-if] --> UI[Simulator / Launch / Method]
+    UPD[update.ts<br/>Bayes + PSIS] --> UI
+    AG[Ask Ripple agent] --> SIM
+    AG --> UPD
+  end
+  AG -. optional .-> GEM[Gemini]
+  AG -. optional .-> NIM[Nimble web search]
+  UP[CSV upload] --> API[FastAPI BYOD<br/>fits with the same model code]
+  API --> UI
+```
 
 ---
 
@@ -304,12 +347,11 @@ make api           # uvicorn with reload on :8000, then http://localhost:8000/do
 make up            # or docker compose
 ```
 
-**Honest caveat:** `make api` is verified — the endpoints below were exercised against a
+**Honest caveat:** `make api` is verified: the endpoints above were exercised against a
 running server, and CI runs the full upload → fit → poll flow on every push. `make up` is
-**not** verified: there was no Docker daemon on the build machine, so `api/Dockerfile` has
-never been built. It is written from the uv + PyMC requirements (build-essential stays in
+**not** verified: `api/Dockerfile` has never been built. It is written from the uv + PyMC requirements (build-essential stays in
 the image because pytensor compiles the model graph on first use), but treat it as
-untested. The API is not deployed anywhere — BYOD runs locally, and the live demo link
+untested. The API is not deployed anywhere: BYOD runs locally, and the live demo
 needs no server because the posterior ships to the browser.
 
 It imports `ripple_model` directly, so a customer's fit, checks and export are the **same
@@ -334,27 +376,41 @@ cards are marked **skipped** rather than quietly passing.
   ESS 1. A k̂ of 22 is not a value the diagnostic can take, so it could not be the gate.
   `model/ripple_model/psis.py` follows Vehtari et al. with the Zhang–Stephens GPD fit,
   agrees with ArviZ to within 0.1 wherever ArviZ behaves, and has 11 tests of its own.
-  See `DECISIONS.md`.
+  See [`DECISIONS.md`](DECISIONS.md).
 
 ---
 
-## Quickstart
+## Refit the model
 
 ```bash
-uv sync                               # Python: model + API
-uv run pytest                         # 73 tests: contract, data, parity, PSIS, launch update
-
-uv run python -m ripple_model.synth           # regenerate the demo company
-uv run python model/scripts/run_fits.py       # fit (~5 min, 4 chains x 1000)
-uv run python model/scripts/export_demo.py    # -> web/public/model/
-uv run python model/scripts/run_calibration.py
-
-cd web && npm install && npm run dev
+make data         # regenerate the synthetic demo company (fixed seed)
+make fit          # fit: 4 chains x 1000 draws, then the 12-week holdout refit (~5-11 min)
+make export       # -> web/public/model/{posterior,trust,launches}.json
+make calibrate    # 200 synthetic launches per arm -> web/public/model/calibration.json
+make pipeline     # all four, from scratch
 ```
 
-**No API key is needed.** The live demo runs in demo mode with a cached agent and a
-cached market scan. Add keys to `.env` (see `.env.example`) to turn on live Gemini and
-Nimble.
+`make help` lists every target. The fit files (`model/data/*.npz`, ~18 MB each) are derived and
+gitignored.
+
+## Services and keys
+
+The app runs fully offline in demo mode. Two optional services switch on live behaviour when their
+key is set in `.env`; `DEMO_MODE=1` forces demo mode even when keys are present.
+
+| Service | Used for | What it is sent | Without it |
+|---|---|---|---|
+| **Google Gemini** (`@google/genai`) | The Ask Ripple tool-calling loop; embeddings for the method Q&A (RAG); the CSV column-mapping assistant | The question and tool results (model outputs); the method docs for embeddings. Column names for mapping; three sample rows **only** if the user ticks "share sample rows" | A rule-based planner and template answers; keyword ranking for the RAG; a rule-based column mapper |
+| **Nimble** (Search API) | Live competitor prices and offers, shown as cited web context | A search query such as "coffee subscription price Austin" | A cached sample scan, labelled as illustrative |
+
+| Variable | Meaning |
+|---|---|
+| `GEMINI_API_KEY`, `GEMINI_MODEL`, `GEMINI_EMBED_MODEL` | Gemini access; the model defaults to `gemini-2.5-flash` and embeddings to `gemini-embedding-001` |
+| `NIMBLE_API_KEY` | Nimble access |
+| `DEMO_MODE` | `1` forces cached/template answers |
+
+The live demo is hosted on Vercel. Fonts (Geist) are fetched at build time and self-hosted. Nothing in the
+repo contains a key, and no customer rows are sent to an LLM by default.
 
 ## Continuous integration
 
@@ -374,23 +430,23 @@ Nimble.
 ## Repository
 
 ```
-contract/     schemas + the posterior and parity fixtures — the agreement between sessions
+contract/     schemas + the posterior and parity fixtures: the Python↔TypeScript agreement
 model/        ripple_model/{synth,data,model,checks,simulate,update,psis,calibration,export}.py
 api/          FastAPI BYOD endpoints
 web/          Next.js app, browser simulator, agent route
-docs/method/  model card, checks, limits — RAG source and the source of this README
+docs/         spec.md (the design) and method/ (model card, checks, limits; also the agent's RAG source)
+DECISIONS.md  choices the design left open, and why
 ```
+
+**Tests:** 102 `pytest` tests (contract, data, parity, PSIS, launch update, API, the end-to-end fit) and 73
+`vitest` tests (simulate and update parity against the Python fixtures, the number guard, the agent).
 
 ## AI tools used
 
-All code in this repository was written during the AI Engineer Hackathon NYC on 2026-10-11. No code was
-carried over from earlier projects.
-
-- **Claude Code** (Claude Opus 5) — wrote all the code during the event, in two parallel
-  sessions: one on `contract/` + `model/` + `api/`, one on `web/`.
-- **Google Gemini** — the "Ask Ripple" agent (function calling), the CSV mapping
-  assistant, and embeddings for the method RAG.
-- **Nimble** — live web search for competitor prices and current offers.
+- **Claude Code** (Claude Opus 5): wrote the code, in two parallel sessions: one on `contract/` + `model/` +
+  `api/`, one on `web/`.
+- **Google Gemini** and **Nimble** are product features, not authoring tools; see
+  [Services and keys](#services-and-keys).
 
 ## Roadmap
 

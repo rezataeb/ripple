@@ -1,6 +1,6 @@
 """Build contract/posterior.fixture.json — the shared tiny posterior.
 
-50 draws, 2 cities, 2 segments, 12 weeks. Session B builds web/lib/simulate.ts
+50 draws, 2 cities, 2 segments, 12 weeks. web/lib/simulate.ts is built
 against this file and the Python reference simulator is tested on the same file,
 so the parity test compares both implementations on identical input.
 

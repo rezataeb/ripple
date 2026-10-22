@@ -1,7 +1,7 @@
 """The fixture and every real export must satisfy the schemas in contract/.
 
-This is the cheapest guard we have against the two sessions drifting apart:
-if Session A changes a shape without changing the schema, this fails.
+This is the cheapest guard we have against the Python side and the web app drifting apart:
+if the model changes a shape without changing the schema, this fails.
 """
 
 from __future__ import annotations
@@ -81,7 +81,7 @@ def test_fixture_shapes_are_self_consistent() -> None:
 
 
 def test_fixture_exercises_the_interesting_paths() -> None:
-    """Session B builds the UI on this file, so it has to contain the edge cases."""
+    """The web app is built on this file, so it has to contain the edge cases."""
     f = load(CONTRACT / "posterior.fixture.json")
     assert any(c["extrapolation"] for c in f["candidates"]), "need an out-of-range candidate"
     assert any(c for c in f["candidates"] if not c["extrapolation"]), "need one in-range candidate"
@@ -150,7 +150,7 @@ def test_fixture_a_city_contains_g0() -> None:
 
 
 def test_exported_candidate_shares_are_in_meta_segment_order() -> None:
-    """Regression guard, found by Session B.
+    """Regression guard, found while building the web app.
 
     candidates[].shares is positional against meta.segments. synth.py declares
     segments in its own order and data.py sorts them alphabetically, so passing a

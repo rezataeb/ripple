@@ -1,5 +1,5 @@
-.PHONY: help install test lint fmt data fit export calibrate pipeline api up down clean \
-        demo-install voice record screenshots video demo probe
+.PHONY: help install test test-all lint fmt data fit export calibrate fixtures check-fixtures \
+        pipeline api up down clean
 
 help:
 	@grep -E '^[a-z-]+:.*?##' $(MAKEFILE_LIST) | sed 's/:.*##/\t/' | expand -t22
@@ -52,43 +52,5 @@ up:                 ## run the API in Docker
 down:
 	docker compose down
 
-# --- demo video (spec Section 14) -----------------------------------------
-# Record against a PRODUCTION build: in `next dev` the home page hangs on its
-# loading skeleton and never fetches the posterior.
-#   cd web && npx next build && npx next start -p 3100
-# then: make demo BASE=http://127.0.0.1:3100
-BASE ?= http://127.0.0.1:3000
-
-demo-install:       ## install playwright for the demo scripts (scoped, not web/)
-	cd scripts/demo && npm install
-
-probe:              ## print the selectors the live UI exposes (run after a UI change)
-	node scripts/demo/probe.ts $(BASE)
-
-voice:              ## macOS `say` -> per-line audio + timings.json (no API key)
-	VOICE=$${VOICE:-Samantha} ./scripts/demo/make_voice.sh
-
-record:             ## Playwright 1440x900 screen recording, scene timings from the voice
-	node scripts/demo/record.ts $(BASE)
-
-screenshots:        ## the 4 README screenshots -> assets/screenshots/
-	node scripts/demo/screenshots.ts $(BASE)
-
-video:              ## ffmpeg: title card + recording + voice -> assets/demo.mp4 + .gif
-	./scripts/demo/make_video.sh
-
-demo: voice record video   ## the whole video pipeline
-
-# The two alternate cuts, both recorded from the same flow:
-demo-voice:         ## narrated cut -> assets/demo-voice.mp4
-	VOICE=$${VOICE:-Daniel} RATE=$${RATE:-195} PAD=0.4 ./scripts/demo/make_voice.sh
-	node scripts/demo/record.ts $(BASE)
-	OUT_NAME=demo-voice PAD=0.4 MAKE_GIF=0 ./scripts/demo/make_video.sh
-
-demo-subtitles:     ## silent cut with burned-in captions -> assets/demo-subtitles.mp4
-	node scripts/demo/record.ts $(BASE) --subtitles --out scripts/demo/recording_sub
-	OUT_NAME=demo-subtitles RECORDING_DIR=recording_sub SILENT=1 ./scripts/demo/make_video.sh
-
 clean:
 	rm -rf .pytest_cache .ruff_cache model/data/*.npz
-	rm -rf scripts/demo/recording scripts/demo/voice scripts/demo/voice.wav

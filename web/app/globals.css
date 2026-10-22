@@ -4,7 +4,7 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Ripple design tokens — RIPPLE_SPEC.md Section 10.1 */
+/* Ripple design tokens — docs/spec.md Section 10.1 */
 :root {
   --background: #ffffff;
   --foreground: #0a0a0a;

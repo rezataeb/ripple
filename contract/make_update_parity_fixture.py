@@ -3,8 +3,8 @@
 web/lib/update.ts is a line-by-line port of model/ripple_model/update.py, so it needs
 the same inputs to produce the same outputs. One of those inputs cannot be ported:
 the prior samples `u` of the unknown come from numpy's Generator, which no browser
-PRNG reproduces. So they are shipped here, once per launch, exactly as Session B
-asked — the same reason `draws.z_new` ships in the posterior.
+PRNG reproduces. So they are shipped here, once per launch, so the web port can be tested against
+them — the same reason `draws.z_new` ships in the posterior.
 
 Everything downstream of `u` is then compared field by field: the importance weights,
 the PSIS gate, the weighted quantiles, the unknown's prior-vs-posterior summaries, the

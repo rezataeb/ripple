@@ -215,7 +215,7 @@ def test_result_matches_the_update_schema(post, launches, launch_id) -> None:
 
 
 # --------------------------------------------------------------------------
-# the incremental verdict (Session B's finding)
+# the incremental verdict (found while building the web app)
 # --------------------------------------------------------------------------
 def test_the_headline_is_incremental_not_gross(post, launches) -> None:
     """P(pays) must come from incremental profit, or it is trivially 1.00.

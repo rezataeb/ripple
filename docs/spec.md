@@ -1,7 +1,7 @@
-# Ripple — 3-Hour Hackathon Build Spec (v4)
+# Ripple — design spec
 ### "What happens to sales if…?" · Bayesian what-if simulator + launch tracker that learns from real data + market-aware AI agent + bring your own data
 
-> **For the coding agent (Claude Code):** Read all of this file before you write code. Total time: **3 hours.** The work runs in **two parallel Claude Code sessions** (Section 12): Session A owns `model/` and `api/`; Session B owns `web/`. They share one contract (Section 7). Commit after each step. When this spec does not decide something, choose the simplest option and write one line in `DECISIONS.md`. **Do not invent API calls:** check the installed versions and official docs of PyMC, nutpie, FastAPI, Next.js, `@google/genai`, and Nimble first. Write all code new. **Never cut or skip anything without Reza's approval** (see CLAUDE.md, "Approval rule").
+> The design the code was built from. Section numbers are cited in code comments (for example "spec Section 5b"). How it turned out, with the numbers, is in the [README](../README.md); choices the spec left open are in [DECISIONS.md](../DECISIONS.md).
 
 ---
 
@@ -112,10 +112,10 @@ Optional second CSV `cities.csv`: `city, log_population, median_income_k, share_
 **Flow (`/data` page):** drop file → **Mapping assistant** (Gemini gets column names + 3 sample rows *only if the user ticks "share sample rows"*, else names only) returns `{mapping, confidence, notes}` → user confirms in a mapping table → validation report (row count, weeks, missing values, negative units, price variation; "price never changes → elasticity cannot be learned" warning) → **Fit** (POST to API, progress steps) → trust cards → "Open in simulator".
 Privacy: files stay in the API's temp storage for the session; no rows go to the LLM by default; delete button.
 
-## 7. Contract between sessions (write this first, in `contract/`)
+## 7. Contract between model and web (`contract/`)
 - `contract/posterior.schema.json` and a small fixture `contract/posterior.fixture.json` (50 draws, 2 cities, 2 segments). Fields: `meta {cities, segments, weeks, base_price, unit_cost, trait_names, trait_mean, trait_std, trait_min, trait_max, has_promo, has_traits, method}`, `draws {g0[], g[][], tau_city[], a_city[][], a_seg[][], e[][], b_promo[][], b_feature[], b_dip[], season[][], phi[]}`, `history`, `candidates`.
 - `contract/trust.schema.json`, `contract/scenario.schema.json` (`{type: promo|price|new_city, cities, segments, discount, weeks, price_change, candidate | traits, unit_cost, fixed_cost, horizon}`), `contract/result.schema.json`.
-- Session B builds against the fixture and switches to the real export later.
+- The web app builds against the fixture and switches to the real export later.
 
 ## 8. API (`api/`, FastAPI, Python) — needed only for BYOD
 | Method | Path | Does |
@@ -168,49 +168,12 @@ Skeletons, empty states with one clear action, error toasts with a fix ("price n
 ## 11. Repository
 ```
 ripple/
-├── README.md  LICENSE  DECISIONS.md  RIPPLE_SPEC.md  Makefile  docker-compose.yml  .env.example
-├── contract/        schemas + fixture
+├── README.md  LICENSE  DECISIONS.md  Makefile  docker-compose.yml  .env.example
+├── contract/        schemas + fixtures: the agreement between Python and TypeScript
 ├── model/           uv project: ripple_model/{synth,model,simulate,update,calibration,checks,export}.py, data/, tests/
 ├── api/             FastAPI app (imports ripple_model), Dockerfile
-├── web/             Next.js: app/(/, /launch, /data, /method, api/agent, api/map), components/, lib/{simulate,update,gemini,nimble,rag}.ts, public/model/, tests/
-├── docs/method/     model card, checks, limits (RAG source + README source)
-├── scripts/demo/    record.ts, narration.txt
-├── assets/          demo.gif, demo.mp4, screenshots/
+├── web/             Next.js: app/(/, /launch, /data, /method, api/agent, api/map), components/, lib/, public/model/, tests/
+├── docs/            spec.md + method/ (model card, checks, limits; also the agent's RAG source)
+├── assets/          demo.gif, screenshots/
 └── .github/workflows/ci.yml   ruff + pytest (tiny fit) + vitest (simulate + update parity, number guard)
 ```
-
-## 12. Plan — 3 hours, two parallel sessions
-
-| Time | Session A — `model/` + `api/` | Session B — `web/` |
-|---|---|---|
-| 0:00–0:15 | Repo, `contract/` schemas + fixture (A writes, B reviews) | Next.js + Tailwind + shadcn + fonts + tokens |
-| 0:15–0:40 | `synth.py`, demo CSV, truth, **3 synthetic launches** (Austin, student coupon, gift-box feature: 8 weeks each, truth known) | Simulator page layout on the fixture |
-| 0:40–1:15 | Model fit, checks, export → `web/public/model/` | `simulate.ts` + parity test; verdict, fan chart, segment bars |
-| 1:15–1:45 | `update.py` (PSIS gate) + `calibration.py` (vectorized, 200 launches) → `calibration.json`; export launch data | `update.ts` + parity test; `/launch` page with week slider |
-| 1:45–2:10 | FastAPI BYOD endpoints + Dockerfile; `docs/method/*.md` | Agent route (`build_scenario`, `run_scenario`, `model_facts`, `update_with_launch`, `market_scan`); Ask panel |
-| 2:10–2:25 | Help B: Nimble cached scan; README draft | `/data` page (mapping, validation); `/method` page with calibration chart |
-| 2:25–2:35 | Deploy API (optional) | Deploy web to Vercel (demo mode, cached scan) |
-| 2:35–3:00 | README final, screenshots | Playwright video + TTS + `ffmpeg`; submit |
-
-**Cut list (cut in this order):** API deploy (BYOD local only) → `explain_method` RAG → dark mode → BYOD fit (keep upload + mapping + validation) → "Upload launch weeks" (keep 3 demo launches) → stress test → live Nimble (keep cached scan) → `/data` page.
-**Never cut:** intervals, incremental vs. baseline, recovery + holdout checks, **launch tracker with the PSIS/ESS gate**, **calibration coverage chart**, number guard, live demo link, README, video.
-
-## 13. README outline
-1. Wordmark, one-line pitch, GIF, **live link**, video, badges.
-2. Problem: promotions, prices, and new markets get decided on one number with no uncertainty and no market context.
-3. Screens: simulator, Ask Ripple with market sources, your-data flow, method.
-4. **Model** (equation + why-each-part table), **scenario math**, **launch updating** (Bayes' rule, importance sampling + PSIS gate, causal assumptions, holdout groups), **evidence** (trust table, recovery chart, holdout vs. naive, **calibration coverage by week**).
-5. **Agent design:** tools table; "numbers only from tools" + number guard; Nimble as cited context; prompt-injection guard.
-6. **Use your own data:** CSV format, privacy, run with Docker.
-7. Design decisions and limits (synthetic demo; no competitor reaction in the model; stable effects; extrapolation).
-8. Quickstart. **AI tools used** (Claude Code, Gemini). Built at the AI Engineer Hackathon NYC, 2026-10-11. Roadmap. MIT.
-
-## 14. Demo video with no manual recording (≈ 100 s)
-Playwright (1440×900, video on): home → preset "Student coupon in Boston" → drag discount 10% → 30% (numbers and bands move) → `/launch` "Austin launch": drag the week slider 0 → 8 (band narrows, "chance it pays" updates, prior → posterior animates, truth line) → ⌘K "Is Miami a good next city?" (steps, verdict, extrapolation warning, market sources) → `/data` with the sample CSV (mapping, validation, trust cards) → `/method`. TTS narration, **line 1: "Hi, I'm Reza, and this is Ripple, my project for the AI Engineer Hackathon NYC."** `ffmpeg` → `assets/demo.mp4` + 15 s `assets/demo.gif`.
-
-## 15. Rules for the coding agent
-- Fixed seeds. Never show a number without its interval.
-- The LLM never creates a number; numbers come from the posterior or from cited web results (labeled as web).
-- No keys in the repo; the live demo needs no key (cached agent answers for the 4 example prompts if no key).
-- No customer rows to the LLM by default.
-- Write code only after the hackathon start time.
