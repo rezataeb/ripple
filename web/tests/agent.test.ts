@@ -1,5 +1,5 @@
 import path from "node:path";
-import { beforeAll, describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it, vi } from "vitest";
 import { numberGuard, numbersIn } from "@/lib/agent/guard";
 import { loadContext } from "@/lib/agent/context";
 import { runAgent } from "@/lib/agent/run";
@@ -155,6 +155,7 @@ describe("Gemini path (stubbed client, no network)", () => {
     ]);
     const a = await withKey(() => runAgent(live(), "Should we run a 20% student coupon in Boston?", () => {}, client));
     expect(a.mode).toBe("gemini");
+    expect(a.fallback).toBeUndefined();
     expect(a.guard.passed).toBe(true);
     expect(a.text).toContain(profit);
   });
@@ -167,6 +168,7 @@ describe("Gemini path (stubbed client, no network)", () => {
     ]);
     const a = await withKey(() => runAgent(live(), "Should we run a 20% coupon?", () => {}, client));
     expect(a.mode).toBe("template");
+    expect(a.fallback).toBe("number_guard");
     expect(a.text).not.toContain("123.4k");
     expect(numberGuard(a.text, a.claims).passed).toBe(true);
   });
@@ -183,7 +185,28 @@ describe("Gemini path (stubbed client, no network)", () => {
     const client = { models: { generateContent: async () => { throw new Error("quota"); } } };
     const a = await withKey(() => runAgent(live(), "What if we raise prices 8%?", () => {}, client as never));
     expect(a.mode).toBe("template");
+    expect(a.fallback).toBe("gemini_error");
     expect(a.guard.passed).toBe(true);
     expect(a.scenario?.type).toBe("price");
+  });
+
+  it("logs a failed Gemini call without leaking the key", async () => {
+    const client = { models: { generateContent: async () => { throw new Error("bad key test-key rejected"); } } };
+    const log = vi.spyOn(console, "error").mockImplementation(() => {});
+    try {
+      await withKey(() => runAgent(live(), "What if we raise prices 8%?", () => {}, client as never));
+      const line = String(log.mock.calls[0]?.[0]);
+      expect(line).toContain("Gemini call failed");
+      expect(line).not.toContain("test-key");
+    } finally {
+      log.mockRestore();
+    }
+  });
+
+  it("marks an empty reply as such", async () => {
+    const { client } = stub([{ text: "" }]);
+    const a = await withKey(() => runAgent(live(), "Why should I trust this?", () => {}, client));
+    expect(a.mode).toBe("template");
+    expect(a.fallback).toBe("empty_reply");
   });
 });

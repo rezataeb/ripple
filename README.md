@@ -35,7 +35,8 @@ cd web && npm install && npm run dev      # http://localhost:3000, with the post
 ```
 
 No API key is needed. Without keys the agent answers from templates and a cached market scan. To turn on
-live Gemini and Nimble, copy `.env.example` to `.env` and fill it in (see [Services and keys](#services-and-keys)).
+live answers you need **one** key, a Gemini key: copy `.env.example` to `.env`, fill it in and set `DEMO_MODE=0`
+(see [Services and keys](#services-and-keys)).
 The Python side is only needed to refit the model or run the bring-your-own-data API.
 
 ## The problem
@@ -58,7 +59,7 @@ Three layers, and the division of labour is the whole design:
 |---|---|
 | **Model** | A hierarchical Bayesian demand model fitted in PyMC. The posterior ships to the browser, so sliders update instantly with no server round trip. |
 | **Agent** | "Ask Ripple" — a Gemini tool-calling agent that turns plain English into a scenario, runs it, and explains the result. **It never writes a number a tool did not return.** |
-| **Web** | Nimble searches live competitor prices and current offers, cited, as *context* — never as a model input. |
+| **Web** | Optionally, Nimble searches live competitor prices and current offers, cited, as *context* — never as a model input. Without a key a cached, labelled sample is shown. |
 | **Reality** | After a launch, each new week of real data updates the forecast with Bayes' rule. The interval narrows. A calibration study proves the intervals are honest. |
 
 ```mermaid
@@ -395,22 +396,31 @@ gitignored.
 
 ## Services and keys
 
-The app runs fully offline in demo mode. Two optional services switch on live behaviour when their
-key is set in `.env`; `DEMO_MODE=1` forces demo mode even when keys are present.
+**One key is enough.** The app runs fully offline in demo mode, and a single Gemini key switches on
+live Ask Ripple. A second service, Nimble, is optional.
 
 | Service | Used for | What it is sent | Without it |
 |---|---|---|---|
-| **Google Gemini** (`@google/genai`) | The Ask Ripple tool-calling loop; embeddings for the method Q&A (RAG); the CSV column-mapping assistant | The question and tool results (model outputs); the method docs for embeddings. Column names for mapping; three sample rows **only** if the user ticks "share sample rows" | A rule-based planner and template answers; keyword ranking for the RAG; a rule-based column mapper |
-| **Nimble** (Search API) | Live competitor prices and offers, shown as cited web context | A search query such as "coffee subscription price Austin" | A cached sample scan, labelled as illustrative |
+| **Google Gemini** (`@google/genai`), **the one key you need** | The Ask Ripple tool-calling loop; embeddings for the method Q&A (RAG); the CSV column-mapping assistant | The question and tool results (model outputs); the method docs for embeddings. Column names for mapping; three sample rows **only** if the user ticks "share sample rows" | A rule-based planner and template answers; keyword ranking for the RAG; a rule-based column mapper |
+| **Nimble** (Search API), *optional* | Live competitor prices and offers, shown as cited web context. Used only by the agent's `market_scan` tool | A search query such as "coffee subscription price Austin" | A cached sample scan, labelled "illustrative sample, not a live scan". Nothing else changes |
 
 | Variable | Meaning |
 |---|---|
 | `GEMINI_API_KEY`, `GEMINI_MODEL`, `GEMINI_EMBED_MODEL` | Gemini access; the model defaults to `gemini-2.5-flash` and embeddings to `gemini-embedding-001` |
-| `NIMBLE_API_KEY` | Nimble access |
-| `DEMO_MODE` | `1` forces cached/template answers |
+| `NIMBLE_API_KEY` | Optional |
+| `DEMO_MODE` | `1` forces cached/template answers even when keys are present; set `0` to use your key |
 
-The live demo is hosted on Vercel. Fonts (Geist) are fetched at build time and self-hosted. Nothing in the
-repo contains a key, and no customer rows are sent to an LLM by default.
+**Gemini's free tier.** As of October 2026, Google's [pricing page](https://ai.google.dev/gemini-api/docs/pricing)
+lists `gemini-2.5-flash` as free of charge on the free plan. Two things to know: the free tier's content may
+be used to improve Google's products, so do not send private data (the demo data is synthetic, and sample rows
+are never shared unless you opt in); and rate limits are per project and shown in
+[AI Studio](https://aistudio.google.com/), so a busy session can be throttled. When a Gemini call fails or is
+rejected by the number guard, the answer is a template and says so (for example "Template answer (the Gemini
+call failed)"), and the server log records the error without the key.
+
+Keep the key off any public deployment: the agent route has no rate limiting, and a shared free quota is easy
+to exhaust. The live demo on Vercel runs in demo mode. Fonts (Geist) are fetched at build time and
+self-hosted. Nothing in the repo contains a key, and no customer rows are sent to an LLM by default.
 
 ## Continuous integration
 
@@ -438,7 +448,7 @@ docs/         spec.md (the design) and method/ (model card, checks, limits; also
 DECISIONS.md  choices the design left open, and why
 ```
 
-**Tests:** 102 `pytest` tests (contract, data, parity, PSIS, launch update, API, the end-to-end fit) and 73
+**Tests:** 102 `pytest` tests (contract, data, parity, PSIS, launch update, API, the end-to-end fit) and 75
 `vitest` tests (simulate and update parity against the Python fixtures, the number guard, the agent).
 
 ## AI tools used

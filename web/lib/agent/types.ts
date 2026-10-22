@@ -100,6 +100,8 @@ export interface AgentAnswer {
   scenario?: Scenario;
   open_question?: string;
   mode: "gemini" | "template";
+  /** Why a live (keyed) run ended up as a template answer. Absent in demo mode and when Gemini's wording was used. */
+  fallback?: "gemini_error" | "number_guard" | "empty_reply";
   guard: { passed: boolean; offending: string[] };
   result_summary?: { profit: Interval; p_profit_positive: number };
 }

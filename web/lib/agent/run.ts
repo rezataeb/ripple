@@ -176,6 +176,7 @@ export async function runAgent(
 ): Promise<AgentAnswer> {
   const sess: Session = { claims: [], sources: [], calls: 0 };
   let mode: AgentAnswer["mode"] = "template";
+  let fallback: AgentAnswer["fallback"];
   let text = "";
 
   if (ctx.live.gemini && process.env.GEMINI_API_KEY) {
@@ -188,7 +189,12 @@ export async function runAgent(
         exec: async (name, args) => (await execTool(ctx, sess, name, args, emit)).output,
       });
       mode = "gemini";
-    } catch {
+    } catch (e) {
+      // Visible in the server log; the key is redacted in case an SDK error echoes it.
+      const key = process.env.GEMINI_API_KEY ?? "";
+      const msg = String((e as Error)?.message ?? e).slice(0, 300);
+      console.error(`[ripple] Gemini call failed, using the template answer: ${key ? msg.split(key).join("***") : msg}`);
+      fallback = "gemini_error";
       text = "";
       sess.calls = 0;
       sess.claims = [];
@@ -203,6 +209,7 @@ export async function runAgent(
     guard = numberGuard(text, sess.claims);
     if (!guard.passed || text.length === 0) {
       // A number the tools did not return: discard the model's wording, keep the tool results.
+      fallback = text.length === 0 ? "empty_reply" : "number_guard";
       text = templateFromSession(ctx, sess, question);
       mode = "template";
     }
@@ -221,6 +228,7 @@ export async function runAgent(
     scenario: sess.result ? sess.scenario : undefined,
     open_question: sess.openQuestion && !sess.result ? sess.openQuestion : undefined,
     mode,
+    fallback,
     guard,
     result_summary: sess.result
       ? { profit: sess.result.incremental.profit, p_profit_positive: sess.result.p_profit_positive }

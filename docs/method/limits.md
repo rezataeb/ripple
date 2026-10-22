@@ -50,7 +50,7 @@ on income and age — it is there to show the warning, not to be a good recommen
 ## No competitor reaction
 
 The model answers what happens if you change your price. It does not model what a
-competitor does next. The Nimble market scan in "Ask Ripple" shows competitor prices and
+competitor does next. The market scan in "Ask Ripple" (a live Nimble search when a Nimble key is set, otherwise a cached illustrative sample) shows competitor prices and
 current offers with sources as **context**, clearly labelled as web data, and it is never
 an input to the model.
 

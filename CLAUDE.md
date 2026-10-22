@@ -29,4 +29,5 @@ portfolio project, started at a 3-hour hackathon (2026-10-11) and now maintained
 
 ## Keys (in `.env`, never committed)
 `GEMINI_API_KEY`, `GEMINI_MODEL`, `GEMINI_EMBED_MODEL`, `NIMBLE_API_KEY`, `DEMO_MODE`.
+Only `GEMINI_API_KEY` is needed for live mode; `NIMBLE_API_KEY` is optional (without it the market scan is the cached sample).
 `DEMO_MODE=1` forces demo mode even when keys are present.

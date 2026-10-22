@@ -13,6 +13,12 @@ export const EXAMPLES = [
   "Why should I trust this?",
 ];
 
+const FALLBACK_NOTE: Record<NonNullable<AgentAnswer["fallback"]>, string> = {
+  gemini_error: "the Gemini call failed",
+  number_guard: "Gemini used a number no tool returned",
+  empty_reply: "Gemini returned nothing",
+};
+
 function StepChips({ m }: { m: Message }) {
   if (m.steps.length === 0 && !m.pending) return null;
   return (
@@ -98,7 +104,7 @@ function AnswerView({ m }: { m: Message }) {
           </button>
         )}
         <span className="text-xs text-muted-foreground">
-          {a.mode === "gemini" ? "Gemini wrote the wording" : "Template answer"} ·{" "}
+          {a.mode === "gemini" ? "Gemini wrote the wording" : `Template answer${a.fallback ? ` (${FALLBACK_NOTE[a.fallback]})` : ""}`} ·{" "}
           {a.guard.passed ? "every number is from a tool" : "numbers replaced by the template"}
         </span>
       </div>
