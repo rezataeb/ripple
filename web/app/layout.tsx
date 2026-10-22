@@ -29,10 +29,20 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <AskProvider>
           {children}
           <footer className="mx-auto w-full max-w-[1200px] px-6 py-6 text-xs text-muted-foreground">
-            Synthetic demo data · MIT ·{" "}
-            <a href="https://github.com/rezataeb/ripple" className="underline underline-offset-2 hover:text-foreground">
-              Source on GitHub
-            </a>
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+              <span>Synthetic demo data · MIT</span>
+              <a href="mailto:taeb.reza@gmail.com" className="underline underline-offset-2 hover:text-foreground">
+                Contact
+              </a>
+              <a
+                href="https://github.com/rezataeb/ripple"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline underline-offset-2 hover:text-foreground"
+              >
+                GitHub
+              </a>
+            </div>
           </footer>
         </AskProvider>
       </body>
