@@ -35,6 +35,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
                 Contact
               </a>
               <a
+                href="https://www.linkedin.com/in/reza-taeb/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline underline-offset-2 hover:text-foreground"
+              >
+                LinkedIn
+              </a>
+              <a
                 href="https://github.com/rezataeb/ripple"
                 target="_blank"
                 rel="noopener noreferrer"
